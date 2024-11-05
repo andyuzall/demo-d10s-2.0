@@ -33,7 +33,8 @@ function Navbar() {
           Monitoreo
           </Link>
           <p className='ml-4'>Hola {session.user.name}!</p>
-          <img src={session.user.image} alt="Imagen de Usuario" 
+          <img src={session.user.image!} 
+          alt="Imagen de Usuario" 
           className='mr-4 w-10 h-10 rounded-full cursor-pointer'
           />
           <button
