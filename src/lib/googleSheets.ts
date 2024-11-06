@@ -36,7 +36,7 @@ interface Producto {
 }
 
 // Ruta temporal para almacenar el archivo de credenciales
-const credentialsPath = path.join('/config', 'credentials.json');
+const credentialsPath = path.join('/tmp', 'credentials.json');
 
 // Verificar si el archivo ya existe antes de crearlo
 if (!fs.existsSync(credentialsPath)) {
