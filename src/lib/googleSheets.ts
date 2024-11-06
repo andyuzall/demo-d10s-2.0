@@ -1,6 +1,7 @@
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import fs from 'fs';
+import path from 'path';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 interface Producto {
@@ -34,7 +35,27 @@ interface Producto {
   porcentaje: string;
 }
 
-const credentials = JSON.parse(fs.readFileSync('./config/credentials.json', 'utf-8'));
+// Ruta temporal para almacenar el archivo de credenciales
+const credentialsPath = path.join('/config', 'credentials.json');
+
+// Verificar si el archivo ya existe antes de crearlo
+if (!fs.existsSync(credentialsPath)) {
+  const credentials = {
+    type: process.env.GOOGLE_TYPE,
+    project_id: process.env.GOOGLE_PROJECT_ID,
+    private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+    private_key: process.env.GOOGLE_PRIVATE_KEY,
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    auth_uri: process.env.GOOGLE_AUTH_URI,
+    token_uri: process.env.GOOGLE_TOKEN_URI,
+    auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
+  };
+  fs.writeFileSync(credentialsPath, JSON.stringify(credentials));
+}
+
+const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf-8'));
 
 const privateKey = credentials.private_key.replace(/\\n/g, '\n');
 const emailKey = credentials.client_email;

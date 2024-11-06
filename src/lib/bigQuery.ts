@@ -1,8 +1,31 @@
 import { BigQuery } from '@google-cloud/bigquery';
+import fs from 'fs';
+import path from 'path';
+
+
+// Ruta temporal para el archivo de credenciales
+const credentialsPath = path.join('/config', 'credentials.json');
+
+// Verificar si el archivo ya existe antes de crearlo
+if (!fs.existsSync(credentialsPath)) {
+  const credentials = {
+    type: process.env.GOOGLE_TYPE,
+    project_id: process.env.GOOGLE_PROJECT_ID,
+    private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+    private_key: process.env.GOOGLE_PRIVATE_KEY,
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    auth_uri: process.env.GOOGLE_AUTH_URI,
+    token_uri: process.env.GOOGLE_TOKEN_URI,
+    auth_provider_x509_cert_url: process.env.GOOGLE_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.GOOGLE_CLIENT_X509_CERT_URL,
+  };
+  fs.writeFileSync(credentialsPath, JSON.stringify(credentials));
+}
 
 const bigQueryClient = new BigQuery({
     projectId: 'forms-atomikos',
-    keyFilename: './config/credentials.json',
+    keyFilename: credentialsPath,
 });
 
 export const insertRowToBigQuery = async (productos: any[]) => {
