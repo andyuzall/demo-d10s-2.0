@@ -40,4 +40,6 @@ yarn-error.log*
 next-env.d.ts
 
 #credenciales
-/config
+/config/credentials.json
+config/credentials.json
+config/credentials.json
