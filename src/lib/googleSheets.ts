@@ -1,7 +1,6 @@
 import { GoogleSpreadsheet, GoogleSpreadsheetRow } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
-import fs from 'fs';
-import { HttpsProxyAgent } from 'https-proxy-agent';
+import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
 
 interface Producto {
   estado: string;
@@ -34,36 +33,62 @@ interface Producto {
   porcentaje: string;
 }
 
-const credentials = JSON.parse(fs.readFileSync('./config/credentials.json', 'utf-8'));
+// Función para obtener las credenciales desde Secret Manager
+async function getCredentials() {
+  if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
+    // Estamos en producción, usar las credenciales de la variable de entorno
+    return JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+  } else {
+    // Estamos en desarrollo, usar Secret Manager
+    const secretManagerClient = new SecretManagerServiceClient();
+    try {
+      const [version] = await secretManagerClient.accessSecretVersion({
+        name: 'projects/369557868596/secrets/d10s-2-0/versions/latest',
+      });
 
-const privateKey = credentials.private_key.replace(/\\n/g, '\n');
-const emailKey = credentials.client_email;
+      const credentials = version.payload?.data?.toString();
+      if (!credentials) {
+        throw new Error('No se pudo obtener las credenciales del Secret Manager.');
+      }
 
-const proxyUrl = 'http://localhost:3000';
-const proxyAgent = new HttpsProxyAgent(proxyUrl);
+      return JSON.parse(credentials);
+    } catch (error) {
+      console.error('Error al acceder al Secret Manager:', error);
+      throw error;
+    }
+  }
+}
 
-const serviceAccountAuth = new JWT({
-  email: emailKey,
-  key: privateKey,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  additionalClaims: {
-    agent: proxyAgent,
-  },
-});
+// Función para inicializar la autenticación con JWT
+async function initializeServiceAccountAuth() {
+  const credentials = await getCredentials();
 
-// Cambia el tipo de la función para que devuelva `Producto[]`
+  const { client_email, private_key } = credentials;
+  if (!client_email || !private_key) {
+    throw new Error('Credenciales inválidas: client_email o private_key no encontrados.');
+  }
+
+  const serviceAccountAuth = new JWT({
+    email: client_email,
+    key: private_key.replace(/\\n/g, '\n'),
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+
+  return serviceAccountAuth;
+}
+
+// Función para obtener los datos desde Google Sheets
 export default async function getGoogleSheetData(): Promise<Producto[]> {
+  const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
 
   try {
-    await doc.loadInfo(); // Cargar información de la hoja
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[0]; 
+    const rows = await sheet.getRows<Producto>();
 
-    const sheet = doc.sheetsByIndex[0]; // Obtener la primera hoja
-    const rows = await sheet.getRows<Producto>(); // Obtener las filas con el tipo Producto
-
-    // Mapear las filas a productos
-    const productos: Producto[] = rows.map((row: GoogleSpreadsheetRow<Producto>) => ({
-      estado: row.get('estado'), // Asegúrate de que la propiedad existe
+    return rows.map((row: GoogleSpreadsheetRow<Producto>) => ({
+      estado: row.get('estado'),
       trader: row.get('trader'),
       id: row.get('id'),
       sdc: row.get('sdc'),
@@ -92,10 +117,8 @@ export default async function getGoogleSheetData(): Promise<Producto[]> {
       cuantoFaltaConsumo: row.get('cuantoFaltaConsumo'),
       porcentaje: row.get('porcentaje'),
     }));
-
-    return productos;
   } catch (error) {
-    console.error('Error fetching Google Sheet data:', error);
+    console.error('Error al obtener los datos de Google Sheets:', error);
     throw error;
   }
 }
