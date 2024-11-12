@@ -50,7 +50,7 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, ex
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center ">
+    <div className="bg-gray-100 flex items-center ">
     {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
     <div className="bg-white rounded-xl shadow-lg p-4 w-full max-w-7xl">
       {/* Títulos y encabezados superiores */}
