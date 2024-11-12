@@ -26,4 +26,7 @@ export interface Product {
     porcentaje: string;
     queBuscamos: string;
     queCantidad: string;
+    duracionCampana: string;
+    idDV: string;
+    accessDV: string;
   }

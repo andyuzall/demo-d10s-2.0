@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IconButton } from '@mui/material';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import axios from 'axios';
 
 interface Product {
   estado: string;
@@ -26,16 +29,28 @@ interface Product {
   consumoDeAyer: string;
   cuantoFaltaConsumo: string;
   porcentaje: string;
-  queBuscamos: string;
-  queCantidad: string;
+  duracionCampana: string;
+  idDV: string;
+  accessDV: string;
 }
 
-interface DashboardConsumoProps {
+interface DashboardDetallesProps {
   productos: Product[];
   existingIds: string[];
 }
 
-const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
+const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds }) => {
+  const [likedIds, setLikedIds] = useState<string[]>(existingIds);
+
+  const handleSaveToBigQuery = async (producto: Product) => {
+    try {
+      await axios.post('/api/saveToBigQuery', producto);
+      console.log('Datos guardados en BigQuery');
+      setLikedIds([...likedIds, producto.id]);
+    } catch (error) {
+      console.error('Error al guardar en BigQuery:', error);
+    }
+  };
 
   return (
     <div className="bg-gray-100 flex items-center ">
@@ -43,15 +58,11 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
     <div className="bg-white rounded-xl shadow-lg p-4 w-full max-w-7xl">
       {/* Títulos y encabezados superiores */}
       <div className="mb-2">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center">
         <h1 className="text-l font-bold text-gray-600">Todas las Campañas</h1>
-        <div className='flex items-start gap-20'>
-          <span className="text-l font-semibold text-gray-600">Inversión</span>
-          <span className="text-l font-semibold text-gray-600">¿Cuánto nos falta?</span>
-        </div>
         </div>
       </div>
-
+    
       {/* Contenedor con la tabla */}
     <div className="overflow-x-auto">
       <div className="overflow-y-auto">
@@ -65,12 +76,13 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
             <th className="px-2 py-2">Form.</th>
             <th className="px-2 py-2">Inicio</th>
             <th className="px-2 py-2">Fin</th>
-            <th className="px-2 py-2 border-l-4 border-gray-100">Re%ult</th>
-            <th className="px-2 py-2">Acordado</th>
-            <th className="px-2 py-2">Actual</th>
-            <th className="px-2 py-2 border-l-4 border-gray-100">Falta</th>
-            <th className="px-2 py-2">Ideal hoy</th>
-            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Proye%</th>
+            <th className="px-2 py-2">ID DV360</th>
+            <th className="px-2 py-2">Nombre</th>
+            <th className="px-2 py-2">Categoría</th>
+            <th className="px-2 py-2">Duración</th>
+            <th className="px-2 py-2">Días restantes</th>
+            <th className="px-2 py-2">Inversión</th>
+            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Destacada</th>
           </tr>
         </thead>
         <tbody className="text-gray-800">
@@ -86,12 +98,25 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
               <td className="px-2 py-2">{producto.formato}</td>
               <td className="px-2 py-2">{producto.fechaInicio}</td>
               <td className="px-2 py-2">{producto.fechaFin}</td>
-              <td className="px-2 py-2 border-l-4 border-gray-200">{producto.porcentaje}%</td>
-              <td className="px-2 py-2">{producto.inversionCampana}</td>
-              <td className="px-2 py-2">{producto.consumoCampana}</td>
-              <td className="px-2 py-2 border-l-4 border-gray-200">{producto.diasRestantes}</td>
-              <td className="px-2 py-2">{producto.cuantoConsumoDeberiamosIr}</td>
-              <td className="px-2 py-2">{producto.porcentaje}%</td>
+              <td className="px-2 py-2">
+                <a href={producto.accessDV} target="_blank" rel="noreferrer" className='hover:text-cyan-700'>
+                {producto.idDV}
+                </a>
+                </td>
+              <td className="px-2 py-2">{producto.campana}</td>
+              <td className="px-2 py-2">{producto.categoria}</td>
+              <td className="px-2 py-2">{producto.duracionCampana}</td>
+              <td className="px-2 py-2">{producto.diasRestantes}</td>
+              <td className="px-2 py-2">${producto.inversionCampana}</td>
+              <td className="px-2 py-2">
+              <IconButton
+                      onClick={() => handleSaveToBigQuery(producto)}
+                      disabled={likedIds.includes(producto.id)}
+                      color="error"
+                    >
+                      {likedIds.includes(producto.id) ? <Favorite /> : <FavoriteBorder />}
+                    </IconButton>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -103,4 +128,4 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
   );
 };
 
-export default DashboardConsumo;
+export default DashboardDetalles;

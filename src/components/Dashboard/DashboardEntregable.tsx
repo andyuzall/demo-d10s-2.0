@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 interface Product {
   estado: string;
@@ -36,18 +35,7 @@ interface DashboardEntregableProps {
   existingIds: string[];
 }
 
-const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, existingIds }) => {
-  const [likedIds, setLikedIds] = useState<string[]>(existingIds);
-
-  const handleSaveToBigQuery = async (producto: Product) => {
-    try {
-      await axios.post('/api/saveToBigQuery', producto);
-      console.log('Datos guardados en BigQuery');
-      setLikedIds([...likedIds, producto.id]);
-    } catch (error) {
-      console.error('Error al guardar en BigQuery:', error);
-    }
-  };
+const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos }) => {
 
   return (
     <div className="bg-gray-100 flex items-center ">
@@ -72,18 +60,18 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, ex
             <th className="px-2 py-2">ID</th>
             <th className="px-2 py-2">Cliente</th>
             <th className="px-2 py-2">Anunciante</th>
-            <th className="px-2 py-2">Formato</th>
+            <th className="px-2 py-2">Form.</th>
             <th className="px-2 py-2">Inicio</th>
             <th className="px-2 py-2">Fin</th>
             <th className="px-2 py-2 border-l-4 border-gray-100">KPI</th>
             <th className="px-2 py-2">Unidad</th>
             <th className="px-2 py-2">Costo</th>
-            <th className="px-2 py-2 border-l-4 border-gray-100">Re%ultado</th>
+            <th className="px-2 py-2 border-l-4 border-gray-100">Re%ult</th>
             <th className="px-2 py-2">Uni.</th>
             <th className="px-2 py-2">Costo</th>
             <th className="px-2 py-2">Faltan</th>
-            <th className="px-2 py-2">Ideal Hoy</th>
-            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Proyección</th>
+            <th className="px-2 py-2">Ideal hoy</th>
+            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Proye%</th>
           </tr>
         </thead>
         <tbody className="text-gray-800">
@@ -102,12 +90,12 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, ex
               <td className="px-2 py-2 border-l-4 border-gray-200">{producto.queBuscamos}</td>
               <td className="px-2 py-2">{producto.queCantidad}</td>
               <td className="px-2 py-2">{producto.objetivoTangible}</td>
-              <td className="px-2 py-2 border-l-4 border-gray-200">{producto.porcentajeObjetivo}</td>
+              <td className="px-2 py-2 border-l-4 border-gray-200">{producto.porcentajeObjetivo}%</td>
               <td className="px-2 py-2">{producto.compraTotal}</td>
               <td className="px-2 py-2">{producto.objetivoCuantificable}</td>
               <td className="px-2 py-2">{producto.diasRestantes}</td>
               <td className="px-2 py-2">{producto.cuantoDeberiamosIr}</td>
-              <td className="px-2 py-2 rounded-tr-lg rounded-br-lg">{producto.porcentajeObjetivo}</td>
+              <td className="px-2 py-2 rounded-tr-lg rounded-br-lg">{producto.porcentajeObjetivo}%</td>
             </tr>
           ))}
         </tbody>
