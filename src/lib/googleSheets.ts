@@ -31,6 +31,8 @@ interface Producto {
   consumoDeAyer: string;
   cuantoFaltaConsumo: string;
   porcentaje: string;
+  queBuscamos: string;
+  queCantidad: string;
 }
 
 // Función para obtener las credenciales desde Secret Manager
@@ -116,6 +118,8 @@ export default async function getGoogleSheetData(): Promise<Producto[]> {
       consumoDeAyer: row.get('consumoDeAyer'),
       cuantoFaltaConsumo: row.get('cuantoFaltaConsumo'),
       porcentaje: row.get('porcentaje'),
+      queBuscamos: row.get('queBuscamos'),
+      queCantidad: row.get('queCantidad')
     }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);

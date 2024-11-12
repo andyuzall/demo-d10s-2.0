@@ -1,9 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import DashboardCard from '../../components/Dashboard/DashboardCard';
 import Sidebar from '@/components/Sidebar';
 import { Product } from '@/types/Product';
 import axios from 'axios';
+import DashboardEntregable from '@/components/Dashboard/DashboardEntregable';
 
 const DashboardPage: React.FC = () => {
   const [productos, setProductos] = useState<Product[]>([]);
@@ -56,8 +56,8 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="dashboard flex">
       <Sidebar onFilterChange={handleFilterChange} />
-      <div className="dashboard-content flex-1 p-6 bg-gray-100">
-        <DashboardCard productos={filteredProductos} existingIds={existingIds} />
+      <div className="dashboard-content flex-1 p-2 bg-gray-100">
+        <DashboardEntregable productos={filteredProductos} existingIds={existingIds} />
       </div>
     </div>
   );

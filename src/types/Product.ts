@@ -24,4 +24,6 @@ export interface Product {
     consumoDeAyer: string;
     cuantoFaltaConsumo: string;
     porcentaje: string;
+    queBuscamos: string;
+    queCantidad: string;
   }
