@@ -62,13 +62,13 @@ function TopBar() {
   return (
     <div className="dashboard flex w-full">
     <Sidebar onFilterChange={handleFilterChange} />
-    <div className='flex-row justify-center items-center w-auto m-2'>
+    <div className='flex-row justify-center items-center w-full m-2'>
       <nav className='border rounded-xl flex justify-between items-center text-center w-full bg-gray-800 pt-1 pb-1 pr-4 pl-4 mb-4'>
         <button
         onClick={() => handleButtonClick('detalles')}
         className={`
             border rounded-xl flex justify-center items-center text-center text-gray-600 w-60 bg-gray-200 p-2 
-            ${selectedButton === 'detalles' ? 'bg-gray-600 text-gray-200 cursor-default' : 'bg-gray-200 text-gray-600'}`}
+            ${selectedButton === 'detalles' ? 'bg-gray-600 text-white cursor-default' : 'bg-gray-200 text-gray-600'}`}
             >
             <p>Detalles</p>
         </button>
@@ -76,7 +76,7 @@ function TopBar() {
             onClick={() => handleButtonClick('objetivoEntregable')}
             className={`
                 border rounded-xl flex justify-center items-center text-center text-gray-600 w-60 bg-gray-200 p-2 
-                ${selectedButton === 'objetivoEntregable' ? 'bg-gray-600 text-gray-200 cursor-default' : 'bg-gray-200 text-gray-600'}`}
+                ${selectedButton === 'objetivoEntregable' ? 'bg-gray-600 text-white cursor-default' : 'bg-gray-200 text-gray-600'}`}
                 >
             <p>Objetivo Entregable</p>
         </button>
@@ -84,7 +84,7 @@ function TopBar() {
             onClick={() => handleButtonClick('objetivoConsumo')}
             className={`
                 border rounded-xl flex justify-center items-center text-center text-gray-600 w-60 bg-gray-200 p-2 
-                ${selectedButton === 'objetivoConsumo' ? 'bg-gray-600 text-gray-200 cursor-default' : 'bg-gray-200 text-gray-600'}`}
+                ${selectedButton === 'objetivoConsumo' ? 'bg-gray-600 text-white cursor-default' : 'bg-gray-200 text-gray-600'}`}
             >     
             <p>Objetivo Consumo</p>
         </button>
