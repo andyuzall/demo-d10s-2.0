@@ -17,7 +17,7 @@ function Navbarr() {
 }
 
   return (
-    <nav className='flex-col items-center pb-3 justify-between px-4'>
+    <nav className='flex-col items-center py-3 justify-between px-4'>
         {session?.user ? (
             <>
             <div className='flex justify-between h-8 w-full items-center text-center'>
@@ -75,7 +75,7 @@ function Navbarr() {
                 href="/home"
                 onClick={() => handleButtonClick('home')}
                 className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
-                  ${selectedButton === 'home' ? 'bg-slate-400 font-semibold cursor-default' : 'font-normal'}`}
+                  ${selectedButton === 'home' ? 'bg-slate-500 font-semibold cursor-default' : 'font-normal'}`}
                   >
                 Home
                 </Link>
@@ -83,7 +83,7 @@ function Navbarr() {
                 href="/dashboard"
                 onClick={() => handleButtonClick('dashboard')}
                 className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
-                  ${selectedButton === 'dashboard' ? 'bg-slate-400 font-semibold cursor-default' : 'font-normal'}`}
+                  ${selectedButton === 'dashboard' ? 'bg-slate-500 font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Campañas
                 </Link>
@@ -91,7 +91,7 @@ function Navbarr() {
                 href="/notificaciones"
                 onClick={() => handleButtonClick('notificaciones')}
                 className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
-                  ${selectedButton === 'notificaciones' ? 'bg-slate-400 font-semibold cursor-default' : 'font-normal'}`}
+                  ${selectedButton === 'notificaciones' ? 'bg-slate-500 font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Notificaciones
                 </Link>
