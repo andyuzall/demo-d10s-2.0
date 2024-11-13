@@ -2,12 +2,19 @@
 import Link from 'next/link'
 import {signIn, useSession, signOut} from 'next-auth/react'
 import logoTipo from '@/assets/logo-violeta.gif';
+import logOut from '@/assets/icon-logout.svg';
 import Image from 'next/image';
+import { useState } from 'react';
 
 
 function Navbarr() {
 
   const {data: session} = useSession();
+  const [selectedButton, setSelectedButton] = useState('');
+
+  const handleButtonClick = (buttonName: React.SetStateAction<string>) => {
+    setSelectedButton(buttonName);
+}
 
   return (
     <nav className='flex-col items-center py-3 justify-between px-4'>
@@ -20,7 +27,21 @@ function Navbarr() {
                     alt='Imagen de Usuario' 
                     className='mr-1 w-10 h-10 rounded-full cursor-pointer'
                     />
-                    <p className='ml-4'>{session.user.name}</p>
+                    <p className='ml-2 mr-2'>{session.user.name}</p>
+                    <button
+                    onClick={async () => {
+                      await signOut({
+                        callbackUrl: "/"
+                      });
+                    }}
+                    >
+                      <Image 
+                      src={logOut}
+                      width={20}
+                      height={20}
+                      alt="Icono para cerrar sesion"
+                      />
+                    </button>
                 </div>
                 <div className='block w-auto'>
                     <Image 
@@ -51,19 +72,25 @@ function Navbarr() {
             <div className='flex justify-center items-center'>
                 <Link
                 href="/home"
-                className='bg-gray-200 text-gray-600 p-2'
+                onClick={() => handleButtonClick('home')}
+                className={`text-xl text-gray-600 bg-gray-300 p-2 rounded-tl-lg rounded-bl-lg w-60 text-center
+                  ${selectedButton === 'home' ? 'font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Home
                 </Link>
                 <Link
                 href="/dashboard"
-                className='bg-gray-200 text-gray-600 p-2'
+                onClick={() => handleButtonClick('dashboard')}
+                className={`text-xl text-gray-600 bg-gray-300 p-2 w-60 text-center
+                  ${selectedButton === 'dashboard' ? 'font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Campañas
                 </Link>
                 <Link
                 href="/notificaciones"
-                className='bg-gray-200 text-gray-600 p-2'
+                onClick={() => handleButtonClick('notificaciones')}
+                className={`text-xl text-gray-600 bg-gray-300 p-2 rounded-tr-lg rounded-br-lg w-60 text-center
+                  ${selectedButton === 'notificaciones' ? 'font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Notificaciones
                 </Link>
