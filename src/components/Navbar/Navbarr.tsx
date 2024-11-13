@@ -17,10 +17,10 @@ function Navbarr() {
 }
 
   return (
-    <nav className='flex-col items-center py-3 justify-between px-4'>
+    <nav className='flex-col items-center pb-3 justify-between px-4'>
         {session?.user ? (
             <>
-            <div className='flex justify-between w-full items-center text-center'>
+            <div className='flex justify-between h-8 w-full items-center text-center'>
                 <div className='flex justify-start items-center'>
                     <img 
                     src={session.user.image!} 
@@ -43,18 +43,18 @@ function Navbarr() {
                       />
                     </button>
                 </div>
-                <div className='block w-auto'>
+                <div className='flex'>
                     <Image 
                     src={logoTipo}
-                    width={150}
+                    width={250}
                     height={50}
                     alt='Logotipo de Atomik' 
                     />        
                 </div>
                 <div>
-                    <button>
+                    <button className='bg-gray-600 px-3 py-1 rounded-lg text-center'>
                         <p
-                        className=''
+                        className='text-white'
                         >
                         Nuevas alertas
                         </p>
@@ -62,38 +62,40 @@ function Navbarr() {
                 </div>
             </div>
             <div className='flex-col justify-center items-center text-center mb-4'>
-                <h1 className='text-5xl font-semibold text-gray-600 uppercase tracking-widest'>
+                <h1 className='text-5xl text-gray-600 uppercase tracking-widest'>
                    Planilla D10S 
                 </h1>
-                <h2 className='text-4xl font-semibold text-gray-600'>
+                <h2 className='text-2xl text-gray-600'>
                     2.0
                 </h2>
             </div>
             <div className='flex justify-center items-center'>
+              <span className='bg-gray-200 w-2/4 rounded-lg flex justify-between items-center'>
                 <Link
                 href="/home"
                 onClick={() => handleButtonClick('home')}
-                className={`text-xl text-gray-600 bg-gray-300 p-2 rounded-tl-lg rounded-bl-lg w-60 text-center
-                  ${selectedButton === 'home' ? 'font-semibold cursor-default' : 'font-normal'}`}
-                >
+                className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
+                  ${selectedButton === 'home' ? 'bg-slate-400 font-semibold cursor-default' : 'font-normal'}`}
+                  >
                 Home
                 </Link>
                 <Link
                 href="/dashboard"
                 onClick={() => handleButtonClick('dashboard')}
-                className={`text-xl text-gray-600 bg-gray-300 p-2 w-60 text-center
-                  ${selectedButton === 'dashboard' ? 'font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
+                  ${selectedButton === 'dashboard' ? 'bg-slate-400 font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Campañas
                 </Link>
                 <Link
                 href="/notificaciones"
                 onClick={() => handleButtonClick('notificaciones')}
-                className={`text-xl text-gray-600 bg-gray-300 p-2 rounded-tr-lg rounded-br-lg w-60 text-center
-                  ${selectedButton === 'notificaciones' ? 'font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
+                  ${selectedButton === 'notificaciones' ? 'bg-slate-400 font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Notificaciones
                 </Link>
+              </span>
             </div>
             </>
         ): (
