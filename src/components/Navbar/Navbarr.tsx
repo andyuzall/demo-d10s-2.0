@@ -74,24 +74,24 @@ function Navbarr() {
                 <Link
                 href="/home"
                 onClick={() => handleButtonClick('home')}
-                className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
-                  ${selectedButton === 'home' ? 'bg-slate-500 font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl text-gray-600 w-2/4 rounded-lg text-center uppercase
+                  ${selectedButton === 'home' ? 'bg-slate-300 font-semibold cursor-default' : 'font-normal'}`}
                   >
                 Home
                 </Link>
                 <Link
                 href="/dashboard"
                 onClick={() => handleButtonClick('dashboard')}
-                className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
-                  ${selectedButton === 'dashboard' ? 'bg-slate-500 font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl text-gray-600 w-2/4 rounded-lg text-center uppercase
+                  ${selectedButton === 'dashboard' ? 'bg-slate-300 font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Campañas
                 </Link>
                 <Link
                 href="/notificaciones"
                 onClick={() => handleButtonClick('notificaciones')}
-                className={`text-xl text-gray-600 w-2/4 bg-transparent rounded-lg text-center uppercase
-                  ${selectedButton === 'notificaciones' ? 'bg-slate-500 font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl text-gray-600 w-2/4 rounded-lg text-center uppercase
+                  ${selectedButton === 'notificaciones' ? 'bg-slate-300 font-semibold cursor-default' : 'font-normal'}`}
                 >
                 Notificaciones
                 </Link>
