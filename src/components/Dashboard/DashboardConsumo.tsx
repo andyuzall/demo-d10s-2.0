@@ -40,7 +40,7 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
   return (
     <div className="bg-gray-100 flex items-center ">
     {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
-    <div className="bg-white rounded-xl shadow-lg p-4 w-full max-w-7xl">
+    <div className="bg-white rounded-xl shadow-lg p-4 w-full">
       {/* Títulos y encabezados superiores */}
       <div className="mb-2">
         <div className="flex justify-between items-center">
