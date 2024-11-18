@@ -38,7 +38,7 @@ interface DashboardConsumoProps {
 const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
 
   return (
-    <div className="bg-gray-100 flex items-center ">
+    <div className="flex items-center ">
     {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
     <div className="bg-white rounded-xl shadow-lg p-4 w-full">
       {/* Títulos y encabezados superiores */}

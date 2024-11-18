@@ -63,7 +63,7 @@ function TopBar() {
     <div className="dashboard flex w-full">
     <Sidebar onFilterChange={handleFilterChange} />
     <div className='flex-row justify-center items-center w-full m-2'>
-      <nav className='border rounded-xl flex justify-between items-center text-center w-full bg-gray-800 pt-1 pb-1 pr-4 pl-4 mb-4'>
+      <nav className='border rounded-xl flex justify-between items-center text-center w-full bg-gray-200 pt-1 pb-1 pr-4 pl-4 mb-4'>
         <button
         onClick={() => handleButtonClick('detalles')}
         className={`

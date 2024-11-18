@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { IoMdCheckboxOutline } from "react-icons/io";
+import { RiNotificationOffLine } from "react-icons/ri";
+import { GiCrossedAxes } from "react-icons/gi";
+import { GiSandsOfTime } from "react-icons/gi";
+
+
 
 type SidebarProps = {
    onFilterChange: (filterType: string, filterValue: string) => void;
@@ -35,32 +41,31 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   }
 
 return (
-  <div className="bg-gray-800 text-white w-60 min-h-screen p-1">
+  <div className="bg-gray-200 rounded-lg text-white w-11 p-1 pt-3 m-1  flex flex-col gap-2 items-center">
      {/* Sección de campañas Activas */}
      <div>
         <button
            onClick={() => handleCampañasActivas()}
-           className="flex justify-between items-center text-left py-2 px-1 rounded-md hover:bg-gray-700"
+           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <span className='text-xs'>Activas</span>
-           <span className="text-xs">{isEstadosOpen ? '-' : '+'}</span>
+           <IoMdCheckboxOutline />
         </button>
         {isEstadosOpen && (
-           <div className="mt-2">
+           <div className="mt-2 flex flex-col gap-1 items-center">
                <button 
               onClick={() => onFilterChange("estado", "Finalizada")}
-              className="block py-1 px-1 text-xs rounded-md hover:bg-gray-700 w-full text-left">
-                 Finalizada
+              className="bg-gray-700 block py-1 px-1 rounded-md">
+                 <IoMdCheckboxOutline />
               </button>
               <button 
               onClick={() => onFilterChange("estado", "Sin actividad")}
-              className="block py-1 px-1 text-xs rounded-md hover:bg-gray-700 w-full text-left">
-                 Sin actividad
+              className="bg-gray-700 block py-1 px-1 rounded-md">
+                 <IoMdCheckboxOutline />
               </button>
               <button 
               onClick={() => onFilterChange("estado", "BONIFICADA")}
-              className="block py-1 px-1 text-xs rounded-md hover:bg-gray-700 w-full text-left">
-                 Bonificadas
+              className="bg-gray-700 block py-1 px-1 rounded-md">
+                 <IoMdCheckboxOutline />
               </button>
            </div>
         )}
@@ -69,27 +74,27 @@ return (
      <div>
         <button
            onClick={() => handleCampañasSinActividad()}
-           className="flex justify-between items-center text-left py-2 px-1 rounded-md hover:bg-gray-700"
+           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <span className='text-xs'>Sin Actividad</span>
+           <GiSandsOfTime />
         </button>
         </div>
     {/* Sección de campañas Finalizadas */}
      <div>
         <button
            onClick={() => handleCampañasFinalizadas()}
-           className="flex justify-between items-center text-left py-2 px-1 rounded-md hover:bg-gray-700"
+           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <span className='text-xs'>Finalizadas</span>
+         <GiCrossedAxes />
         </button>
       </div>
      {/* Sección de campañas Por fuera de DV */}
      <div>
         <button
            onClick={() => handleCampañasPorFueraDeDV()}
-           className="flex justify-between items-center text-left py-2 px-1 rounded-md hover:bg-gray-700"
+           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <span className='text-xs'>Fuera de DV</span>
+           <RiNotificationOffLine />
         </button>
       </div>
      {/* Sección de Campañas Destacadas */}

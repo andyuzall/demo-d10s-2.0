@@ -53,13 +53,15 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
   };
 
   return (
-    <div className="bg-gray-100 flex items-center ">
+    <div className=" flex items-center ">
     {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
     <div className="bg-white rounded-xl shadow-lg p-4 w-full">
       {/* Títulos y encabezados superiores */}
       <div className="mb-2">
         <div className="flex items-center">
-        <h1 className="text-l font-bold text-gray-600">Todas las Campañas</h1>
+        <h1 className="text-l font-bold text-gray-600">
+          
+          </h1>
         </div>
       </div>
     
