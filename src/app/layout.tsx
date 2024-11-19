@@ -3,6 +3,8 @@ import "./globals.css";
 import { Providers } from './Providers';
 import Navbar from "../components/Navbar";
 import Navbarr from "@/components/Navbar/Navbarr";
+import { setFlagsFromString } from 'v8';
+setFlagsFromString('--no-deprecation');
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
