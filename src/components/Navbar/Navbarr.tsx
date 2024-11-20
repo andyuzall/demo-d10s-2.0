@@ -4,6 +4,7 @@ import {signIn, useSession, signOut} from 'next-auth/react'
 import logoTipo from '@/assets/logo-violeta.gif';
 import logOut from '@/assets/icon-logout.svg';
 import Image from 'next/image';
+import { FcGoogle } from "react-icons/fc";
 import { useState } from 'react';
 
 
@@ -99,11 +100,43 @@ function Navbarr() {
             </div>
             </>
         ): (
+          <>
+          <div className='flex flex-col justify-center h-32 w-full items-center text-center mb-28'>
+            <div className='flex flex-col justify-center m-0'>
+                      <Image 
+                      src={logoTipo}
+                      width={250}
+                      height={50}
+                      alt='Logotipo de Atomik' 
+                      />        
+            </div>
+            <div className='flex-col justify-center items-center text-center mb-4'>
+                  <h1 className='text-5xl text-gray-600 uppercase tracking-widest'>
+                     Planilla D10S 
+                  </h1>
+                  <h2 className='text-2xl text-gray-600'>
+                      2.0
+                  </h2>
+            </div>
+          </div>
+            <div className='flex flex-col items-center text-center justify-center'>
+              <div className='bg-gray-200 h-60 flex flex-col gap-4 justify-between p-8 rounded-lg shadow-md'>
+              <h1 className='font-bold text-xl text-gray-500'>
+                Bienvenido a D1OS 2.0
+              </h1>
             <button onClick={() => signIn()} 
-            className='bg-sky-400 px-3 py-2'
+            className='bg-white px-4 py-2 font-bold rounded-2xl text-black flex items-center justify-between w-full max-w-xs'
             >
-              Logueate
+              <div className="w-6" /> {/* Espaciador invisible para equilibrar el diseño */}
+              <p className="text-center flex-grow">Logueate ahora</p>
+              <FcGoogle className="text-xl" />
             </button>
+              <h2 className='text-sm text-gray-400'>
+                Registra, monitorea y acciona sobre tus campañas.
+              </h2>
+              </div>
+            </div>
+          </>
         )} 
     </nav>
   )
