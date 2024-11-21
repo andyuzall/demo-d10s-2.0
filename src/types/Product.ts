@@ -29,4 +29,12 @@ export interface Product {
     duracionCampana: string;
     idDV: string;
     accessDV: string;
+  };
+
+  export interface HomeData {
+    mesActual: number;
+    mesAnterior: number;
+    campanasActivas: number;
+    campanasProxFinalizar: number;
+    campanasRecientes: number;
   }

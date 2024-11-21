@@ -37,6 +37,14 @@ interface Producto {
   accessDV: string;
 }
 
+interface HomeData {
+  mesActual: number;
+  mesAnterior: number;
+  campanasActivas: number;
+  campanasProxFinalizar: number;
+  campanasRecientes: number;
+}
+
 // Función para obtener las credenciales desde Secret Manager
 async function getCredentials() {
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
@@ -82,7 +90,7 @@ async function initializeServiceAccountAuth() {
 }
 
 // Función para obtener los datos desde Google Sheets
-export default async function getGoogleSheetData(): Promise<Producto[]> {
+export async function getGoogleSheetData(): Promise<Producto[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
 
@@ -129,4 +137,28 @@ export default async function getGoogleSheetData(): Promise<Producto[]> {
     console.error('Error al obtener los datos de Google Sheets:', error);
     throw error;
   }
-}
+};
+// Obtenemos los datos de cantidad de campañas actuales y del mes anterior
+
+export async function getGoogleSheetHomeData(): Promise<HomeData[]> {
+  const serviceAccountAuth = await initializeServiceAccountAuth();
+  const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
+
+  try {
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[4]; 
+    const rows = await sheet.getRows<HomeData>();
+
+    return rows.map((row: GoogleSpreadsheetRow<HomeData>) => ({
+      mesActual: Number(row.get('mesActual')) || 0,
+      mesAnterior: row.get('mesAnterior'),
+      campanasActivas: row.get('campanasActivas'),
+      campanasProxFinalizar: row.get('campanasProxFinalizar'),
+      campanasRecientes: row.get('campanasRecientes'),
+    }));
+
+  } catch (error) {
+    console.error('Error al obtener los datos de Google Sheets:', error);
+    throw error;
+  }
+};

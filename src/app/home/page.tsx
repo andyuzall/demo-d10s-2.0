@@ -1,13 +1,12 @@
 "use client";
 
 import React from 'react'
+import DashboardHome from '@/components/Dashboard/DashboardHome';
 
-function Home() {
+const Home: React.FC = () => {
   return (
     <div>
-      <h2>
-        Esta es la pagina de Home
-      </h2>
+      <DashboardHome />
     </div>
   )
 }
