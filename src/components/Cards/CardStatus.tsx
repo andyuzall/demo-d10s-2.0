@@ -5,7 +5,7 @@ import { ArrowDownLeftIcon, ArrowUpIcon } from '@heroicons/react/16/solid';
 type CardValues = {
     titulo: string;
     indicador: number;
-    resultado?: number;
+    resultado: number;
 };
 
 const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado }) => {
