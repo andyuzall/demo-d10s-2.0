@@ -6,15 +6,16 @@ type CardValues = {
     titulo: string;
     indicador: number;
     resultado: number;
+    subtitulo: string;
 };
 
-const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado }) => {
+const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtitulo }) => {
     const isPositive = resultado > 0;
 
     
     return (
         <>
-        <div className="flex flex-col gap-4 p-4 bg-slate-200 w-52 rounded-lg">
+        <div className="flex flex-col gap-4 p-4 bg-slate-200 w-56 rounded-lg">
             <h2 className='text-s font-semibold'>{titulo}</h2>
             <h3 className='text-black font-bold text-4xl'>{indicador}</h3>
             <div className="flex items-center">
@@ -26,7 +27,7 @@ const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado }) => {
                     <span className="text-gray-400">Sin cambios</span>
                 )}
                 <span className={`ml-2 text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                    {resultado.toFixed(2)}% al mes anterior.
+                    {resultado.toFixed(2)}{subtitulo}
                 </span>
             </div>
         </div>

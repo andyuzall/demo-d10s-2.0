@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import CardStatus from '../Cards/CardStatus';
 import axios from 'axios';
+import CardSinCalc from '../Cards/CardSinCalc';
+import CardGrafic from '../Cards/CardGrafic';
+import CardDestacadas from '../Cards/CardDestacadas';
 
 interface HomeData {
     mesActual: number;
@@ -44,8 +47,11 @@ const DashboardHome: React.FC = () => {
 
   return (
       <>
-
         {datosCampanas.map((campana, index) => (
+          <>
+          <div className='flex justify-start gap-2 mt-2 mx-2 p-2 bg-gray-100 w-3/4 rounded-lg'>
+          
+          {/* Primer bloque de datos */}
           <div className='flex flex-col gap-4'>
           <CardStatus
           titulo="Campañas de este mes"
@@ -54,6 +60,7 @@ const DashboardHome: React.FC = () => {
             campana.mesActual,
             campana.mesAnterior
           )}
+          subtitulo='% al mes anterior.'
           />
           <CardStatus
           titulo="Campañas activas"
@@ -62,16 +69,73 @@ const DashboardHome: React.FC = () => {
             campana.mesActual,
             campana.mesAnterior
           )}
+          subtitulo='% de las del mes.'
           />
-          <CardStatus
+          <CardSinCalc 
           titulo="Campañas próx. a finalizar"
-          indicador={campana.campanasProxFinalizar} 
+          indicador={campana.campanasProxFinalizar}
+          subtitulo="Entre hoy y el sábado"
+          />
+          </div>
+
+          {/* Segundo bloque de datos */} 
+          <div className='flex flex-col gap-4'>
+          <CardGrafic 
+          titulo="Campañas en Estado Crítico"
+          indicador={campana.mesActual} 
           resultado={calcularCambio(
             campana.mesActual,
             campana.mesAnterior
           )}
+          subtitulo='% al mes anterior.'   
+          />
+          <CardGrafic 
+          titulo="Campañas en Estado Delicado"
+          indicador={campana.mesActual} 
+          resultado={calcularCambio(
+            campana.mesActual,
+            campana.mesAnterior
+          )}
+          subtitulo='% al mes anterior.'   
+          />
+          <CardGrafic 
+          titulo="Campañas en Estado Óptimo"
+          indicador={campana.mesActual} 
+          resultado={calcularCambio(
+            campana.mesActual,
+            campana.mesAnterior
+          )}
+          subtitulo='% al mes anterior.'   
           />
           </div>
+          
+          {/* Tercer bloque de datos */}  
+          <div className='flex flex-col gap-4'>
+          <CardDestacadas 
+          titulo="Campañas destacadas"
+          indicador={campana.mesActual} 
+          resultado={calcularCambio(
+            campana.mesActual,
+            campana.mesAnterior
+          )}
+          subtitulo='% al mes anterior.' 
+          />
+          <div className='flex justify-between gap-4'>
+          <CardSinCalc 
+          titulo="Nuevas Alarmas"
+          indicador={campana.campanasRecientes}
+          subtitulo="2 de ellas son por Bajo Cumplimiento"
+          />
+
+          <CardSinCalc 
+          titulo="Campañas iniciadas recientemente"
+          indicador={campana.campanasRecientes}
+          subtitulo="En los últimos 4 días"
+          />
+          </div>
+          </div>
+          </div>
+          </>
         ))}
       </>
   );
