@@ -43,6 +43,9 @@ interface HomeData {
   campanasActivas: number;
   campanasProxFinalizar: number;
   campanasRecientes: number;
+  campanasCritico: number;
+  campanasDelicado: number;
+  campanasOptimo: number;
 }
 
 // Función para obtener las credenciales desde Secret Manager
@@ -155,6 +158,9 @@ export async function getGoogleSheetHomeData(): Promise<HomeData[]> {
       campanasActivas: row.get('campanasActivas'),
       campanasProxFinalizar: row.get('campanasProxFinalizar'),
       campanasRecientes: row.get('campanasRecientes'),
+      campanasCritico: row.get('campanasCritico'),
+      campanasDelicado: row.get('campanasDelicado'),
+      campanasOptimo: row.get('campanasOptimo'),
     }));
 
   } catch (error) {

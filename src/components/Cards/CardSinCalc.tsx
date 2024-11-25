@@ -10,7 +10,7 @@ const CardSinCalc: React.FC<CardSinValues> = ({ titulo, indicador, subtitulo }) 
     
     return (
         <>
-        <div className="flex flex-col gap-4 p-4 bg-slate-200 w-56 rounded-lg">
+        <div className="flex flex-col gap-4 p-4 bg-slate-200 h-[152px] rounded-lg">
             <h2 className='text-s font-semibold'>{titulo}</h2>
             <h3 className='text-black font-bold text-4xl'>{indicador}</h3>
             <div className="flex items-center">

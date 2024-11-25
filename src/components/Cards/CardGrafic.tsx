@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowDownLeftIcon, ArrowUpIcon } from '@heroicons/react/16/solid';
+import GaugeChart from '../Graphic/Gauge';
 
 
 type CardGraficValues = {
@@ -7,9 +8,11 @@ type CardGraficValues = {
     indicador: number;
     resultado: number;
     subtitulo: string;
+    value: number;
+    comparador: number;
 };
 
-const CardGrafic: React.FC<CardGraficValues> = ({ titulo, indicador, resultado, subtitulo }) => {
+const CardGrafic: React.FC<CardGraficValues> = ({ titulo, indicador, resultado, subtitulo, value, comparador }) => {
     const isPositive = resultado > 0;
 
     
@@ -28,12 +31,12 @@ const CardGrafic: React.FC<CardGraficValues> = ({ titulo, indicador, resultado, 
                         <span className="text-gray-400">Sin cambios</span>
                     )}
                     <span className={`ml-2 text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                        {resultado.toFixed(2)}{subtitulo}
+                        {resultado.toFixed(0)}{subtitulo}
                     </span>
                 </div>
             </div>
             <div>
-                insertar grafica
+               <GaugeChart value={value} comparisonValue={comparador} />
             </div>
         </div>
         </>

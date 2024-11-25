@@ -37,4 +37,7 @@ export interface Product {
     campanasActivas: number;
     campanasProxFinalizar: number;
     campanasRecientes: number;
+    campanasCritico: number;
+    campanasDelicado: number;
+    campanasOptimo: number;
   }
