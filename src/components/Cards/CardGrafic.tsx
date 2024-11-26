@@ -30,7 +30,7 @@ const CardGrafic: React.FC<CardGraficValues> = ({ titulo, indicador, resultado, 
                     ) : (
                         <span className="text-gray-400">Sin cambios</span>
                     )}
-                    <span className={`ml-2 text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                    <span className={`ml-2 text-xs font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
                         {resultado.toFixed(0)}{subtitulo}
                     </span>
                 </div>

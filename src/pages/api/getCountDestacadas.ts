@@ -54,24 +54,22 @@ async function initializeGoogleSheetsClient() {
   return new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
 }
 
-// Handler para el endpoint que obtiene todas las destacadas
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+// Handler para el endpoint que obtiene las ultimas 5 destacadas
+export default async function getCountDestacadas(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
       const bigQueryClient = await initializeBigQueryClient();
       const datasetId = 'forms_atomikos';
       const tableId = 'destacadas';
 
-      const query = `SELECT * FROM \`${datasetId}.${tableId}\``;
+      const query = `SELECT COUNT(id) AS total FROM \`${datasetId}.${tableId}\``;
       const [rows] = await bigQueryClient.query({ query });
 
-      // Inicializar el cliente de Google Sheets (aunque no se use en este endpoint, lo dejamos por si se necesita en el futuro)
-      await initializeGoogleSheetsClient();
-
-      res.status(200).json(rows);
+      const total = rows[0]?.total || 0;
+      res.status(200).json({ total });
     } catch (error) {
-      console.error('Error al obtener campañas destacadas de BigQuery:', error);
-      res.status(500).json({ error: 'Error al obtener campañas destacadas' });
+      console.error('Error al contar los identificadores de las destacadas:', error);
+      res.status(500).json({ error: 'Error al contar los identificadores de las destacadas' });
     }
   } else {
     res.status(405).json({ message: 'Método no permitido' });

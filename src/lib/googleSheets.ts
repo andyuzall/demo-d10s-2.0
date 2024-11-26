@@ -154,13 +154,13 @@ export async function getGoogleSheetHomeData(): Promise<HomeData[]> {
 
     return rows.map((row: GoogleSpreadsheetRow<HomeData>) => ({
       mesActual: Number(row.get('mesActual')) || 0,
-      mesAnterior: row.get('mesAnterior'),
-      campanasActivas: row.get('campanasActivas'),
-      campanasProxFinalizar: row.get('campanasProxFinalizar'),
-      campanasRecientes: row.get('campanasRecientes'),
-      campanasCritico: row.get('campanasCritico'),
-      campanasDelicado: row.get('campanasDelicado'),
-      campanasOptimo: row.get('campanasOptimo'),
+      mesAnterior: Number(row.get('mesAnterior')) || 0,
+      campanasActivas: Number(row.get('campanasActivas')) || 0,
+      campanasProxFinalizar: Number(row.get('campanasProxFinalizar')) || 0,
+      campanasRecientes: Number(row.get('campanasRecientes')) || 0,
+      campanasCritico: Number(row.get('campanasCritico')) || 0,
+      campanasDelicado: Number(row.get('campanasDelicado')) || 0,
+      campanasOptimo: Number(row.get('campanasOptimo')) || 0,
     }));
 
   } catch (error) {

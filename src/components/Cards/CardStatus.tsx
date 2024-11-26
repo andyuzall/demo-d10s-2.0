@@ -26,8 +26,8 @@ const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtit
                 ) : (
                     <span className="text-gray-400">Sin cambios</span>
                 )}
-                <span className={`ml-2 text-xs font-medium ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
-                    {resultado.toFixed(2)}{subtitulo}
+                <span className={`ml-2 text-xs font-bold ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                    {resultado.toFixed(0)}{subtitulo}
                 </span>
             </div>
         </div>

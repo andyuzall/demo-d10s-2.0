@@ -65,7 +65,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ value, comparisonValue }) => {
             detail: {
                 valueAnimation: true,
                 offsetCenter: ['0%', '-10%'],
-                formatter: `${result.toFixed(2)}%`
+                formatter: `${result.toFixed(0)}%`
                 }
             }
           ],

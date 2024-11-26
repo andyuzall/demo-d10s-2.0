@@ -49,10 +49,11 @@ const DashboardHome: React.FC = () => {
   }
 
   return (
-      <>
+      <div>
         {datosCampanas.map((campana, index) => (
-          <>
-          <div className='flex justify-center items-start gap-2 mt-2 mx-2 p-4 bg-gray-100 rounded-lg'>
+          <div 
+          key={index}
+          className='flex justify-center items-start gap-2 mt-2 mx-2 p-4 bg-gray-100 rounded-lg'>
           {/* Primer bloque de datos */}
           <div className='flex flex-col gap-4'>
           <CardStatus
@@ -84,7 +85,7 @@ const DashboardHome: React.FC = () => {
           <div className='flex flex-col flex-1 gap-4'>
           <CardGrafic 
           titulo="Campañas en Estado Crítico"
-          indicador={campana.mesActual} 
+          indicador={campana.campanasCritico} 
           resultado={calcularCambio(
             campana.mesActual,
             campana.mesAnterior
@@ -95,7 +96,7 @@ const DashboardHome: React.FC = () => {
           />
           <CardGrafic 
           titulo="Campañas en Estado Delicado"
-          indicador={campana.mesActual} 
+          indicador={campana.campanasDelicado} 
           resultado={calcularCambio(
             campana.mesActual,
             campana.mesAnterior
@@ -106,7 +107,7 @@ const DashboardHome: React.FC = () => {
           />
           <CardGrafic 
           titulo="Campañas en Estado Óptimo"
-          indicador={campana.mesActual} 
+          indicador={campana.campanasOptimo} 
           resultado={calcularCambio(
             campana.mesActual,
             campana.mesAnterior
@@ -118,7 +119,7 @@ const DashboardHome: React.FC = () => {
           </div>
           
           {/* Tercer bloque de datos */}  
-          <div className='flex flex-col w-3/4 gap-4'>
+          <div className='flex flex-col w-full gap-4'>
             <CardDestacadas 
             titulo="Campañas destacadas"
             indicador={campana.mesActual} 
@@ -140,12 +141,11 @@ const DashboardHome: React.FC = () => {
               indicador={campana.campanasRecientes}
               subtitulo=""
               />
+              </div>
             </div>
           </div>
-          </div>
-          </>
         ))}
-      </>
+      </div>
   );
 };
 

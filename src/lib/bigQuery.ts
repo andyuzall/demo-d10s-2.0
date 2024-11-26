@@ -43,14 +43,20 @@ export const insertRowToBigQuery = async (productos: any[]) => {
   const datasetId = 'forms_atomikos';
   const tableId = 'destacadas';
 
+  const currentDate = new Date().toISOString().split('T')[0];
+
   const rows = productos.map(producto => ({
     id: producto.id ?? '',
+    cliente: producto.cliente ?? '',
+    anunciante: producto.anunciante ?? '',
+    formato: producto.formato ?? '',
     trader: producto.trader ?? '',
     inversion: producto.inversionCampana ?? '',
     consumo: producto.consumoCampana ?? '',
     objetivoTangible: producto.objetivoTangible ?? '',
     objetivoCuantificable: producto.objetivoCuantificable ?? '',
     compraTotal: producto.compraTotal ?? '',
+    date: currentDate,
   }));
 
   try {
