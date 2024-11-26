@@ -1,5 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
-import { ArrowDownLeftIcon, ArrowUpIcon } from '@heroicons/react/16/solid';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
