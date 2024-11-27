@@ -48,7 +48,7 @@ const CardDestacadas: React.FC<CardDestacadasValues> = ({
 
     return (
         <>
-            <div className="flex flex-col gap-1 bg-slate-200 w-3/4 h-[320px] rounded-lg p-4">
+            <div className="flex flex-col gap-1 bg-slate-200 w-4/4 h-[320px] rounded-lg p-4">
                 <h2 className='text-xl font-semibold'>{titulo}</h2>
                 <div className="flex justify-between items-center">
                 <h3 className='text-black font-bold text-3xl'>{countDestacadas || 0}</h3>

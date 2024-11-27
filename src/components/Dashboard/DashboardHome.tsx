@@ -16,24 +16,47 @@ interface HomeData {
     campanasOptimo: number;
 };
 
+
 const DashboardHome: React.FC = () => {
   const [datosCampanas, setDatosCampanas] = useState<HomeData[]>([]);
+  const [alarmCount, setAlarmCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-      const fetchDatosCampanas = async () => {
-          try {
-              const response = await axios.get('/api/sheetDataHome');
-              setDatosCampanas(response.data);
-              console.log(response.data)
-          } catch (error) {
-              console.error('Error al obtener datos:', error);
-          } finally {
-              setLoading(false);
-          }
-      };
+  // dia para las alarmas
+  const dateLimit = new Date();
+  dateLimit.setDate(dateLimit.getDate() - 20);
 
+  // dias para campañas recientes
+  const dateLimitRecente  = new Date();
+  dateLimitRecente.setDate(dateLimitRecente.getDate() - 4);
+
+  const fetchAlarms = async () => {
+    try {
+      const res = await fetch('/api/sheetAlarms');
+      const data = await res.json();
+      setAlarmCount(data.count);
+    } catch (error) {
+      console.error('Error al obtener datos:', error);
+      setAlarmCount(0);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchDatosCampanas = async () => {
+    try {
+        const response = await axios.get('/api/sheetDataHome');
+        setDatosCampanas(response.data);
+    } catch (error) {
+        console.error('Error al obtener datos:', error);
+    } finally {
+        setLoading(false);
+    }
+};
+
+  useEffect(() => {
       fetchDatosCampanas();
+      fetchAlarms();
   }, []);
 
   // Función para calcular el cambio porcentual
@@ -53,7 +76,7 @@ const DashboardHome: React.FC = () => {
         {datosCampanas.map((campana, index) => (
           <div 
           key={index}
-          className='flex justify-center items-start gap-2 mt-2 mx-2 p-4 bg-gray-100 rounded-lg'>
+          className='flex justify-center items-start gap-2 mt-7 mx-2 p-4 rounded-lg'>
           {/* Primer bloque de datos */}
           <div className='flex flex-col gap-4'>
           <CardStatus
@@ -82,7 +105,7 @@ const DashboardHome: React.FC = () => {
           </div>
 
           {/* Segundo bloque de datos */} 
-          <div className='flex flex-col flex-1 gap-4'>
+          <div className='flex flex-col gap-4'>
           <CardGrafic 
           titulo="Campañas en Estado Crítico"
           indicador={campana.campanasCritico} 
@@ -119,7 +142,7 @@ const DashboardHome: React.FC = () => {
           </div>
           
           {/* Tercer bloque de datos */}  
-          <div className='flex flex-col w-full gap-4'>
+          <div className='flex flex-col gap-4'>
             <CardDestacadas 
             titulo="Campañas destacadas"
             indicador={campana.mesActual} 
@@ -132,14 +155,14 @@ const DashboardHome: React.FC = () => {
             <div className='flex justify-start gap-4'>
               <CardSinCalc 
               titulo="Nuevas Alarmas"
-              indicador={campana.campanasRecientes}
-              subtitulo=""
+              indicador={alarmCount ?? 0}
+              subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
               />
 
               <CardSinCalc 
               titulo="Campañas iniciadas recientemente"
               indicador={campana.campanasRecientes}
-              subtitulo=""
+              subtitulo={`Entre el ${dateLimitRecente.toLocaleDateString()} hasta hoy`}
               />
               </div>
             </div>

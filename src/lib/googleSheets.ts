@@ -48,6 +48,18 @@ interface HomeData {
   campanasOptimo: number;
 }
 
+interface Alarms {
+  date: string;
+  id: string;
+  type: string;
+  text: string;
+  trader: string;
+  year: string;
+  month: string;
+  day: string;
+  dateFormmated: string;
+}
+
 // Función para obtener las credenciales desde Secret Manager
 async function getCredentials() {
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
@@ -168,3 +180,30 @@ export async function getGoogleSheetHomeData(): Promise<HomeData[]> {
     throw error;
   }
 };
+
+
+// obtenemos los datos de las alarmas de la API de Google Sheets
+export async function getAlarms(): Promise<Alarms[]> {
+  const serviceAccountAuth = await initializeServiceAccountAuth();
+  const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
+  try {
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[5]; 
+    const rows = await sheet.getRows<Alarms>();
+
+    return rows.map((row: GoogleSpreadsheetRow<Alarms>) => ({
+      date: row.get('date'),
+      id: row.get('id'),
+      type: row.get('type'),
+      text: row.get('text'),
+      trader: row.get('trader'),
+      year: row.get('year'),
+      month: row.get('month'),
+      day: row.get('day'),
+      dateFormmated: row.get('dateFormmated'),
+    }));
+  } catch (error) {
+    console.error('Error al obtener las alarmas de Google Sheets:', error);
+    throw error;
+  }
+}

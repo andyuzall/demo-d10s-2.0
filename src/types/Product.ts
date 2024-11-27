@@ -31,7 +31,7 @@ export interface Product {
     accessDV: string;
   };
 
-  export interface HomeData {
+export interface HomeData {
     mesActual: number;
     mesAnterior: number;
     campanasActivas: number;
@@ -41,3 +41,15 @@ export interface Product {
     campanasDelicado: number;
     campanasOptimo: number;
   }
+
+export interface Alarms {
+    date: string;
+    id: string;
+    type: string;
+    text: string;
+    trader: string;
+    year: string;
+    month: string;
+    day: string;
+    dateFormmated: string;
+}
