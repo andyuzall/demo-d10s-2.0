@@ -13,11 +13,11 @@ function Navbarr() {
   const { data: session } = useSession();
   const [selectedButton, setSelectedButton] = useState('');
   const [notifications, setNotifications] = useState([
-    { text: "Alerta 1" },
-    { text: "Alerta 2" },
-    { text: "Alerta 3" },
-    { text: "Alerta 4" },
-    { text: "Alerta 5" },
+    { text: "" },
+    { text: "" },
+    { text: "" },
+    { text: "" },
+    { text: "" },
   ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -92,7 +92,7 @@ function Navbarr() {
 
               {isDropdownOpen && (
                 <ul
-                  className="absolute right-0 mt-2 w-56 rounded-lg shadow-lg border border-gray-200 z-10 overflow-hidden p-2"
+                  className="absolute right-0 mt-2 w-60 rounded-lg shadow-lg border border-gray-200 z-10 overflow-hidden p-2"
                 >
                   {notifications.map((notification, index) => (
                     <li

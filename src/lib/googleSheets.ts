@@ -58,6 +58,8 @@ interface Alarms {
   month: string;
   day: string;
   dateFormmated: string;
+  cliente: string;
+  categoria: number;
 }
 
 // Función para obtener las credenciales desde Secret Manager
@@ -201,6 +203,8 @@ export async function getAlarms(): Promise<Alarms[]> {
       month: row.get('month'),
       day: row.get('day'),
       dateFormmated: row.get('dateFormmated'),
+      cliente: row.get('cliente'),
+      categoria: row.get('categoria'),
     }));
   } catch (error) {
     console.error('Error al obtener las alarmas de Google Sheets:', error);

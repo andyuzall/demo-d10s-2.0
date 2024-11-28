@@ -52,4 +52,6 @@ export interface Alarms {
     month: string;
     day: string;
     dateFormmated: string;
+    cliente: string;
+    categoria: number;
 }

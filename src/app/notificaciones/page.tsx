@@ -1,12 +1,13 @@
 "use client";
 
+import DashboardNotificaciones from '@/components/Dashboard/DashboardNotificaciones';
 import React from 'react'
 
 function Notificaciones() {
   return (
     <div>
         <p>
-            Esta es la pagina de notificaciones
+            <DashboardNotificaciones />
         </p>
     </div>
   )

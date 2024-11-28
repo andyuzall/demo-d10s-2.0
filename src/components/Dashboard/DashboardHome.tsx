@@ -4,6 +4,7 @@ import axios from 'axios';
 import CardSinCalc from '../Cards/CardSinCalc';
 import CardGrafic from '../Cards/CardGrafic';
 import CardDestacadas from '../Cards/CardDestacadas';
+import Loading from '../Loader/Loading';
 
 interface HomeData {
     mesActual: number;
@@ -64,11 +65,11 @@ const DashboardHome: React.FC = () => {
       anterior !== 0 ? ((actual - anterior) / anterior) * 100 : 0;
 
   if (loading) {
-      return <div>Cargando datos...</div>; // Muestra un loader mientras los datos se cargan
+      return <Loading />;
   }
 
   if (!datosCampanas.length) {
-      return <div>Error al cargar los datos.</div>; // Manejo de errores si no hay datos
+      return <div>Error al cargar los datos.</div>;
   }
 
   return (
