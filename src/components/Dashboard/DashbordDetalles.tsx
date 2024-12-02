@@ -42,9 +42,9 @@ interface DashboardDetallesProps {
 const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds }) => {
   const [likedIds, setLikedIds] = useState<string[]>(existingIds);
 
-  const handleSaveToBigQuery = async (producto: Product) => {
+  const handleSaveEspecialToBigQuery = async (producto: Product) => {
     try {
-      await axios.post('/api/saveToBigQuery', producto);
+      await axios.post('/api/saveEspecialToBigQuery', producto);
       console.log('Datos guardados en BigQuery');
       setLikedIds([...likedIds, producto.id]);
     } catch (error) {
@@ -84,7 +84,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
             <th className="px-2 py-2">Duración</th>
             <th className="px-2 py-2">Días restantes</th>
             <th className="px-2 py-2">Inversión</th>
-            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Destacada</th>
+            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Especial</th>
           </tr>
         </thead>
         <tbody className="text-gray-800">
@@ -93,31 +93,31 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
               key={index}
               className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} rounded-lg border-white`}
             >
-              <td className="px-2 py-2 rounded-tl-lg rounded-bl-lg">{producto.estado}</td>
-              <td className="px-2 py-2">{producto.id}</td>
+              <td className="px-2 py-2 rounded-tl-lg rounded-bl-lg  w-4">{producto.estado}</td>
+              <td className="px-2 py-2 w-4">{producto.id}</td>
               <td className="px-2 py-2">{producto.cliente}</td>
               <td className="px-2 py-2">{producto.anunciante}</td>
               <td className="px-2 py-2">{producto.formato}</td>
-              <td className="px-2 py-2">{producto.fechaInicio}</td>
-              <td className="px-2 py-2">{producto.fechaFin}</td>
-              <td className="px-2 py-2">
+              <td className="px-2 py-2 w-4">{producto.fechaInicio}</td>
+              <td className="px-2 py-2 w-4">{producto.fechaFin}</td>
+              <td className="px-2 py-2 w-4">
                 <a href={producto.accessDV} target="_blank" rel="noreferrer" className='hover:text-cyan-700'>
                 {producto.idDV}
                 </a>
                 </td>
-              <td className="px-2 py-2">{producto.campana}</td>
+              <td className="px-2 py-2 w-4">{producto.campana}</td>
               <td className="px-2 py-2">{producto.categoria}</td>
               <td className="px-2 py-2">{producto.duracionCampana}</td>
               <td className="px-2 py-2">{producto.diasRestantes}</td>
               <td className="px-2 py-2">${producto.inversionCampana}</td>
               <td className="px-2 py-2">
               <IconButton
-                      onClick={() => handleSaveToBigQuery(producto)}
+                      onClick={() => handleSaveEspecialToBigQuery(producto)}
                       disabled={likedIds.includes(producto.id)}
                       color="error"
                     >
                       {likedIds.includes(producto.id) ? <Favorite /> : <FavoriteBorder />}
-                    </IconButton>
+              </IconButton>
               </td>
             </tr>
           ))}

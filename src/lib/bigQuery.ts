@@ -37,7 +37,7 @@ async function initializeBigQueryClient() {
   });
 }
 
-// Función para insertar filas en BigQuery
+// Función para insertar filas destacadas en la tabla de BigQuery
 export const insertRowToBigQuery = async (productos: any[]) => {
   const bigQueryClient = await initializeBigQueryClient();
   const datasetId = 'forms_atomikos';
@@ -78,6 +78,67 @@ export const fetchExistingIds = async () => {
   const bigQueryClient = await initializeBigQueryClient();
   const datasetId = 'forms_atomikos';
   const tableId = 'destacadas';
+
+  try {
+    const [rows] = await bigQueryClient
+      .dataset(datasetId)
+      .table(tableId)
+      .getRows();
+
+    return rows.map((row) => row.id);
+  } catch (error) {
+    console.error('Error al obtener los ids existentes:', error);
+    return [];
+  }
+};
+
+
+// Función para insertar filas especiales en la tabla de BigQuery
+export const insertRowToEspecialBigQuery = async (productos: any[]) => {
+  const bigQueryClient = await initializeBigQueryClient();
+  const datasetId = 'forms_atomikos';
+  const tableId = 'especiales';
+
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  const rows = productos.map(producto => ({
+    date: currentDate,
+    id: producto.id ?? '',
+    cliente: producto.cliente ?? '',
+    anunciante: producto.anunciante ?? '',
+    formato: producto.formato ?? '',
+    trader: producto.trader ?? '',
+    inversion: producto.inversionCampana ?? '',
+    consumo: producto.consumoCampana ?? '',
+    objetivoTangible: producto.objetivoTangible ?? '',
+    objetivoCuantificable: producto.objetivoCuantificable ?? '',
+    compraTotal: producto.compraTotal ?? '',
+    fechaInicio: producto.fechaInicio ? new Date(producto.fechaInicio).toISOString().split('T')[0] : '',
+    fechaFin: producto.fechaFin ? new Date(producto.fechaFin).toISOString().split('T')[0] : '',
+    idDV: producto.idDV ?? '',
+    categoria: producto.categoria ?? '',
+    campana: producto.campana ?? '',
+  }));
+
+  try {
+    await bigQueryClient.dataset(datasetId).table(tableId).insert(rows);
+    console.log(`Datos insertados correctamente en ${tableId}`);
+  } catch (error: any) {
+    console.error('Error al insertar datos en BigQuery:', error);
+    if (error.name === 'PartialFailureError') {
+      error.errors?.forEach((err: any) => {
+        console.error('Detalles del error por fila:', err.row);
+        console.error('Errores específicos:', err.errors);
+      });
+    }
+  }
+};
+
+// Función para obtener los IDs existentes en la tabla Especiales de BigQuery
+export const fetchEspecialExistingIds = async () => {
+  const bigQueryClient = await initializeBigQueryClient();
+  const datasetId = 'forms_atomikos';
+  const tableId = 'especiales';
 
   try {
     const [rows] = await bigQueryClient

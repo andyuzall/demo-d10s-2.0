@@ -22,7 +22,7 @@ function TopBar() {
         const fetchProductosAndIds = async () => {
           try {
             const response = await axios.get('/api/sheetData');
-            const existingIdsResponse = await axios.get('/api/getExistingIds');
+            const existingIdsResponse = await axios.get('/api/getEspecialExistingIds');
             setExistingIds(existingIdsResponse.data);        
             setProductos(response.data);
             setFilteredProductos(response.data);

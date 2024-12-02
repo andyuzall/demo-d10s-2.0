@@ -14,14 +14,24 @@ type SidebarProps = {
 const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   const [isEstadosOpen, setIsEstadosOpen] = useState(false);
 
-  const fetchDestacadas = async () => {
-    try {
-      const response = await axios.get('/api/getDestacadas');
-      onFilterChange("destacadas", response.data);
-    } catch (error) {
-      console.error('Error al obtener datos de destacadas:', error);
-    }
-  };
+//   const fetchDestacadas = async () => {
+//     try {
+//       const response = await axios.get('/api/getDestacadas');
+//       onFilterChange("destacadas", response.data);
+//     } catch (error) {
+//       console.error('Error al obtener datos de destacadas:', error);
+//     }
+//   };
+
+  const fetchEspecialCampaigns = async () => {
+   try {
+      const res = await axios.get('/api/getEspecialCampaigns');
+      onFilterChange("especial", res.data);
+      console.log(res.data);
+   } catch (error) {
+      console.error('Error al obtener datos de campañas especiales:', error);
+   }     
+};
 
   const handleCampañasActivas = () => {
    setIsEstadosOpen(!isEstadosOpen);
@@ -67,6 +77,11 @@ return (
               className="bg-gray-700 block py-1 px-1 rounded-md">
                  <IoMdCheckboxOutline />
               </button>
+              <button 
+              onClick={fetchEspecialCampaigns}
+              className="bg-gray-700 block py-1 px-1 rounded-md">
+                 <IoMdCheckboxOutline />
+              </button>
            </div>
         )}
      </div>
@@ -98,13 +113,13 @@ return (
         </button>
       </div>
      {/* Sección de Campañas Destacadas */}
-     <div className="">
+     {/* <div className="">
         <button 
-        onClick={fetchDestacadas}
+        onClick={fetchEspecialCampaigns}
         className="flex justify-between items-center text-left py-2 px-1 rounded-md hover:bg-gray-700">
            <span className="text-xs">Destacadas</span>
         </button>
-     </div>
+     </div> */}
   </div>
 );
 };
