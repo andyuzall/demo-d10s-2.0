@@ -62,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const datasetId = 'forms_atomikos';
       const tableId = 'especiales';
 
-      const query = `SELECT * FROM \`${datasetId}.${tableId}\` WHERE fechaFin > CURRENT_DATE() ORDER BY date DESC`;
+      const query = `SELECT * FROM \`${datasetId}.${tableId}\` WHERE DATE(fechaFin) >= CURRENT_DATE() ORDER BY date DESC`;
       const [rows] = await bigQueryClient.query({ query });
 
       // Inicializar el cliente de Google Sheets (aunque no se use en este endpoint, lo dejamos por si se necesita en el futuro)

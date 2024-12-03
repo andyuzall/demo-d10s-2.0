@@ -101,6 +101,26 @@ export const insertRowToEspecialBigQuery = async (productos: any[]) => {
 
   const currentDate = new Date().toISOString().split('T')[0];
 
+  const transformDateToISO = (dateString: string) => {
+    // Verifica si el string tiene el formato esperado
+    if (!dateString || !/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) {
+      console.warn(`Formato de fecha inválido: ${dateString}`);
+      return ''; // Retorna vacío si la fecha no es válida
+    }
+  
+    try {
+      // Divide la fecha en partes
+      const [day, month, year] = dateString.split('/').map(Number);
+      // Crea un objeto Date con el formato correcto
+      const date = new Date(year, month - 1 , day + 1); // Ajusta el mes (0-11)
+      // Devuelve la fecha en formato ISO (YYYY-MM-DD)
+      return date.toISOString().split('T')[0];
+    } catch (error) {
+      console.error(`Error al transformar la fecha: ${dateString}`, error);
+      return '';
+    }
+  };
+
   const rows = productos.map(producto => ({
     date: currentDate,
     id: producto.id ?? '',
@@ -113,8 +133,8 @@ export const insertRowToEspecialBigQuery = async (productos: any[]) => {
     objetivoTangible: producto.objetivoTangible ?? '',
     objetivoCuantificable: producto.objetivoCuantificable ?? '',
     compraTotal: producto.compraTotal ?? '',
-    fechaInicio: producto.fechaInicio ? new Date(producto.fechaInicio).toISOString().split('T')[0] : '',
-    fechaFin: producto.fechaFin ? new Date(producto.fechaFin).toISOString().split('T')[0] : '',
+    fechaInicio: producto.fechaInicio ?? '',
+    fechaFin: transformDateToISO(producto.fechaFin),
     idDV: producto.idDV ?? '',
     categoria: producto.categoria ?? '',
     campana: producto.campana ?? '',

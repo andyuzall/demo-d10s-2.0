@@ -5,32 +5,37 @@ import DashboardEntregable from '../Dashboard/DashboardEntregable';
 import DashboardConsumo from '../Dashboard/DashboardConsumo';
 import axios from 'axios';
 import Sidebar from '../Sidebar';
+import Loading from '../Loader/Loading';
 
 function TopBar() {
-    const [selectedButton, setSelectedButton] = useState('');
+    const [selectedButton, setSelectedButton] = useState('detalles');
     const [productos, setProductos] = useState<Product[]>([]);
     const [filteredProductos, setFilteredProductos] = useState<Product[]>([]);
     const [existingIds, setExistingIds] = useState<string[]>([]);
     const [activeFilter, setActiveFilter] = useState({ type: '', value: '' });
+    const [loading, setLoading] = useState(true);
 
     const handleButtonClick = (buttonName: React.SetStateAction<string>) => {
         setSelectedButton(buttonName);
     }
 
+    // Obtenemos los productos desde Google Sheets y los ids existentes en BigQuery
+    const fetchProductosAndIds = async () => {
+      try {
+        const response = await axios.get('/api/sheetData');
+        const existingIdsResponse = await axios.get('/api/getEspecialExistingIds');
+        setExistingIds(existingIdsResponse.data);        
+        setProductos(response.data);
+        setFilteredProductos(response.data);
+
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     useEffect(() => {
-        // Obtenemos los productos desde Google Sheets y los ids existentes en BigQuery
-        const fetchProductosAndIds = async () => {
-          try {
-            const response = await axios.get('/api/sheetData');
-            const existingIdsResponse = await axios.get('/api/getEspecialExistingIds');
-            setExistingIds(existingIdsResponse.data);        
-            setProductos(response.data);
-            setFilteredProductos(response.data);
-    
-          } catch (error) {
-            console.error('Error al obtener datos:', error);
-          }
-        };
         fetchProductosAndIds();
       }, []);
     
@@ -58,6 +63,14 @@ function TopBar() {
       const handleFilterChange = (filterType: string, filterValue: string) => {
         setActiveFilter({ type: filterType, value: filterValue });
       };
+
+      if (loading) {
+        return <Loading />
+      }
+
+      if (!productos.length) {
+        return <div>Error al cargar los datos.</div>
+      }
 
   return (
     <div className="dashboard flex w-full">
