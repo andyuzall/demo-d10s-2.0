@@ -8,6 +8,15 @@ import { FcGoogle } from "react-icons/fc";
 import { useState } from 'react';
 
 
+const tradersAsign = [
+  { email: "juan@atomik.pro", name: "Juan" },
+  { email: "cynthia@atomik.pro", name: "Cynthia" },
+  { email: "dalma@atomik.pro", name: "Dalma" },
+  { email: "emmanuel@atomik.pro", name: "Emmanuel" },
+  { email: "juansebastian@atomik.pro", name: "Juan Sebastian" },
+  { email: "monica@atomik.pro", name: "Monica" },
+];
+
 function Navbarr() {
 
   const { data: session } = useSession();

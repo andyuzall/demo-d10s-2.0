@@ -38,6 +38,7 @@ interface Producto {
 }
 
 interface HomeData {
+  trader: string;
   mesActual: number;
   mesAnterior: number;
   campanasActivas: number;
@@ -61,6 +62,19 @@ interface Alarms {
   cliente: string;
   categoria: number;
 }
+
+const tradersAsign = [
+  { email: "juan.alayon@atomik.pro", name: "Juan" },
+  { email: "cynthia@atomik.pro", name: "Cynthia" },
+  { email: "dalma@atomik.pro", name: "Dalma" },
+  { email: "emmanuel@atomik.pro", name: "Emmanuel" },
+  { email: "juan.roa@atomik.pro", name: "Juan Sebastian" },
+  { email: "monica@atomik.pro", name: "Monica" },
+  { email: "alexandra@atomik.pro", name: "admin" },
+  { email: "andy@atomik.pro", name: "admin" },
+  { email: "agustin@atomik.pro", name: "admin" },
+  { email: "martina@atomik.pro", name: "admin" },
+];
 
 // Función para obtener las credenciales desde Secret Manager
 async function getCredentials() {
@@ -157,16 +171,20 @@ export async function getGoogleSheetData(): Promise<Producto[]> {
 };
 // Obtenemos los datos de cantidad de campañas actuales y del mes anterior
 
-export async function getGoogleSheetHomeData(): Promise<HomeData[]> {
+export async function getGoogleSheetHomeData(userEmail: string): Promise<HomeData[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
 
   try {
+
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[4]; 
     const rows = await sheet.getRows<HomeData>();
 
-    return rows.map((row: GoogleSpreadsheetRow<HomeData>) => ({
+    return rows
+    .filter((row) => row.get('trader') === tradersAsign.find((t) => t.email === userEmail)?.name)
+    .map((row: GoogleSpreadsheetRow<HomeData>) => ({
+      trader: row.get('trader') || '',
       mesActual: Number(row.get('mesActual')) || 0,
       mesAnterior: Number(row.get('mesAnterior')) || 0,
       campanasActivas: Number(row.get('campanasActivas')) || 0,
@@ -185,15 +203,39 @@ export async function getGoogleSheetHomeData(): Promise<HomeData[]> {
 
 
 // obtenemos los datos de las alarmas de la API de Google Sheets
-export async function getAlarms(): Promise<Alarms[]> {
+export async function getAlarms(userEmail: string): Promise<Alarms[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
+  
+  const filterExceptions = ["andy@atomik.pro"];
+
+
   try {
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[5]; 
     const rows = await sheet.getRows<Alarms>();
 
-    return rows.map((row: GoogleSpreadsheetRow<Alarms>) => ({
+    if (filterExceptions.includes(userEmail)){
+
+      return rows
+      .map((row: GoogleSpreadsheetRow<Alarms>) => ({
+        date: row.get('date'),
+        id: row.get('id'),
+        type: row.get('type'),
+        text: row.get('text'),
+        trader: row.get('trader'),
+        year: row.get('year'),
+        month: row.get('month'),
+        day: row.get('day'),
+        dateFormmated: row.get('dateFormmated'),
+        cliente: row.get('cliente'),
+        categoria: row.get('categoria'),
+      }));
+    }
+      
+    return rows
+    .filter((row) => row.get('trader') === tradersAsign.find((t) => t.email === userEmail)?.name)
+    .map((row: GoogleSpreadsheetRow<Alarms>) => ({
       date: row.get('date'),
       id: row.get('id'),
       type: row.get('type'),

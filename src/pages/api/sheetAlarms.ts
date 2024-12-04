@@ -1,9 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getAlarms } from '../../lib/googleSheets';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const sheetAlarms = await getAlarms();
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session || !session.user?.email) {
+      return res.status(401).json({ error: 'Usuario no autenticado' });
+    }
+    const userEmail = session.user.email; 
+    const sheetAlarms = await getAlarms(userEmail);
 
     const dateLimit = new Date();
     dateLimit.setDate(dateLimit.getDate() - 20);
