@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getGoogleSheetHomeData } from '../../lib/googleSheets';
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
