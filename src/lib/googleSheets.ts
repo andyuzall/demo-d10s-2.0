@@ -76,6 +76,14 @@ const tradersAsign = [
   { email: "martina@atomik.pro", name: "admin" },
 ];
 
+const filterExceptions = [
+  "andy@atomik.pro", 
+  "alexandra@atomik.pro",
+  "martina@atomik.pro",
+  "agustin@atomik.pro",
+  "programatica@atomik.pro",
+];
+
 // Función para obtener las credenciales desde Secret Manager
 async function getCredentials() {
   if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
@@ -121,7 +129,7 @@ async function initializeServiceAccountAuth() {
 }
 
 // Función para obtener los datos desde Google Sheets
-export async function getGoogleSheetData(): Promise<Producto[]> {
+export async function getGoogleSheetData(userEmail: string): Promise<Producto[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
 
@@ -130,7 +138,9 @@ export async function getGoogleSheetData(): Promise<Producto[]> {
     const sheet = doc.sheetsByIndex[0]; 
     const rows = await sheet.getRows<Producto>();
 
-    return rows.map((row: GoogleSpreadsheetRow<Producto>) => ({
+    if(filterExceptions.includes(userEmail)) {
+
+      return rows.map((row: GoogleSpreadsheetRow<Producto>) => ({
       estado: row.get('estado'),
       trader: row.get('trader'),
       id: row.get('id'),
@@ -164,6 +174,43 @@ export async function getGoogleSheetData(): Promise<Producto[]> {
       idDV: row.get('idDV'),
       accessDV: row.get('accessDV'),
     }));
+  }
+  return rows
+  .filter((row) => row.get('trader') === tradersAsign.find((t) => t.email === userEmail)?.name)
+  .map((row: GoogleSpreadsheetRow<Producto>) => ({
+    estado: row.get('estado'),
+    trader: row.get('trader'),
+    id: row.get('id'),
+    sdc: row.get('sdc'),
+    cliente: row.get('cliente'),
+    anunciante: row.get('anunciante'),
+    campana: row.get('campana'),
+    categoria: row.get('categoria'),
+    formato: row.get('formato'),
+    fechaInicio: row.get('fechaInicio'),
+    fechaFin: row.get('fechaFin'),
+    diasRestantes: row.get('diasRestantes'),
+    kpiObjetivo: row.get('kpiObjetivo'),
+    kpiEntregado: row.get('kpiEntregado'),
+    duracionCampana: row.get('duracionCampana'),
+    objetivoTangible: row.get('objetivoTangible'),
+    objetivoCuantificable: row.get('objetivoCuantificable'),
+    compraDeAyer: row.get('compraDeAyer'),
+    compraTotal: row.get('compraTotal'),
+    cuantoDeberiamosIr: row.get('cuantoDeberiamosIr'),
+    cuantoFaltaObjetivo: row.get('cuantoFaltaObjetivo'),
+    porcentajeObjetivo: row.get('porcentajeObjetivo'),
+    inversionCampana: row.get('inversionCampana'),
+    consumoCampana: row.get('consumoCampana'),
+    cuantoConsumoDeberiamosIr: row.get('cuantoConsumoDeberiamosIr'),
+    consumoDeAyer: row.get('consumoDeAyer'),
+    cuantoFaltaConsumo: row.get('cuantoFaltaConsumo'),
+    porcentaje: row.get('porcentaje'),
+    queBuscamos: row.get('queBuscamos'),
+    queCantidad: row.get('queCantidad'),
+    idDV: row.get('idDV'),
+    accessDV: row.get('accessDV'),
+  }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);
     throw error;
@@ -206,9 +253,6 @@ export async function getGoogleSheetHomeData(userEmail: string): Promise<HomeDat
 export async function getAlarms(userEmail: string): Promise<Alarms[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
-  
-  const filterExceptions = ["andy@atomik.pro"];
-
 
   try {
     await doc.loadInfo();
