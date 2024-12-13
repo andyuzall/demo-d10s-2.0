@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { IoMdCheckboxOutline } from "react-icons/io";
-import { RiNotificationOffLine } from "react-icons/ri";
-import { GiCrossedAxes } from "react-icons/gi";
-import { GiSandsOfTime } from "react-icons/gi";
-
+import iconActivas from '../assets/icons/menu-campañas/activa.svg';
+import iconActivasOptimo from '../assets/icons/menu-campañas/activas-optimo.svg';
+import iconActivasExito from '../assets/icons/menu-campañas/activas-exito.svg';
+import iconActivasCritica from '../assets/icons/menu-campañas/activas-criticas.svg';
+import iconActivasDelicada from '../assets/icons/menu-campañas/activas-delicada.svg';
+import iconSinActividad from '../assets/icons/menu-campañas/sinactividad.svg';
+import iconFinalizadas from '../assets/icons/menu-campañas/finalizadas.svg';
+import iconFueraDV from '../assets/icons/menu-campañas/fueradv360.svg';
+import Image from 'next/image';
 
 
 type SidebarProps = {
@@ -56,9 +61,14 @@ return (
      <div>
         <button
            onClick={() => handleCampañasActivas()}
-           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
+           className="bg-white flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <IoMdCheckboxOutline />
+         <Image
+         src={iconActivas}
+         alt="icono activas"
+         width={20}  
+         height={20}
+         />
         </button>
         {isEstadosOpen && (
            <div className="mt-2 flex flex-col gap-1 items-center">
@@ -89,27 +99,42 @@ return (
      <div>
         <button
            onClick={() => handleCampañasSinActividad()}
-           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
+           className="bg-white flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <GiSandsOfTime />
+         <Image
+         src={iconSinActividad}
+         alt="icono sin actividad"
+         width={20}  
+         height={20}
+         />
         </button>
         </div>
     {/* Sección de campañas Finalizadas */}
      <div>
         <button
            onClick={() => handleCampañasFinalizadas()}
-           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
+           className="bg-white flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-         <GiCrossedAxes />
+         <Image
+         src={iconFinalizadas}
+         alt="icono finalizadas"
+         width={20}  
+         height={20}
+         />
         </button>
       </div>
      {/* Sección de campañas Por fuera de DV */}
      <div>
         <button
            onClick={() => handleCampañasPorFueraDeDV()}
-           className="bg-gray-700 flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
+           className="bg-white flex justify-between items-center py-2 px-2 rounded-md hover:bg-gray-700"
         >
-           <RiNotificationOffLine />
+           <Image
+           src={iconFueraDV}
+           alt="icono fuera de DV360"
+           width={20}  
+           height={20}
+           />
         </button>
       </div>
      {/* Sección de Campañas Destacadas */}

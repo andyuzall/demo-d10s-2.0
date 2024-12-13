@@ -4,8 +4,8 @@ import * as echarts from 'echarts';
 type EChartsOption = echarts.EChartsOption;
 
 type GaugeChartProps = {
-    value: number;
-    comparisonValue: number;
+  value: number;
+  comparisonValue: number;
 }
 
 const GaugeChart: React.FC<GaugeChartProps> = ({ value, comparisonValue }) => {
@@ -20,6 +20,30 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ value, comparisonValue }) => {
     const option: EChartsOption = {
       backgroundColor: 'transparent',
       series: [
+        // Capa de sombra interna
+        {
+          type: 'gauge',
+          startAngle: 90,
+          endAngle: -270,
+          radius: '95%', // Radio menor para crear el efecto de sombra dentro
+          pointer: { show: false },
+          progress: { show: false }, // Sin progreso, solo para la sombra
+          axisLine: {
+            lineStyle: {
+              width: 20,
+              color: [[1, 'rgba(187, 134, 252, 0.2)']], // Color semitransparente
+              shadowBlur: 12,
+              opacity: 0.4,
+              shadowColor: '#BB86FC',
+              shadowOffsetX: 0,
+              shadowOffsetY: 0
+            }
+          },
+          splitLine: { show: false },
+          axisTick: { show: false },
+          axisLabel: { show: false }
+        },
+        // Capa principal con progreso
         {
           type: 'gauge',
           startAngle: 90,
@@ -33,47 +57,50 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ value, comparisonValue }) => {
             overlap: false,
             roundCap: true,
             clip: false,
+            width: 4,
             itemStyle: {
-              borderWidth: 1,
-              borderColor: '#464646'
-            }
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#BB86FC' }, // Color inicial
+                { offset: 1, color: '#6300DC' }  // Color final
+              ]),
+            },
           },
+          radius: '100%',
           axisLine: {
             lineStyle: {
-              width: 10 // Reduce el ancho del indicador para mejor visualización en espacios pequeños
+              width: 20,
+              color: [[1, '#FAF8F8']], // Reduce el ancho del indicador para mejor visualización en espacios pequeños
             }
           },
           splitLine: {
             show: false,
-            distance: 0,
-            length: 10
           },
           axisTick: {
             show: false
           },
           axisLabel: {
             show: false,
-            distance: 50
           },
-        data: [
+          data: [
             {
-            value: value,
-            name: '',
-            title: {
+              value: value,
+              name: '',
+              title: {
                 offsetCenter: ['0%', '-10%']
-            },
-            detail: {
+              },
+              detail: {
                 valueAnimation: true,
                 offsetCenter: ['0%', '-10%'],
                 formatter: `${result.toFixed(0)}%`
-                }
+              }
             }
           ],
           detail: {
             width: 25,
             height: 20,
             fontSize: 15,
-            color: 'inherit',
+            color: 'black',
+            fontFamily: 'Poppins',
           }
         }
       ]

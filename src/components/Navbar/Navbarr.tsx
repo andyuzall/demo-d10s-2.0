@@ -1,21 +1,11 @@
 "use client"
 import Link from 'next/link'
 import { signIn, useSession, signOut } from 'next-auth/react'
-import logoTipo from '@/assets/logo-violeta.gif';
-import logOut from '@/assets/icon-logout.svg';
+import logoTipo from '@/assets/logos/logo-blanco.svg';
+import logOut from '@/assets/icons/generales/logout.svg';
 import Image from 'next/image';
 import { FcGoogle } from "react-icons/fc";
-import { useState } from 'react';
-
-
-const tradersAsign = [
-  { email: "juan@atomik.pro", name: "Juan" },
-  { email: "cynthia@atomik.pro", name: "Cynthia" },
-  { email: "dalma@atomik.pro", name: "Dalma" },
-  { email: "emmanuel@atomik.pro", name: "Emmanuel" },
-  { email: "juansebastian@atomik.pro", name: "Juan Sebastian" },
-  { email: "monica@atomik.pro", name: "Monica" },
-];
+import { useEffect, useState } from 'react';
 
 function Navbarr() {
 
@@ -52,22 +42,26 @@ function Navbarr() {
     }
   };
 
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
   const handleButtonClick = (buttonName: React.SetStateAction<string>) => {
     setSelectedButton(buttonName);
   }
 
   return (
-    <nav className='flex-col items-center py-3 justify-between px-4'>
+    <nav className="flex-col items-center pt-8 justify-between m-1 h-[300px] rounded-lg px-4 bg-[url('../assets/img-header.jpg')] bg-cover bg-no-repeat'">
       {session?.user ? (
         <>
-          <div className='flex justify-between h-8 w-full items-center text-center'>
+          <div className="flex justify-between h-8 w-full items-center text-center">
             <div className='flex justify-start items-center'>
               <img
                 src={session.user.image!}
                 alt='Imagen de Usuario'
                 className='mr-1 w-10 h-10 rounded-full cursor-pointer'
               />
-              <p className='ml-2 mr-2'>{session.user.name}</p>
+              <p className='ml-2 mr-2 text-blanco'>{session.user.name}</p>
               <button
                 onClick={async () => {
                   await signOut({
@@ -86,7 +80,7 @@ function Navbarr() {
             <div className='flex'>
               <Image
                 src={logoTipo}
-                width={250}
+                width={150}
                 height={50}
                 alt='Logotipo de Atomik'
               />
@@ -94,19 +88,20 @@ function Navbarr() {
             <div className="relative inline-block text-left">
               <button
                 onClick={toggleDropdown}
-                className="bg-gray-600 px-3 py-1 rounded-lg text-white text-center"
+                className={`bg-blanco px-3 py-1 rounded-lg shadow-custom text-center
+                  ${isDropdownOpen ? 'bg-gradient-to-r from-[#BB86FC] to-[#6300DC] text-blanco' : ''}`}
               >
                 Nuevas alertas
               </button>
 
               {isDropdownOpen && (
                 <ul
-                  className="absolute right-0 mt-2 w-60 rounded-lg shadow-lg border border-gray-200 z-10 overflow-hidden p-2"
+                  className="absolute right-0 mt-1 w-60 z-10 overflow-hidden p-2"
                 >
                   {notifications.map((notification, index) => (
                     <li
                       key={index}
-                      className="px-4 py-1.5 font-semibold text-xs text-gray-700 hover:bg-gray-100 cursor-pointer rounded-lg"
+                      className="bg-negro opacity-40 px-4 py-1.5 my-1 font-normal text-xs text-blanco rounded-lg"
                     >
                       {notification.text}
                     </li>
@@ -115,11 +110,11 @@ function Navbarr() {
               )}
             </div>
           </div>
-          <div className='flex-col justify-center items-center text-center mb-4'>
-            <h1 className='text-5xl text-gray-600 uppercase tracking-widest'>
-              Planilla D10S
+          <div className='flex flex-col justify-center items-center text-center mb-14 mt-8 gap-2'>
+            <h1 className='text-4xl text-blanco uppercase tracking-wider'>
+              D10S
             </h1>
-            <h2 className='text-2xl text-gray-600'>
+            <h2 className='text-2xl text-blanco'>
               2.0
             </h2>
           </div>
@@ -128,24 +123,24 @@ function Navbarr() {
               <Link
                 href="/home"
                 onClick={() => handleButtonClick('home')}
-                className={`text-xl text-gray-600 w-2/4 rounded-lg text-center uppercase
-                  ${selectedButton === 'home' ? 'bg-slate-300 font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
+                  ${selectedButton === 'home' ? 'bg-violetaSecundario text-blanco font-semibold cursor-default' : 'font-normal'}`}
               >
                 Home
               </Link>
               <Link
                 href="/dashboard"
                 onClick={() => handleButtonClick('dashboard')}
-                className={`text-xl text-gray-600 w-2/4 rounded-lg text-center uppercase
-                  ${selectedButton === 'dashboard' ? 'bg-slate-300 font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
+                  ${selectedButton === 'dashboard' ? 'bg-violetaSecundario text-blanco font-semibold cursor-default' : 'font-normal'}`}
               >
                 Campañas
               </Link>
               <Link
                 href="/notificaciones"
                 onClick={() => handleButtonClick('notificaciones')}
-                className={`text-xl text-gray-600 w-2/4 rounded-lg text-center uppercase
-                  ${selectedButton === 'notificaciones' ? 'bg-slate-300 font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
+                  ${selectedButton === 'notificaciones' ? 'bg-violetaSecundario text-blanco font-semibold cursor-default' : 'font-normal'}`}
               >
                 Notificaciones
               </Link>
@@ -154,39 +149,40 @@ function Navbarr() {
         </>
       ) : (
         <>
-          <div className='flex flex-col justify-center h-32 w-full items-center text-center mb-28'>
-            <div className='flex flex-col justify-center m-0'>
-              <Image
-                src={logoTipo}
-                width={250}
-                height={50}
-                alt='Logotipo de Atomik'
+          <div className="fixed inset-0 flex flex-col gap-28 justify-start pt-10 items-center bg-[url('../assets/img-login.jpg')] bg-cover bg-no-repeat">
+            <div className='flex flex-col gap-8'>
+            <Image
+              src={logoTipo}
+              width={250}
+              height={50}
+              alt='Logotipo de Atomik'
               />
-            </div>
-            <div className='flex-col justify-center items-center text-center mb-4'>
-              <h1 className='text-5xl text-gray-600 uppercase tracking-widest'>
-                Planilla D10S
+            <div className='flex flex-col items-center text-center'>
+              <h1 className='text-4xl text-blanco font-light uppercase tracking-widest'>
+                D10S
               </h1>
-              <h2 className='text-2xl text-gray-600'>
+              <h2 className='text-2xl text-blanco'>
                 2.0
               </h2>
             </div>
-          </div>
-          <div className='flex flex-col items-center text-center justify-center'>
-            <div className='bg-gray-200 h-60 flex flex-col gap-4 justify-between p-8 rounded-lg shadow-md'>
-              <h1 className='font-bold text-xl text-gray-500'>
-                Bienvenido a D1OS 2.0
-              </h1>
-              <button onClick={() => signIn()}
-                className='bg-white px-4 py-2 font-bold rounded-2xl text-black flex items-center justify-between w-full max-w-xs'
-              >
-                <div className="w-6" /> {/* Espaciador invisible para equilibrar el diseño */}
-                <p className="text-center flex-grow">Logueate ahora</p>
-                <FcGoogle className="text-xl" />
-              </button>
-              <h2 className='text-sm text-gray-400'>
-                Registra, monitorea y acciona sobre tus campañas.
-              </h2>
+            </div>
+            <div className="">
+              <div className='bg-transparent backdrop-blur-md h-64 flex flex-col 
+            border-2 border-grisPrincipal border-opacity-80 justify-evenly items-center p-8 rounded-lg shadow-md'>
+                <h1 className='font-bold text-2xl text-blanco'>
+                  Bienvenido a D1OS 2.0
+                </h1>
+                <button onClick={() => signIn()}
+                  className='bg-blanco px-4 py-3 font-bold rounded-2xl text-negro flex items-center justify-between w-full max-w-xs'
+                >
+                  <div className="w-6" /> {/* Espaciador invisible para equilibrar el diseño */}
+                  <p className="text-center flex-grow">Logueate ahora</p>
+                  <FcGoogle className="text-xl" />
+                </button>
+                <h2 className='text-sm text-blanco'>
+                  Registra, monitorea y acciona sobre tus campañas.
+                </h2>
+              </div>
             </div>
           </div>
         </>

@@ -1,10 +1,11 @@
 import "./globals.css";
 import { Providers } from './Providers';
-import Navbar from "../components/Navbar";
 import type { Metadata } from 'next';
 import Navbarr from "@/components/Navbar/Navbarr";
 import { setFlagsFromString } from 'v8';
 setFlagsFromString('--no-deprecation');
+
+
 
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export default function RootLayout({ children, }: {
 }) {
   return (
     <html lang="en">
-      <body className="font-montserrat" >
+      <body className='font-poppins'>
         <Providers>
           <Navbarr />
           {children}

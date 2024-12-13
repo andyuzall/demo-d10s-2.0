@@ -73,7 +73,7 @@ function TopBar() {
       }
 
   return (
-    <div className="dashboard flex w-full">
+    <div className="dashboard flex">
     <Sidebar onFilterChange={handleFilterChange} />
     <div className='flex-row justify-center items-center w-full m-2'>
       <nav className='border rounded-xl flex justify-between items-center text-center w-full bg-gray-200 pt-1 pb-1 pr-4 pl-4 mb-4'>
