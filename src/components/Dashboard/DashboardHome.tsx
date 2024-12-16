@@ -61,8 +61,10 @@ const DashboardHome: React.FC = () => {
   }, []);
 
   // Función para calcular el cambio porcentual
-  const calcularCambio = (actual: number, anterior: number) =>
-    anterior !== 0 ? ((actual - anterior) / anterior) * 100 : 0;
+  const calcularCambio = (actual: number, anterior: number) => anterior !== 0 ? ((actual - anterior) / anterior) * 100 : 0;
+
+  // Función para calcular el porcentaje de campañas en estado critico, delicado o optimo
+  const calcularPorcentaje = (actual: number, anterior: number) => actual !== 0 ? ((actual / anterior) * 100) : 0;
 
   if (loading) {
     return <Loading />;
@@ -73,14 +75,14 @@ const DashboardHome: React.FC = () => {
   }
 
   return (
-    <div className='container mx-auto px-4 m-4'>
-      <div className='bg-grisPrincipal bg-opacity-50 rounded-lg border border-white shadow-custom'>
+    <div className='container mx-auto min-w-full px-4 m-2'>
+      <div className='bg-grisPrincipal bg-opacity-30 rounded-lg border border-white shadow-custom'>
         {datosCampanas.map((campana, index) => (
           <div
             key={index}
-            className='flex justify-center items-start gap-4 mx-2 px-4 py-8 rounded-lg'>
+            className='flex justify-center items-start gap-8 mx-2 px-4 py-8 rounded-lg'>
             {/* Primer bloque de datos */}
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-6'>
               <CardStatus
                 titulo="Cant. de campañas"
                 indicador={campana.mesActual}
@@ -107,46 +109,46 @@ const DashboardHome: React.FC = () => {
             </div>
 
             {/* Segundo bloque de datos */}
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-6'>
               <CardGrafic
                 titulo="Campañas en Estado Crítico"
                 indicador={campana.campanasCritico}
-                resultado={calcularCambio(
-                  campana.mesActual,
-                  campana.mesAnterior
+                resultado={calcularPorcentaje(
+                  campana.campanasCritico,
+                  campana.mesActual
                 )}
-                subtitulo='% al mes anterior.'
+                subtitulo={`% sobre ${campana.mesActual} actuales`}
                 value={campana.campanasCritico}
                 comparador={campana.mesActual}
               />
               <CardGrafic
                 titulo="Campañas en Estado Delicado"
                 indicador={campana.campanasDelicado}
-                resultado={calcularCambio(
-                  campana.mesActual,
-                  campana.mesAnterior
+                resultado={calcularPorcentaje(
+                  campana.campanasDelicado,
+                  campana.mesActual
                 )}
-                subtitulo='% al mes anterior.'
+                subtitulo={`% sobre ${campana.mesActual} actuales`}
                 value={campana.campanasDelicado}
                 comparador={campana.mesActual}
               />
               <CardGrafic
                 titulo="Campañas en Estado Óptimo"
                 indicador={campana.campanasOptimo}
-                resultado={calcularCambio(
-                  campana.mesActual,
-                  campana.mesAnterior
+                resultado={calcularPorcentaje(
+                  campana.campanasOptimo,
+                  campana.mesActual
                 )}
-                subtitulo='% al mes anterior.'
+                subtitulo={`% sobre ${campana.mesActual} actuales`}
                 value={campana.campanasOptimo}
                 comparador={campana.mesActual}
               />
             </div>
 
             {/* Tercer bloque de datos */}
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-6'>
               <CardDestacadas
-                titulo="Campañas destacadas"
+                titulo="Campañas Destacadas"
                 indicador={campana.mesActual}
                 resultado={calcularCambio(
                   campana.mesActual,
@@ -156,7 +158,7 @@ const DashboardHome: React.FC = () => {
               />
               <div className='flex justify-between gap-4'>
                 <CardSinCalc
-                  titulo="Nuevas Alarmas"
+                  titulo="Nuevas alarmas"
                   indicador={alarmCount ?? 0}
                   subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
                 />

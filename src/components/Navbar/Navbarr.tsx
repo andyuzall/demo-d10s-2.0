@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 function Navbarr() {
 
   const { data: session } = useSession();
-  const [selectedButton, setSelectedButton] = useState('');
+  const [selectedButton, setSelectedButton] = useState('home');
   const [notifications, setNotifications] = useState([
     { text: "" },
     { text: "" },
@@ -51,17 +51,18 @@ function Navbarr() {
   }
 
   return (
-    <nav className="flex-col items-center pt-8 justify-between m-1 h-[300px] rounded-lg px-4 bg-[url('../assets/img-header.jpg')] bg-cover bg-no-repeat'">
+    <nav className="relative flex-col items-center pt-8 justify-between m-1 h-[250px] rounded-lg px-4 bg-[url('../assets/img-header.jpg')] bg-cover bg-no-repeat'">
+      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent backdrop-blur-sm rounded-b-lg pointer-events-none z-0"></div>
       {session?.user ? (
         <>
           <div className="flex justify-between h-8 w-full items-center text-center">
-            <div className='flex justify-start items-center'>
+            <div className='flex items-center w-[150px] gap-[5px]'>
               <img
                 src={session.user.image!}
                 alt='Imagen de Usuario'
-                className='mr-1 w-10 h-10 rounded-full cursor-pointer'
+                className='w-10 h-10 rounded-full cursor-pointer'
               />
-              <p className='ml-2 mr-2 text-blanco'>{session.user.name}</p>
+              <p className='text-blanco'>{session.user.name}</p>
               <button
                 onClick={async () => {
                   await signOut({
@@ -101,7 +102,7 @@ function Navbarr() {
                   {notifications.map((notification, index) => (
                     <li
                       key={index}
-                      className="bg-negro opacity-40 px-4 py-1.5 my-1 font-normal text-xs text-blanco rounded-lg"
+                      className="bg-negro opacity-90 px-4 py-1.5 my-1 font-normal text-xs text-blanco rounded-lg"
                     >
                       {notification.text}
                     </li>
@@ -110,42 +111,43 @@ function Navbarr() {
               )}
             </div>
           </div>
-          <div className='flex flex-col justify-center items-center text-center mb-14 mt-8 gap-2'>
-            <h1 className='text-4xl text-blanco uppercase tracking-wider'>
+          <div className='flex flex-col justify-center items-center text-center mb-4 mt-4 gap-2'>
+            <h1 className='text-4xl font-light text-blanco uppercase tracking-widest'>
               D10S
             </h1>
-            <h2 className='text-2xl text-blanco'>
+            <h2 className='text-l font-light text-blanco'>
               2.0
             </h2>
           </div>
-          <div className='flex justify-center items-center'>
-            <span className='bg-gray-200 w-2/4 rounded-lg flex justify-between items-center'>
+          <div className='flex justify-center items-center relative z-10'>
+            <span className='bg-transparent border-2 border-blanco/50 w-2/4 rounded-lg flex justify-between items-center'>
               <Link
                 href="/home"
                 onClick={() => handleButtonClick('home')}
-                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
-                  ${selectedButton === 'home' ? 'bg-violetaSecundario text-blanco font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 text-blanco/60
+                  ${selectedButton === 'home' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal'}`}
               >
                 Home
               </Link>
               <Link
                 href="/dashboard"
                 onClick={() => handleButtonClick('dashboard')}
-                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
-                  ${selectedButton === 'dashboard' ? 'bg-violetaSecundario text-blanco font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 text-blanco/80
+                  ${selectedButton === 'dashboard' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal'}`}
               >
                 Campañas
               </Link>
               <Link
                 href="/notificaciones"
                 onClick={() => handleButtonClick('notificaciones')}
-                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
-                  ${selectedButton === 'notificaciones' ? 'bg-violetaSecundario text-blanco font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 text-blanco/60
+                  ${selectedButton === 'notificaciones' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal'}`}
               >
                 Notificaciones
               </Link>
             </span>
           </div>
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent backdrop-blur-sm rounded-b-lg pointer-events-none"></div>
         </>
       ) : (
         <>

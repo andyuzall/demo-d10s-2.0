@@ -18,7 +18,7 @@ const CardGrafic: React.FC<CardGraficValues> = ({ titulo, indicador, resultado, 
     
     return (
         <>
-        <div className='flex p-4 justify-between items-center bg-blanco shadow-sombraCards shadow-md rounded-lg'>
+        <div className='flex p-4 justify-between items-center bg-blanco shadow-custom rounded-lg w-[450px]'>
             <div className="flex flex-col gap-5">
                 <h2 className='text-s font-semibold'>{titulo}</h2>
                 <h3 className='text-negro font-semibold text-3xl'>{indicador}</h3>
