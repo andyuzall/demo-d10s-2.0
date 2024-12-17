@@ -15,7 +15,7 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         violetaPrincipal: "#BB86FC",
-        violetaSecundario: "#6300DC",
+        violetaSecundario: "#9747FF",
         grisPrincipal: "#D9D9D9",
         sombraCards: "#FAF8F8",
         blanco: "#FFFFFF",

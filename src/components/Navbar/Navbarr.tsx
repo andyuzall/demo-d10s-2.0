@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 function Navbarr() {
 
   const { data: session } = useSession();
-  const [selectedButton, setSelectedButton] = useState('home');
+  const [selectedButton, setSelectedButton] = useState('');
   const [notifications, setNotifications] = useState([
     { text: "" },
     { text: "" },
@@ -124,24 +124,24 @@ function Navbarr() {
               <Link
                 href="/home"
                 onClick={() => handleButtonClick('home')}
-                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 text-blanco/60
-                  ${selectedButton === 'home' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
+                  ${selectedButton === 'home' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal text-blanco/60'}`}
               >
                 Home
               </Link>
               <Link
                 href="/dashboard"
                 onClick={() => handleButtonClick('dashboard')}
-                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 text-blanco/80
-                  ${selectedButton === 'dashboard' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 
+                  ${selectedButton === 'dashboard' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal text-blanco/60'}`}
               >
                 Campañas
               </Link>
               <Link
                 href="/notificaciones"
                 onClick={() => handleButtonClick('notificaciones')}
-                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5 text-blanco/60
-                  ${selectedButton === 'notificaciones' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal'}`}
+                className={`text-xl font-light w-2/4 rounded-lg text-center uppercase py-1.5
+                  ${selectedButton === 'notificaciones' ? 'bg-violetaSecundario/50 text-blanco font-semibold cursor-default' : 'font-normal text-blanco/60'}`}
               >
                 Notificaciones
               </Link>
