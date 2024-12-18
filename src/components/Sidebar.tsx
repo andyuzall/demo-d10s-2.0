@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange }) => {
   }
 
 return (
-  <div className="bg-gray-200 rounded-lg text-white w-11 p-1 pt-3 m-1  flex flex-col gap-2 items-center">
+  <div className="bg-gray-200 rounded-lg text-white w-12 p-1 pt-3 m-1  flex flex-col gap-2 items-center">
      {/* Sección de campañas Activas */}
      <div>
         <button

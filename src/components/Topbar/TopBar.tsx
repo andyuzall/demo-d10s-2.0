@@ -73,31 +73,31 @@ function TopBar() {
       }
 
   return (
-    <div className="dashboard flex">
+    <div className="flex px-4 m-2 container mx-auto max-w-full">
     <Sidebar onFilterChange={handleFilterChange} />
-    <div className='flex-row justify-center items-center w-full m-2'>
-      <nav className='border rounded-xl flex justify-between items-center text-center w-full bg-gray-200 pt-1 pb-1 pr-4 pl-4 mb-4'>
+    <div className='flex-row justify-center items-center m-2 w-11/12'>
+      <nav className='border rounded-xl flex justify-between items-center text-center w-full shadow-custom gap-4 pt-1 pb-1 pr-4 pl-4 mb-4'>
         <button
         onClick={() => handleButtonClick('detalles')}
         className={`
-            border rounded-xl flex justify-center items-center text-center text-gray-600 w-60 bg-gray-200 p-2 
-            ${selectedButton === 'detalles' ? 'bg-gray-600 text-white cursor-default' : 'bg-gray-200 text-gray-600'}`}
+            border rounded-xl flex justify-center items-center text-center bg-blanco p-2 w-1/3
+            ${selectedButton === 'detalles' ? 'bg-gradient-to-r to-[#BB86FC] from-[#6300DC] text-white cursor-default' : 'bg-blanco text-negro font-bold shadow-custom'}`}
             >
             <p>Detalles</p>
         </button>
         <button 
             onClick={() => handleButtonClick('objetivoEntregable')}
             className={`
-                border rounded-xl flex justify-center items-center text-center text-gray-600 w-60 bg-gray-200 p-2 
-                ${selectedButton === 'objetivoEntregable' ? 'bg-gray-600 text-white cursor-default' : 'bg-gray-200 text-gray-600'}`}
+                border rounded-xl flex justify-center items-center text-center w-1/3 bg-blanco p-2 
+                ${selectedButton === 'objetivoEntregable' ? 'bg-gradient-to-r to-[#BB86FC] from-[#6300DC] text-white cursor-default' : 'bg-blanco text-negro font-bold shadow-custom'}`}
                 >
             <p>Objetivo Entregable</p>
         </button>
         <button 
             onClick={() => handleButtonClick('objetivoConsumo')}
             className={`
-                border rounded-xl flex justify-center items-center text-center text-gray-600 w-60 bg-gray-200 p-2 
-                ${selectedButton === 'objetivoConsumo' ? 'bg-gray-600 text-white cursor-default' : 'bg-gray-200 text-gray-600'}`}
+                border rounded-xl flex justify-center items-center text-center w-1/3 bg-blanco p-2 
+                ${selectedButton === 'objetivoConsumo' ? 'bg-gradient-to-r to-[#BB86FC] from-[#6300DC] text-white cursor-default' : 'bg-blanco text-negro font-bold shadow-custom'}`}
             >     
             <p>Objetivo Consumo</p>
         </button>
