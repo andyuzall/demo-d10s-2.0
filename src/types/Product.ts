@@ -29,6 +29,7 @@ export interface Product {
     duracionCampana: string;
     idDV: string;
     accessDV: string;
+    estadoCampana: string;
   };
 
 export interface HomeData {

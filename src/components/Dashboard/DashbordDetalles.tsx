@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { IconButton } from '@mui/material';
-import { Favorite, FavoriteBorder } from '@mui/icons-material';
+import destacadoFinalizada from '../../assets/icons/menu-campañas/destacados/destacado-finalizado.svg'
+import destacadoFinalizadaClicked from '../../assets/icons/menu-campañas/destacados/destacado-finalizado-pressed.svg'
+import destacadoActivo from '../../assets/icons/menu-campañas/destacados/destacado-activo.svg'
+import destacadoActivoclicked from '../../assets/icons/menu-campañas/destacados/destacado-activo-pressed.svg'
 import axios from 'axios';
+import Image from 'next/image';
 
 interface Product {
   estado: string;
@@ -32,6 +36,7 @@ interface Product {
   duracionCampana: string;
   idDV: string;
   accessDV: string;
+  estadoCampana: string;
 }
 
 interface DashboardDetallesProps {
@@ -52,14 +57,24 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
     }
   };
 
+  const handleSaveDestacadaToBigQuery = async (producto: Product) => {
+    try {
+      await axios.post('/api/saveToBigQuery', producto);
+      console.log('Datos guardados en BigQuery');
+      setLikedIds([...likedIds, producto.id]);
+    } catch (error) {
+      console.error('Error al guardar en BigQuery:', error);
+    }
+  };
+
   return (
     <div className=" flex items-center ">
       {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
-      <div className="bg-white rounded-xl shadow-lg p-4 w-full">
+      <div className="bg-grisPrincipal bg-opacity-30 border-white shadow-custom rounded-xl p-4 w-full">
         {/* Títulos y encabezados superiores */}
         <div className="mb-2">
           <div className="flex justify-between">
-            <h1 className="text-l font-bold text-gray-600">
+            <h1 className="text-l font-bold text-negro">
               Todas las campañas
             </h1>
           </div>
@@ -69,9 +84,10 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
         <div className="overflow-x-auto">
           <div className="overflow-y-auto">
             <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
-              <thead className="bg-gray-200 text-gray-600">
-                <tr className="rounded-t-lg">
-                  <th className="px-2 py-2 rounded-tl-lg rounded-bl-lg">Estado</th>
+              <thead className="bg-violetaSecundario text-blanco">
+                <tr className="rounded-t-3xl">
+                  <th className="px-2 py-2 rounded-tl-3xl rounded-bl-3xl">Destacar</th>
+                  <th className="px-2 py-2">Estado</th>
                   <th className="px-2 py-2">ID</th>
                   <th className="px-2 py-2">Cliente</th>
                   <th className="px-2 py-2">Anunciante</th>
@@ -79,11 +95,11 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                   <th className="px-2 py-2">Inicio</th>
                   <th className="px-2 py-2">Fin</th>
                   <th className="px-2 py-2">ID DV360</th>
-                  <th className="px-2 py-2 w-[10px] text-start">Nombre</th>
+                  <th className="w-[5px] text-start">Nombre</th>
                   <th className="px-2 py-2">Categoría</th>
                   <th className="px-2 py-2">Duración</th>
                   <th className="px-2 py-2">Días restantes</th>
-                  <th className="px-2 py-2">Inversión</th>
+                  <th className="px-2 py-2 rounded-tr-3xl rounded-br-3xl">Inversión</th>
                 </tr>
               </thead>
               <tbody className="text-gray-800">
@@ -92,32 +108,74 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                     key={index}
                     className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} rounded-lg border-white`}
                   >
-                    <td className="px-2 py-2 rounded-tl-lg rounded-bl-lg  w-4">{producto.estado}</td>
-                    <td className="px-2 py-2 w-4">{producto.id}</td>
-                    <td className="px-2 py-2">{producto.cliente}</td>
-                    <td className="px-2 py-2">{producto.anunciante}</td>
-                    <td className="px-2 py-2">{producto.formato}</td>
-                    <td className="px-2 py-2 w-4">{producto.fechaInicio}</td>
-                    <td className="px-2 py-2 w-4">{producto.fechaFin}</td>
-                    <td className="px-2 py-2 w-4">
+                    <td className="px-2 py-2 rounded-tl-3xl rounded-bl-3xl border-l-2 border-t-2 border-b-2 border-violetaPrincipal w-4">
+                      {producto.estado === 'Finalizada' ?
+                        <IconButton
+                          onClick={() => handleSaveDestacadaToBigQuery(producto)}
+                          disabled={likedIds.includes(producto.id)}
+                          color="error"
+                        >
+                          {likedIds.includes(producto.id) ?
+                            <Image
+                              src={destacadoFinalizadaClicked}
+                              alt='Campaña destacada'
+                              width={20}
+                              height={20}
+                            />
+                            :
+                            <Image
+                              src={destacadoFinalizada}
+                              alt='Destacar campaña finalizada'
+                              width={20}
+                              height={20}
+                            />
+                          }
+                        </IconButton> :
+                        ''}
+                      {producto.estado === 'Activa' || 
+                      producto.estado === 'Sin actividad' || 
+                      producto.estado === 'BONIFICADA' || 
+                      producto.estado === 'Por fuera de DV360' ?
+                        <IconButton
+                          onClick={() => handleSaveEspecialToBigQuery(producto)}
+                          disabled={likedIds.includes(producto.id)}
+                          color="error"
+                        >
+                          {likedIds.includes(producto.id) ?
+                            <Image
+                              src={destacadoActivoclicked}
+                              alt='Campaña destacada'
+                              width={20}
+                              height={20}
+                            />
+                            :
+                            <Image
+                              src={destacadoActivo}
+                              alt='Destacar campaña'
+                              width={20}
+                              height={20}
+                            />
+                          }
+                        </IconButton> :
+                        ''}
+                    </td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.estado}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal w-4">{producto.id}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cliente}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.anunciante}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.formato}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal w-4">{producto.fechaInicio}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal w-4">{producto.fechaFin}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal w-4">
                       <a href={producto.accessDV} target="_blank" rel="noreferrer" className='hover:text-cyan-700'>
                         {producto.idDV}
                       </a>
                     </td>
-                    <td className="px-2 py-2 w-[10px] text-start">{producto.campana}</td>
-                    <td className="px-2 py-2">{producto.categoria}</td>
-                    <td className="px-2 py-2">{producto.duracionCampana}</td>
-                    <td className="px-2 py-2">{producto.diasRestantes}</td>
-                    <td className="px-2 py-2">${producto.inversionCampana}</td>
-                    {/* <td className="px-2 py-2">
-                      <IconButton
-                        onClick={() => handleSaveEspecialToBigQuery(producto)}
-                        disabled={likedIds.includes(producto.id)}
-                        color="error"
-                      >
-                        {likedIds.includes(producto.id) ? <Favorite /> : <FavoriteBorder />}
-                      </IconButton>
-                    </td> */}
+                    <td className="border-t-2 border-b-2 border-violetaPrincipal w-[5px] text-start">{producto.campana}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.categoria}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.duracionCampana}</td>
+                    <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
+                    <td className="px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal">${producto.inversionCampana}</td>
                   </tr>
                 ))}
               </tbody>
