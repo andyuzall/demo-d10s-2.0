@@ -75,7 +75,10 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
         <div className="mb-2">
           <div className="flex justify-between">
             <h1 className="text-l font-bold text-negro">
-              Todas las campañas
+              <span className="text-l font-semibold text-negro">
+                Todas las campañas
+              </span>
+
             </h1>
           </div>
         </div>
@@ -132,10 +135,10 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                           }
                         </IconButton> :
                         ''}
-                      {producto.estado === 'Activa' || 
-                      producto.estado === 'Sin actividad' || 
-                      producto.estado === 'BONIFICADA' || 
-                      producto.estado === 'Por fuera de DV360' ?
+                      {producto.estado === 'Activa' ||
+                        producto.estado === 'Sin actividad' ||
+                        producto.estado === 'BONIFICADA' ||
+                        producto.estado === 'Por fuera de DV360' ?
                         <IconButton
                           onClick={() => handleSaveEspecialToBigQuery(producto)}
                           disabled={likedIds.includes(producto.id)}

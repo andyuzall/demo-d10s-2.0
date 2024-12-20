@@ -40,13 +40,13 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos }) 
   return (
     <div className="flex items-center ">
     {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
-    <div className="bg-white rounded-xl shadow-lg p-4 w-full">
+    <div className="bg-grisPrincipal bg-opacity-30 border-white shadow-custom rounded-xl p-4 w-full">
       {/* Títulos y encabezados superiores */}
       <div className="mb-2">
         <div className="flex justify-between">
-        <h1 className="text-l font-bold text-gray-600">Todas las Campañas</h1>
-          <span className="text-l font-semibold text-gray-600">Acordado</span>
-          <span className="text-l font-semibold text-gray-600">Actualidad</span>
+        <h1 className="text-l font-bold text-negro">Todas las Campañas</h1>
+          <span className="text-l font-semibold text-negro">Acordado</span>
+          <span className="text-l font-semibold text-negro">Actualidad</span>
         </div>
       </div>
 
@@ -54,24 +54,24 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos }) 
     <div className="overflow-x-auto">
       <div className="overflow-y-auto">
       <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
-        <thead className="bg-gray-200 text-gray-600">
-          <tr className="rounded-t-lg">
-            <th className="px-2 py-2 rounded-tl-lg rounded-bl-lg">Estado</th>
+        <thead className="bg-violetaSecundario text-blanco">
+          <tr className="rounded-t-3xl">
+            <th className="px-2 py-2 rounded-tl-3xl rounded-bl-3xl">Estado</th>
             <th className="px-2 py-2">ID</th>
             <th className="px-2 py-2">Cliente</th>
             <th className="px-2 py-2">Anunciante</th>
             <th className="px-2 py-2">Form.</th>
             <th className="px-2 py-2">Inicio</th>
             <th className="px-2 py-2">Fin</th>
-            <th className="px-2 py-2 border-l-4 border-gray-100">KPI</th>
+            <th className="px-2 py-2 border-l-2 border-violetaPrincipal">KPI</th>
             <th className="px-2 py-2">Unidad</th>
             <th className="px-2 py-2">Costo</th>
-            <th className="px-2 py-2 border-l-4 border-gray-100">Re%ult</th>
+            <th className="px-2 py-2 border-l-2 border-violetaPrincipal">Re%ult</th>
             <th className="px-2 py-2">Uni.</th>
             <th className="px-2 py-2">Costo</th>
             <th className="px-2 py-2">Faltan</th>
             <th className="px-2 py-2">Ideal hoy</th>
-            <th className="px-2 py-2 rounded-tr-lg rounded-br-lg">Proye%</th>
+            <th className="px-2 py-2 rounded-tr-3xl rounded-br-3xl">Proye%</th>
           </tr>
         </thead>
         <tbody className="text-gray-800">
@@ -80,22 +80,22 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos }) 
               key={index}
               className={`border-b ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} rounded-lg border-white`}
             >
-              <td className="px-2 py-2 rounded-tl-lg rounded-bl-lg">{producto.estado}</td>
-              <td className="px-2 py-2">{producto.id}</td>
-              <td className="px-2 py-2">{producto.cliente}</td>
-              <td className="px-2 py-2">{producto.anunciante}</td>
-              <td className="px-2 py-2">{producto.formato}</td>
-              <td className="px-2 py-2">{producto.fechaInicio}</td>
-              <td className="px-2 py-2">{producto.fechaFin}</td>
-              <td className="px-2 py-2 border-l-4 border-gray-200">{producto.queBuscamos}</td>
-              <td className="px-2 py-2">{producto.queCantidad}</td>
-              <td className="px-2 py-2">{producto.objetivoTangible}</td>
-              <td className="px-2 py-2 border-l-4 border-gray-200">{producto.porcentajeObjetivo}%</td>
-              <td className="px-2 py-2">{producto.compraTotal}</td>
-              <td className="px-2 py-2">{producto.objetivoCuantificable}</td>
-              <td className="px-2 py-2">{producto.diasRestantes}</td>
-              <td className="px-2 py-2">{producto.cuantoDeberiamosIr}</td>
-              <td className="px-2 py-2 rounded-tr-lg rounded-br-lg">{producto.porcentajeObjetivo}%</td>
+              <td className="px-2 py-2 rounded-tl-3xl rounded-bl-3xl border-l-2 border-t-2 border-b-2 border-violetaPrincipal w-4">{producto.estado}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.id}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cliente}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.anunciante}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.formato}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.fechaInicio}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.fechaFin}</td>
+              <td className="px-2 py-2 border-l-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.queBuscamos}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.queCantidad}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoTangible}</td>
+              <td className="px-2 py-2 border-l-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.compraTotal}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoCuantificable}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
+              <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cuantoDeberiamosIr}</td>
+              <td className="px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
             </tr>
           ))}
         </tbody>
