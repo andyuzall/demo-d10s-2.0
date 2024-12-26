@@ -5,9 +5,6 @@ import Navbarr from "@/components/Navbar/Navbarr";
 import { setFlagsFromString } from 'v8';
 setFlagsFromString('--no-deprecation');
 
-
-
-
 export const metadata: Metadata = {
   title: "D10S 2.0",
   description: "Software de Monitoreo",
@@ -19,10 +16,10 @@ export default function RootLayout({ children, }: {
   return (
     <html lang="en">
       <body className='font-poppins'>
-        <Providers>
-          <Navbarr />
-          {children}
-        </Providers>
+          <Providers>
+            <Navbarr />
+            {children}
+          </Providers>
       </body>
     </html>
   );

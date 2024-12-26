@@ -6,6 +6,7 @@ import destacadoActivo from '../../assets/icons/menu-campañas/destacados/destac
 import destacadoActivoclicked from '../../assets/icons/menu-campañas/destacados/destacado-activo-pressed.svg'
 import axios from 'axios';
 import Image from 'next/image';
+import SwitchButton from '../Switch/SwitchButton';
 
 interface Product {
   estado: string;
@@ -78,8 +79,8 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
               <span className="text-l font-semibold text-negro">
                 Todas las campañas
               </span>
-
             </h1>
+            <SwitchButton />
           </div>
         </div>
 
