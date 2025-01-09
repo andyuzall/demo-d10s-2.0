@@ -7,8 +7,13 @@ import iconActivasCritica from '../assets/icons/menu-campañas/activas-criticas.
 import iconActivasDelicada from '../assets/icons/menu-campañas/activas-delicada.svg';
 import iconSinActividad from '../assets/icons/menu-campañas/sinactividad.svg';
 import iconFinalizadas from '../assets/icons/menu-campañas/finalizadas.svg';
+import iconFinalizadasExito from '../assets/icons/menu-campañas/finalizadas-exito.svg';
 import iconFueraDV from '../assets/icons/menu-campañas/fueradv360.svg';
+import iconPausadas from '../assets/icons/menu-campañas/pausadas.svg';
+import iconDestacadas from '../assets/icons/menu-campañas/destacadas.svg';
+
 import Image from 'next/image';
+import CampaignTooltip from './Tooltip/CampaignTooltip';
 
 
 type SidebarProps = {
@@ -18,7 +23,8 @@ type SidebarProps = {
 
 const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) => {
    const [isEstadosOpen, setIsEstadosOpen] = useState(false);
-
+   const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
+   const [selectedButton, setSelectedButton] = useState('');
    //   const fetchDestacadas = async () => {
    //     try {
    //       const response = await axios.get('/api/getDestacadas');
@@ -41,122 +47,131 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
    const handleCampañasActivas = () => {
       setIsEstadosOpen(!isEstadosOpen);
       onFilterChange("estado", "Activa");
+      setSelectedButton("Activa");
    }
 
    const handleCampañasSinActividad = () => {
       onFilterChange("estado", "Sin actividad");
+      setSelectedButton("Sin actividad");
+   }
+
+   const handleCampañasPausadas = () => {
+      onFilterChange("estado", "Pausada");
+      setSelectedButton("Pausada");
    }
 
    const handleCampañasFinalizadas = () => {
+      setIsFinalizadasOpen(!isFinalizadasOpen);
       onFilterChange("estado", "Finalizada");
+      setSelectedButton("Finalizada");
    }
 
    const handleCampañasPorFueraDeDV = () => {
       onFilterChange("estado", "Por fuera de DV360")
+      setSelectedButton("Por fuera de DV360");
    }
 
    return (
       <div className="bg-grisPrincipal bg-opacity-30 rounded-lg text-white w-12 h-[500px] p-1 pt-3 m-1  flex flex-col gap-2 items-center">
          {/* Sección de campañas Activas */}
-         <div>
-            <button
-               onClick={() => handleCampañasActivas()}
-               className="bg-blanco flex justify-between items-center py-2 px-2 rounded-md"
-            >
-               <Image
-                  src={iconActivas}
-                  alt="icono activas"
-                  width={20}
-                  height={20}
+         <CampaignTooltip
+            iconSrc={iconActivas}
+            tooltipText="Campañas activas"
+            isSelected={selectedButton === 'Activa'}
+            onClick={() => handleCampañasActivas()}
+         />
+         {isEstadosOpen && (
+            <div className="mt-2 flex flex-col gap-1 items-center">
+
+               <CampaignTooltip
+                  iconSrc={iconActivasExito}
+                  tooltipText="Campañas activas en estado excelente"
+                  isSelected={selectedButton === 'Activa excelente'}
+                  onClick={() => {
+                     onFilterChange("estado", "Finalizada");
+                     setSelectedButton("Activa excelente");
+                  }}
                />
-            </button>
-            {isEstadosOpen && (
-               <div className="mt-2 flex flex-col gap-1 items-center">
-                  <button
-                     onClick={() => onFilterChange("estado", "Finalizada")}
-                     className="bg-blanco block py-2 px-2 rounded-md">
-                     <Image
-                        src={iconActivasExito}
-                        alt="icono exito"
-                        width={20}
-                        height={20}
-                     />
-                  </button>
-                  <button
-                     onClick={() => onFilterChange("estado", "Sin actividad")}
-                     className="bg-blanco block py-2 px-2 rounded-md">
-                     <Image
-                        src={iconActivasOptimo}
-                        alt="icono activas"
-                        width={20}
-                        height={20}
-                     />
-                  </button>
-                  <button
-                     onClick={() => onFilterTwoChange("estadoCampana", "delicado", "estado", "Activa")}
-                     className="bg-blanco block py-2 px-2 rounded-md">
-                     <Image
-                        src={iconActivasDelicada}
-                        alt="icono activas"
-                        width={20}
-                        height={20}
-                     />
-                  </button>
-                  <button
-                     onClick={() => onFilterTwoChange("estadoCampana", "critico", "estado", "Activa")}
-                     className="bg-blanco block py-2 px-2 rounded-md">
-                     <Image
-                        src={iconActivasCritica}
-                        alt="icono activas"
-                        width={20}
-                        height={20}
-                     />
-                  </button>
-               </div>
-            )}
-         </div>
+
+               <CampaignTooltip
+                  iconSrc={iconActivasOptimo}
+                  tooltipText="Campañas activas en estado optimo"
+                  isSelected={selectedButton === 'Activa optimo'}
+                  onClick={() => {
+                     onFilterChange("estado", "Finalizada");
+                     setSelectedButton("Activa optimo");
+                  }}               />
+
+               <CampaignTooltip
+                  iconSrc={iconActivasDelicada}
+                  tooltipText="Campañas activas en estado delicado"
+                  isSelected={selectedButton === 'Activa delicado'}
+                  onClick={() => {
+                     onFilterChange("estado", "Finalizada");
+                     setSelectedButton("Activa delicado");
+                  }}
+               />
+
+               <CampaignTooltip
+                  iconSrc={iconActivasCritica}
+                  tooltipText="Campañas activas en estado critico"
+                  isSelected={selectedButton === 'Activa critico'}
+                  onClick={() => {
+                     onFilterTwoChange("estadoCampana", "critico", "estado", "Activa");
+                     setSelectedButton("Activa critico");
+                  }}
+               />
+
+            </div>
+         )}
+         {/* Sección de campañas destacadas */}
+         <CampaignTooltip
+            iconSrc={iconDestacadas}
+            tooltipText="Campañas destacadas"
+            isSelected={selectedButton === 'Destacadas'}
+            onClick={() => handleCampañasSinActividad()} //TODO: cambiar a campañas destacadas
+         />
          {/* Sección de campañas sin actividad */}
-         <div>
-            <button
-               onClick={() => handleCampañasSinActividad()}
-               className="bg-white flex justify-between items-center py-2 px-2 rounded-md"
-            >
-               <Image
-                  src={iconSinActividad}
-                  alt="icono sin actividad"
-                  width={20}
-                  height={20}
-               />
-            </button>
-         </div>
-         {/* Sección de campañas Finalizadas */}
-         <div>
-            <button
-               onClick={() => handleCampañasFinalizadas()}
-               className="bg-white flex justify-between items-center py-2 px-2 rounded-md "
-            >
-               <Image
-                  src={iconFinalizadas}
-                  alt="icono finalizadas"
-                  width={20}
-                  height={20}
-               />
-            </button>
-         </div>
+         <CampaignTooltip
+            iconSrc={iconSinActividad}
+            tooltipText="Campañas sin actividad"
+            isSelected={selectedButton === 'Sin actividad'}
+            onClick={() => handleCampañasSinActividad()}
+         />
+         {/* Sección de campañas pausadas */}
+         <CampaignTooltip
+            iconSrc={iconPausadas}
+            tooltipText="Campañas pausadas"
+            isSelected={selectedButton === 'Pausada'}
+            onClick={() => handleCampañasPausadas()}
+         />
          {/* Sección de campañas Por fuera de DV */}
-         <div>
-            <button
-               onClick={() => handleCampañasPorFueraDeDV()}
-               className="bg-white flex justify-between items-center py-2 px-2 rounded-md "
-            >
-               <Image
-                  src={iconFueraDV}
-                  alt="icono fuera de DV360"
-                  width={20}
-                  height={20}
+         <CampaignTooltip
+            iconSrc={iconFueraDV}
+            tooltipText="Campañas fuera de DV360"
+            isSelected={selectedButton === 'Por fuera de DV360'}
+            onClick={() => handleCampañasPorFueraDeDV()}
+         />
+         {/* Sección de campañas Finalizadas */}
+         <CampaignTooltip
+            iconSrc={iconFinalizadas}
+            tooltipText="Campañas finalizadas"
+            isSelected={selectedButton === 'Finalizada'}
+            onClick={() => handleCampañasFinalizadas()}
+         />
+         {isFinalizadasOpen && (
+            <div className="mt-2 flex flex-col gap-1 items-center">
+               <CampaignTooltip
+                  iconSrc={iconFinalizadasExito}
+                  tooltipText="Campañas finalizadas exitosamente"
+                  isSelected={selectedButton === 'Finalizada exitosa'}
+                  onClick={() => {
+                     onFilterChange("estado", "Finalizada");
+                     setSelectedButton("Finalizada exitosa");
+                  }}
                />
-            </button>
-         </div>
+            </div>
+         )}
          {/* Sección de Campañas Destacadas */}
          {/* <div className="">
         <button 
