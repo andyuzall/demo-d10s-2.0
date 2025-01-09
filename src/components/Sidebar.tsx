@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import iconActivas from '../assets/icons/menu-campañas/activa.svg';
-import iconActivasOptimo from '../assets/icons/menu-campañas/activas-optimo.svg';
-import iconActivasExito from '../assets/icons/menu-campañas/activas-exito.svg';
-import iconActivasCritica from '../assets/icons/menu-campañas/activas-criticas.svg';
-import iconActivasDelicada from '../assets/icons/menu-campañas/activas-delicada.svg';
-import iconSinActividad from '../assets/icons/menu-campañas/sinactividad.svg';
-import iconFinalizadas from '../assets/icons/menu-campañas/finalizadas.svg';
-import iconFinalizadasExito from '../assets/icons/menu-campañas/finalizadas-exito.svg';
-import iconFueraDV from '../assets/icons/menu-campañas/fueradv360.svg';
-import iconPausadas from '../assets/icons/menu-campañas/pausadas.svg';
-import iconDestacadas from '../assets/icons/menu-campañas/destacadas.svg';
 
-import Image from 'next/image';
+import { 
+   IconActivas, 
+   IconActivasExito, 
+   IconActivasOptimo, 
+   IconActivasDelicada, 
+   IconActivasCritica, 
+   IconDestacadas, 
+   IconSinActividad, 
+   IconPausadas, 
+   IconFueraDV, 
+   IconFinalizadas, 
+   IconFinalizadasExito } from './Tooltip/icons';
 import CampaignTooltip from './Tooltip/CampaignTooltip';
 
 
@@ -75,16 +75,15 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
       <div className="bg-grisPrincipal bg-opacity-30 rounded-lg text-white w-12 h-[500px] p-1 pt-3 m-1  flex flex-col gap-2 items-center">
          {/* Sección de campañas Activas */}
          <CampaignTooltip
-            iconSrc={iconActivas}
+            icon={<IconActivas className={`w-5 h-5 ${selectedButton === 'Activa' ? 'stroke-blanco' : ''}`} />}
             tooltipText="Campañas activas"
             isSelected={selectedButton === 'Activa'}
             onClick={() => handleCampañasActivas()}
          />
          {isEstadosOpen && (
             <div className="mt-2 flex flex-col gap-1 items-center">
-
                <CampaignTooltip
-                  iconSrc={iconActivasExito}
+                  icon={<IconActivasExito className={`w-5 h-5 ${selectedButton === 'Activa excelente' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
                   tooltipText="Campañas activas en estado excelente"
                   isSelected={selectedButton === 'Activa excelente'}
                   onClick={() => {
@@ -94,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                />
 
                <CampaignTooltip
-                  iconSrc={iconActivasOptimo}
+                  icon={<IconActivasOptimo className={`w-5 h-5 ${selectedButton === 'Activa optimo' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
                   tooltipText="Campañas activas en estado optimo"
                   isSelected={selectedButton === 'Activa optimo'}
                   onClick={() => {
@@ -103,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   }}               />
 
                <CampaignTooltip
-                  iconSrc={iconActivasDelicada}
+                  icon={<IconActivasDelicada className={`w-5 h-5 ${selectedButton === 'Activa delicado' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
                   tooltipText="Campañas activas en estado delicado"
                   isSelected={selectedButton === 'Activa delicado'}
                   onClick={() => {
@@ -113,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                />
 
                <CampaignTooltip
-                  iconSrc={iconActivasCritica}
+                  icon={<IconActivasCritica className={`w-5 h-5 ${selectedButton === 'Activa critico' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
                   tooltipText="Campañas activas en estado critico"
                   isSelected={selectedButton === 'Activa critico'}
                   onClick={() => {
@@ -126,35 +125,35 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
          )}
          {/* Sección de campañas destacadas */}
          <CampaignTooltip
-            iconSrc={iconDestacadas}
+            icon={<IconDestacadas className={`w-5 h-5 ${selectedButton === 'Destacadas' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas destacadas"
             isSelected={selectedButton === 'Destacadas'}
             onClick={() => handleCampañasSinActividad()} //TODO: cambiar a campañas destacadas
          />
          {/* Sección de campañas sin actividad */}
          <CampaignTooltip
-            iconSrc={iconSinActividad}
+            icon={<IconSinActividad className={`w-5 h-5 ${selectedButton === 'Sin actividad' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas sin actividad"
             isSelected={selectedButton === 'Sin actividad'}
             onClick={() => handleCampañasSinActividad()}
          />
          {/* Sección de campañas pausadas */}
          <CampaignTooltip
-            iconSrc={iconPausadas}
+            icon={<IconPausadas className={`w-5 h-5 ${selectedButton === 'Pausada' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas pausadas"
             isSelected={selectedButton === 'Pausada'}
             onClick={() => handleCampañasPausadas()}
          />
          {/* Sección de campañas Por fuera de DV */}
          <CampaignTooltip
-            iconSrc={iconFueraDV}
+            icon={<IconFueraDV className={`w-5 h-5 ${selectedButton === 'Por fuera de DV360' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas fuera de DV360"
             isSelected={selectedButton === 'Por fuera de DV360'}
             onClick={() => handleCampañasPorFueraDeDV()}
          />
          {/* Sección de campañas Finalizadas */}
          <CampaignTooltip
-            iconSrc={iconFinalizadas}
+            icon={<IconFinalizadas className={`w-5 h-5 ${selectedButton === 'Finalizada' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas finalizadas"
             isSelected={selectedButton === 'Finalizada'}
             onClick={() => handleCampañasFinalizadas()}
@@ -162,7 +161,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
          {isFinalizadasOpen && (
             <div className="mt-2 flex flex-col gap-1 items-center">
                <CampaignTooltip
-                  iconSrc={iconFinalizadasExito}
+                  icon={<IconFinalizadasExito className={`w-5 h-5 ${selectedButton === 'Finalizada exitosa' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
                   tooltipText="Campañas finalizadas exitosamente"
                   isSelected={selectedButton === 'Finalizada exitosa'}
                   onClick={() => {
