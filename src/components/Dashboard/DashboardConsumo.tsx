@@ -53,7 +53,7 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
       </div>
 
       {/* Contenedor con la tabla */}
-    <div className="overflow-x-auto h-4/5">
+    <div className="overflow-x-auto h-[650px]">
       <div className="overflow-y-auto">
       <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
         <thead className="bg-violetaSecundario text-blanco">

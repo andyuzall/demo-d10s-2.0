@@ -85,7 +85,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
         </div>
 
         {/* Contenedor con la tabla */}
-        <div className="overflow-x-auto h-4/5">
+        <div className="overflow-x-auto h-[650px]">
           <div className="overflow-y-auto">
             <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
               <thead className="bg-violetaSecundario text-blanco">
@@ -99,7 +99,6 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                   <th className="px-2 py-2">Inicio</th>
                   <th className="px-2 py-2">Fin</th>
                   <th className="px-2 py-2">ID DV360</th>
-                  {/* <th className="w-[5px] text-start">Nombre</th> */}
                   <th className="px-2 py-2">Categoría</th>
                   <th className="px-2 py-2">Duración</th>
                   <th className="px-2 py-2">Días restantes</th>
@@ -175,7 +174,6 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         {producto.idDV}
                       </a>
                     </td>
-                    {/* <td className="border-t-2 border-b-2 border-violetaPrincipal w-[5px] text-start">{producto.campana}</td> */}
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.categoria}</td>
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.duracionCampana}</td>
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
