@@ -40,7 +40,7 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
   return (
     <div className="flex items-center ">
     {/* Contenedor principal con fondo, bordes redondeados y espacio interno */}
-    <div className="bg-grisPrincipal bg-opacity-30 border-white shadow-custom rounded-xl p-4 w-full">
+    <div className="bg-grisPrincipal bg-opacity-30 border-white shadow-custom rounded-xl p-4 w-full h-lvh">
       {/* Títulos y encabezados superiores */}
       <div className="mb-2">
         <div className="flex justify-between items-center">
@@ -53,7 +53,7 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
       </div>
 
       {/* Contenedor con la tabla */}
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto h-4/5">
       <div className="overflow-y-auto">
       <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
         <thead className="bg-violetaSecundario text-blanco">

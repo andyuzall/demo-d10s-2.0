@@ -72,7 +72,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
    }
 
    return (
-      <div className="bg-grisPrincipal bg-opacity-30 rounded-lg text-white w-12 h-[500px] p-1 pt-3 m-1  flex flex-col gap-2 items-center">
+      <div className="bg-grisPrincipal bg-opacity-30 rounded-lg text-white w-12 h-[500px] p-1 pt-3 m-1 flex flex-col gap-2 items-center">
          {/* Sección de campañas Activas */}
          <CampaignTooltip
             icon={<IconActivas className={`w-5 h-5 ${selectedButton === 'Activa' ? 'stroke-blanco' : ''}`} />}
@@ -125,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
          )}
          {/* Sección de campañas destacadas */}
          <CampaignTooltip
-            icon={<IconDestacadas className={`w-5 h-5 ${selectedButton === 'Destacadas' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+            icon={<IconDestacadas className={`w-5 h-5 items-center ${selectedButton === 'Destacadas' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas destacadas"
             isSelected={selectedButton === 'Destacadas'}
             onClick={() => handleCampañasSinActividad()} //TODO: cambiar a campañas destacadas
