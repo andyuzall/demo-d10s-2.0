@@ -46,28 +46,44 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
 
    const handleCampañasActivas = () => {
       setIsEstadosOpen(!isEstadosOpen);
-      onFilterChange("estado", "Activa");
+      onFilterTwoChange("estado", "Activa", "estadoCampana", "")
       setSelectedButton("Activa");
    }
 
+   const handleCampañasActivasAceptables = () => {
+      onFilterTwoChange("estado", "Activa", "estadoCampana", "aceptable")
+   }
+
+   const handleCampañasActivasOptimas = () => {
+      onFilterTwoChange("estado", "Activa", "estadoCampana", "optimo")
+   }
+
+   const handleCampañasActivasDelicadas = () => {
+      onFilterTwoChange("estado", "Activa", "estadoCampana", "delicado")
+   }
+
+   const handleCampañasActivasCritico = () => {
+      onFilterTwoChange("estado", "Activa", "estadoCampana", "critico")
+   }
+
    const handleCampañasSinActividad = () => {
-      onFilterChange("estado", "Sin actividad");
+      onFilterTwoChange("estado", "Sin actividad", "estadoCampana", "")
       setSelectedButton("Sin actividad");
    }
 
    const handleCampañasPausadas = () => {
-      onFilterChange("estado", "Pausada");
+      onFilterTwoChange("estado", "Pausada", "estadoCampana", "")
       setSelectedButton("Pausada");
    }
 
    const handleCampañasFinalizadas = () => {
       setIsFinalizadasOpen(!isFinalizadasOpen);
-      onFilterChange("estado", "Finalizada");
+      onFilterTwoChange("estado", "Finalizada", "estadoCampana", "")
       setSelectedButton("Finalizada");
    }
 
    const handleCampañasPorFueraDeDV = () => {
-      onFilterChange("estado", "Por fuera de DV360")
+      onFilterTwoChange("estado", "Por fuera de DV360", "estadoCampana", "")
       setSelectedButton("Por fuera de DV360");
    }
 
@@ -87,7 +103,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   tooltipText="Campañas activas en estado excelente"
                   isSelected={selectedButton === 'Activa excelente'}
                   onClick={() => {
-                     onFilterChange("estado", "Finalizada");
+                     handleCampañasActivasAceptables();
                      setSelectedButton("Activa excelente");
                   }}
                />
@@ -97,7 +113,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   tooltipText="Campañas activas en estado optimo"
                   isSelected={selectedButton === 'Activa optimo'}
                   onClick={() => {
-                     onFilterChange("estado", "Finalizada");
+                     handleCampañasActivasOptimas();
                      setSelectedButton("Activa optimo");
                   }}               />
 
@@ -106,7 +122,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   tooltipText="Campañas activas en estado delicado"
                   isSelected={selectedButton === 'Activa delicado'}
                   onClick={() => {
-                     onFilterChange("estado", "Finalizada");
+                     handleCampañasActivasDelicadas();
                      setSelectedButton("Activa delicado");
                   }}
                />
@@ -116,7 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   tooltipText="Campañas activas en estado critico"
                   isSelected={selectedButton === 'Activa critico'}
                   onClick={() => {
-                     onFilterTwoChange("estadoCampana", "critico", "estado", "Activa");
+                     handleCampañasActivasCritico();
                      setSelectedButton("Activa critico");
                   }}
                />
