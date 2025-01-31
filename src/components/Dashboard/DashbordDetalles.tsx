@@ -113,7 +113,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                       <th className="px-2 py-2">KPI</th>
                       <th className="px-2 py-2">Unidad</th>
                       <th className="px-2 py-2">Costo</th>
-                      <th className="px-2 py-2">Re%ult</th>
+                      <th className="px-2 py-2">%Entr</th>
                       <th className="px-2 py-2">Uni.</th>
                       <th className="px-2 py-2">Costo</th>
                       <th className="px-2 py-2">Faltan</th>
@@ -210,7 +210,17 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.queBuscamos}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.queCantidad}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoTangible}</td>
-                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
+                        <td className="border-t-2 border-b-2 border-violetaPrincipal">
+                          <p
+                          className={`${parseFloat(producto.porcentajeObjetivo) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
+                          ${parseFloat(producto.porcentajeObjetivo) >= 100 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
+                          ${parseFloat(producto.porcentajeObjetivo) >= 75 && parseFloat(producto.porcentajeObjetivo) < 100 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
+                          ${parseFloat(producto.porcentajeObjetivo) >= 40 && parseFloat(producto.porcentajeObjetivo) < 75 ? 'bg-orange bg-opacity-15 rounded-3xl border-orange border-2 p-1' : ''}
+                          ${parseFloat(producto.porcentajeObjetivo) < 40 ? ' bg-red bg-opacity-15 rounded-3xl border-red border-2 p-1' : ''}`}
+                          >
+                            {producto.porcentajeObjetivo}%
+                          </p>
+                        </td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.compraTotal}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoCuantificable}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
@@ -220,11 +230,11 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                           border-t-2 border-b-2 border-violetaPrincipal`}>
                           <p
                             className={`
-                              ${parseFloat(producto.porcentaje) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2' : ''}
-                              ${parseFloat(producto.porcentaje) >= 100 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2' : ''}
-                              ${parseFloat(producto.porcentaje) >= 75 && parseFloat(producto.porcentaje) < 100 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2' : ''}
-                              ${parseFloat(producto.porcentaje) >= 40 && parseFloat(producto.porcentaje) < 75 ? 'bg-orange bg-opacity-15 rounded-3xl border-orange border-2' : ''}
-                              ${parseFloat(producto.porcentaje) < 40 ? ' bg-red bg-opacity-15 rounded-3xl border-red border-2' : ''}
+                              ${parseFloat(producto.porcentaje) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
+                              ${parseFloat(producto.porcentaje) >= 100 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
+                              ${parseFloat(producto.porcentaje) >= 75 && parseFloat(producto.porcentaje) < 100 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
+                              ${parseFloat(producto.porcentaje) >= 40 && parseFloat(producto.porcentaje) < 75 ? 'bg-orange bg-opacity-15 rounded-3xl border-orange border-2 p-1' : ''}
+                              ${parseFloat(producto.porcentaje) < 40 ? ' bg-red bg-opacity-15 rounded-3xl border-red border-2 p-1' : ''}
                               `}
                           >
                             {producto.porcentaje}%
