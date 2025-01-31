@@ -38,6 +38,8 @@ interface Product {
   idDV: string;
   accessDV: string;
   estadoCampana: string;
+  queBuscamos: string;
+  queCantidad: string;
 }
 
 interface DashboardDetallesProps {
@@ -47,6 +49,7 @@ interface DashboardDetallesProps {
 
 const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds }) => {
   const [likedIds, setLikedIds] = useState<string[]>(existingIds);
+  const [showExtraTables, setShowExtraTables] = useState(false);
 
   const handleSaveEspecialToBigQuery = async (producto: Product) => {
     try {
@@ -80,14 +83,13 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                 Todas las campañas
               </span>
             </h1>
-            <SwitchButton />
+            <SwitchButton onChange={setShowExtraTables} />
           </div>
         </div>
-
-        {/* Contenedor con la tabla */}
+        {/* Contenedor con la tabla sin menos info */}
         <div className="overflow-x-auto h-[650px]">
-          <div className="overflow-y-auto">
-            <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
+          <div className="overflow-y-auto max-h-full">
+            <table className="min-w-full whitespace-nowrap text-xs border-separate border-spacing-y-2 text-center">
               <thead className="bg-violetaSecundario text-blanco">
                 <tr className="rounded-t-3xl">
                   <th className="px-2 py-2 rounded-tl-3xl rounded-bl-3xl">Destacar</th>
@@ -101,8 +103,30 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                   <th className="px-2 py-2">ID DV360</th>
                   <th className="px-2 py-2">Categoría</th>
                   <th className="px-2 py-2">Duración</th>
-                  <th className="px-2 py-2">Días restantes</th>
-                  <th className="px-2 py-2 rounded-tr-3xl rounded-br-3xl">Inversión</th>
+                  <th className="px-2 py-2">Restante</th>
+                  <th
+                    className={`${showExtraTables ? "px-2 py-2" : "px-2 py-2 rounded-tr-3xl rounded-br-3xl"}`}>
+                    Inversión
+                  </th>
+                  {showExtraTables && (
+                    <>
+                      <th className="px-2 py-2">KPI</th>
+                      <th className="px-2 py-2">Unidad</th>
+                      <th className="px-2 py-2">Costo</th>
+                      <th className="px-2 py-2">Re%ult</th>
+                      <th className="px-2 py-2">Uni.</th>
+                      <th className="px-2 py-2">Costo</th>
+                      <th className="px-2 py-2">Faltan</th>
+                      <th className="px-2 py-2">Ideal hoy</th>
+                      <th className="px-2 py-2">Proye%</th>
+                      <th className="px-2 py-2">Re%ult</th>
+                      <th className="px-2 py-2">Acordado</th>
+                      <th className="px-2 py-2">Actual</th>
+                      <th className="px-2 py-2">Falta</th>
+                      <th className="px-2 py-2">Ideal</th>
+                      <th className="px-2 py-2 rounded-tr-3xl rounded-br-3xl">Proye%</th>
+                    </>
+                  )}
                 </tr>
               </thead>
               <tbody className="text-gray-800">
@@ -177,7 +201,38 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.categoria}</td>
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.duracionCampana}</td>
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
-                    <td className="px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal">${producto.inversionCampana}</td>
+                    <td
+                      className={`${showExtraTables ? "px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal" : "px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal"}`}>
+                      ${producto.inversionCampana}
+                    </td>
+                    {showExtraTables && (
+                      <>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.queBuscamos}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.queCantidad}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoTangible}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.compraTotal}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoCuantificable}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cuantoDeberiamosIr}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
+                        <td className={`
+                          border-t-2 border-b-2 border-violetaPrincipal
+                          ${parseFloat(producto.porcentaje) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-opacity-100' : ''}
+                          ${parseFloat(producto.porcentaje) >= 100 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-opacity-100' : ''}
+                          ${parseFloat(producto.porcentaje) >= 75 && parseFloat(producto.porcentaje) < 100 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-opacity-100' : ''}
+                          ${parseFloat(producto.porcentaje) >= 40 && parseFloat(producto.porcentaje) < 75 ? 'bg-orange bg-opacity-15 rounded-3xl border-orange border-opacity-100' : ''}
+                          ${parseFloat(producto.porcentaje) < 40 ? ' bg-red bg-opacity-15 rounded-3xl border-red border-opacity-100' : ''}
+                          `}>
+                          {producto.porcentaje}%
+                        </td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.inversionCampana}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.consumoCampana}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cuantoConsumoDeberiamosIr}</td>
+                        <td className="px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentaje}%</td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
