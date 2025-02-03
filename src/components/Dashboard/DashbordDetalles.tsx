@@ -45,9 +45,10 @@ interface Product {
 interface DashboardDetallesProps {
   productos: Product[];
   existingIds: string[];
+  title: string;
 }
 
-const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds }) => {
+const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds, title }) => {
   const [likedIds, setLikedIds] = useState<string[]>(existingIds);
   const [showExtraTables, setShowExtraTables] = useState(false);
 
@@ -80,7 +81,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
           <div className="flex justify-between">
             <h1 className="text-l font-bold text-negro">
               <span className="text-l font-semibold text-negro">
-                Todas las campañas
+                {title}
               </span>
             </h1>
             <SwitchButton onChange={setShowExtraTables} />

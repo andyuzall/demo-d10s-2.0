@@ -57,7 +57,7 @@ function TopBar() {
         }
       };
       fetchDestacadas();
-      return; // Detén aquí para evitar sobrescribir `filteredProductos` más adelante.
+      return;
     }
 
     if (activeFilterTwo.type && activeFilterTwo.value) {
@@ -117,7 +117,7 @@ function TopBar() {
           </button>
         </nav>
         <div>
-          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} />}
+          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
           {selectedButton === 'objetivoEntregable' && <DashboardEntregable productos={filteredProductos} existingIds={existingIds} />}
           {selectedButton === 'objetivoConsumo' && <DashboardConsumo productos={filteredProductos} existingIds={existingIds} />}
         </div>
