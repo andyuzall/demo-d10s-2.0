@@ -33,9 +33,10 @@ interface Product {
 interface DashboardConsumoProps {
   productos: Product[];
   existingIds: string[];
+  title: string;
 }
 
-const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
+const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos, title }) => {
 
   return (
     <div className="flex items-center ">
@@ -44,7 +45,7 @@ const DashboardConsumo: React.FC<DashboardConsumoProps> = ({ productos }) => {
         {/* Títulos y encabezados superiores */}
         <div className="mb-2">
           <div className="flex justify-between items-center">
-            <h1 className="text-l font-bold text-negro">Todas las Campañas</h1>
+            <h1 className="text-l font-bold text-negro">{title}</h1>
             <div className='flex items-start gap-20'>
               <span className="text-l font-semibold text-negro">Inversión</span>
               <span className="text-l font-semibold text-negro">¿Cuánto nos falta?</span>

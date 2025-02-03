@@ -33,9 +33,10 @@ interface Product {
 interface DashboardEntregableProps {
   productos: Product[];
   existingIds: string[];
+  title: string;
 }
 
-const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos }) => {
+const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, title }) => {
 
   return (
     <div className="flex items-center ">
@@ -44,7 +45,7 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos }) 
       {/* Títulos y encabezados superiores */}
       <div className="mb-2">
         <div className="flex justify-between">
-        <h1 className="text-l font-bold text-negro">Todas las Campañas</h1>
+        <h1 className="text-l font-bold text-negro">{title}</h1>
           <span className="text-l font-semibold text-negro">Acordado</span>
           <span className="text-l font-semibold text-negro">Actualidad</span>
         </div>

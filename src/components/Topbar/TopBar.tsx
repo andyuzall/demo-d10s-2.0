@@ -117,9 +117,17 @@ function TopBar() {
           </button>
         </nav>
         <div>
-          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
-          {selectedButton === 'objetivoEntregable' && <DashboardEntregable productos={filteredProductos} existingIds={existingIds} />}
-          {selectedButton === 'objetivoConsumo' && <DashboardConsumo productos={filteredProductos} existingIds={existingIds} />}
+          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} 
+          title={
+            [activeFilter.value && `En estado: ${activeFilter.value}`,
+              activeFilterTwo.value && `y ${activeFilterTwo.value}`
+            ]
+             .filter(Boolean)
+             .join(' ') || 'Todas las campañas'
+          }
+          />}
+          {selectedButton === 'objetivoEntregable' && <DashboardEntregable productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
+          {selectedButton === 'objetivoConsumo' && <DashboardConsumo productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
         </div>
       </div>
     </div>
