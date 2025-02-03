@@ -52,13 +52,12 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
   const [likedIds, setLikedIds] = useState<string[]>(existingIds);
   const [showExtraTables, setShowExtraTables] = useState(false);
 
-  const handleSaveEspecialToBigQuery = async (producto: Product) => {
+  const handleSaveEspecialSheet = async (producto: Product) => {
     try {
-      await axios.post('/api/saveEspecialToBigQuery', producto);
-      console.log('Datos guardados en BigQuery');
-      setLikedIds([...likedIds, producto.id]);
+      await axios.post('/api/saveEspecialToSheet', { id: producto.id });
+      console.log('Datos guardados en Google Sheet');
     } catch (error) {
-      console.error('Error al guardar en BigQuery:', error);
+      console.error('Error al guardar en GoogleSheet:', error);
     }
   };
 
@@ -165,7 +164,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         producto.estado === 'BONIFICADA' ||
                         producto.estado === 'Por fuera de DV360' ?
                         <IconButton
-                          onClick={() => handleSaveEspecialToBigQuery(producto)}
+                          onClick={() => handleSaveEspecialSheet(producto)}
                           disabled={likedIds.includes(producto.id)}
                           color="error"
                         >

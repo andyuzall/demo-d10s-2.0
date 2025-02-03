@@ -38,6 +38,11 @@ interface Producto {
   estadoCampana: string;
 }
 
+interface SpecialCampaign {
+  id: string;
+  especial: string;
+}
+
 interface HomeData {
   trader: string;
   mesActual: number;
@@ -297,6 +302,32 @@ export async function getAlarms(userEmail: string): Promise<Alarms[]> {
     }));
   } catch (error) {
     console.error('Error al obtener las alarmas de Google Sheets:', error);
+    throw error;
+  }
+}
+
+export async function postEspecialCampaigns(productId: string): Promise<void> {
+
+  const serviceAccountAuth = await initializeServiceAccountAuth();
+  const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
+
+  try {
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[6]; 
+    const rows = await sheet.getRows<SpecialCampaign>();
+
+    const rowToUpdate = rows.find(row => row.get('id') === productId);
+
+    if (rowToUpdate) {
+      rowToUpdate.set('especial', 'si');
+      await rowToUpdate.save();
+
+    } else {
+      console.warn('No se encontro ninguna fila');
+    }
+
+  } catch (error) {
+    console.error('Error al actualizar Google Sheets:', error);
     throw error;
   }
 }

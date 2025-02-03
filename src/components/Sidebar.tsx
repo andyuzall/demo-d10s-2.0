@@ -34,15 +34,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
    //     }
    //   };
 
-   const fetchEspecialCampaigns = async () => {
-      try {
-         const res = await axios.get('/api/getEspecialCampaigns');
-         onFilterChange("especial", res.data);
-         console.log(res.data);
-      } catch (error) {
-         console.error('Error al obtener datos de campañas especiales:', error);
-      }
-   };
+   
+   const handleCampañasDestacadas = () => {
+      setSelectedButton("especial");
+   }
 
    const handleCampañasActivas = () => {
       setIsEstadosOpen(!isEstadosOpen);
@@ -141,10 +136,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
          )}
          {/* Sección de campañas destacadas */}
          <CampaignTooltip
-            icon={<IconDestacadas className={`w-5 h-5 items-center ${selectedButton === 'Destacadas' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+            icon={<IconDestacadas className={`w-5 h-5 items-center ${selectedButton === 'especial' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText="Campañas destacadas"
-            isSelected={selectedButton === 'Destacadas'}
-            onClick={() => handleCampañasSinActividad()} //TODO: cambiar a campañas destacadas
+            isSelected={selectedButton === 'especial'}
+            onClick={() => handleCampañasDestacadas()}
          />
          {/* Sección de campañas sin actividad */}
          <CampaignTooltip

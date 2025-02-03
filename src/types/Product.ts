@@ -56,3 +56,8 @@ export interface Alarms {
     cliente: string;
     categoria: number;
 }
+
+export interface SpecialCampaign {
+  id: string;
+  especial: string;
+}
