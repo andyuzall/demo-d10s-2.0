@@ -36,11 +36,7 @@ interface Producto {
   idDV: string;
   accessDV: string;
   estadoCampana: string;
-}
-
-interface SpecialCampaign {
-  id: string;
-  especial: string;
+  campanaEspecial: string;
 }
 
 interface HomeData {
@@ -180,6 +176,7 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
       idDV: row.get('idDV'),
       accessDV: row.get('accessDV'),
       estadoCampana: row.get('estadoCampana'),
+      campanaEspecial: row.get('campanaEspecial')
     }));
   }
   return rows
@@ -218,6 +215,7 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
     idDV: row.get('idDV'),
     accessDV: row.get('accessDV'),
     estadoCampana: row.get('estadoCampana'),
+    campanaEspecial: row.get('campanaEspecial')
   }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);
@@ -314,20 +312,34 @@ export async function postEspecialCampaigns(productId: string): Promise<void> {
   try {
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[6]; 
-    const rows = await sheet.getRows<SpecialCampaign>();
 
-    const rowToUpdate = rows.find(row => row.get('id') === productId);
-
-    if (rowToUpdate) {
-      rowToUpdate.set('especial', 'si');
-      await rowToUpdate.save();
-
-    } else {
-      console.warn('No se encontro ninguna fila');
-    }
+    await sheet.addRow({ id: productId, especial: 'si' });
 
   } catch (error) {
     console.error('Error al actualizar Google Sheets:', error);
+    throw error;
+  }
+}
+
+export async function getGoogleSheetEspecialIds(): Promise<{ id: string; especial: string }[]> {
+  const serviceAccountAuth = await initializeServiceAccountAuth();
+  const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
+
+  try {
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[6]; 
+    const rows = await sheet.getRows();
+
+    const especialIds = rows
+      .filter((row: GoogleSpreadsheetRow) => row.get('especial') === "si")
+      .map((row: GoogleSpreadsheetRow) => ({
+        id: row.get('id'),
+        especial: row.get('especial'),
+      }));
+
+    return especialIds;
+  } catch (error) {
+    console.error('Error al obtener las campañas especiales:', error);
     throw error;
   }
 }

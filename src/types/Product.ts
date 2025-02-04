@@ -30,6 +30,7 @@ export interface Product {
     idDV: string;
     accessDV: string;
     estadoCampana: string;
+    campanaEspecial: string;
   };
 
 export interface HomeData {
@@ -55,9 +56,4 @@ export interface Alarms {
     dateFormmated: string;
     cliente: string;
     categoria: number;
-}
-
-export interface SpecialCampaign {
-  id: string;
-  especial: string;
 }

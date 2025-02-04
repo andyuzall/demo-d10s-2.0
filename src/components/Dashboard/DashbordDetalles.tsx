@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { IconButton } from '@mui/material';
 import destacadoFinalizada from '../../assets/icons/menu-campañas/destacados/destacado-finalizado.svg'
@@ -40,21 +41,25 @@ interface Product {
   estadoCampana: string;
   queBuscamos: string;
   queCantidad: string;
+  campanaEspecial: string;
 }
 
 interface DashboardDetallesProps {
   productos: Product[];
   existingIds: string[];
+  especialIds: string[];
   title: string;
 }
 
-const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds, title }) => {
+const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existingIds, title, especialIds }) => {
   const [likedIds, setLikedIds] = useState<string[]>(existingIds);
+  const [especialCampaigns, setEspecialCampaigns] = useState<string[]>(especialIds);
   const [showExtraTables, setShowExtraTables] = useState(false);
 
   const handleSaveEspecialSheet = async (producto: Product) => {
     try {
       await axios.post('/api/saveEspecialToSheet', { id: producto.id });
+      setEspecialCampaigns([...especialCampaigns, producto.id]);
       console.log('Datos guardados en Google Sheet');
     } catch (error) {
       console.error('Error al guardar en GoogleSheet:', error);
@@ -165,24 +170,24 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         producto.estado === 'Por fuera de DV360' ?
                         <IconButton
                           onClick={() => handleSaveEspecialSheet(producto)}
-                          disabled={likedIds.includes(producto.id)}
+                          disabled={especialCampaigns.includes(producto.id)}
                           color="error"
                         >
-                          {likedIds.includes(producto.id) ?
+                          {especialCampaigns.includes(producto.id) ? (
                             <Image
                               src={destacadoActivoclicked}
                               alt='Campaña destacada'
                               width={20}
                               height={20}
                             />
-                            :
+                          ) : (
                             <Image
                               src={destacadoActivo}
                               alt='Destacar campaña'
                               width={20}
                               height={20}
                             />
-                          }
+                          )}
                         </IconButton> :
                         ''}
                     </td>
@@ -212,7 +217,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoTangible}</td>
                         <td className="border-t-2 border-b-2 border-violetaPrincipal">
                           <p
-                          className={`${parseFloat(producto.porcentajeObjetivo) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
+                            className={`${parseFloat(producto.porcentajeObjetivo) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
                           ${parseFloat(producto.porcentajeObjetivo) >= 100 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
                           ${parseFloat(producto.porcentajeObjetivo) >= 75 && parseFloat(producto.porcentajeObjetivo) < 100 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
                           ${parseFloat(producto.porcentajeObjetivo) >= 40 && parseFloat(producto.porcentajeObjetivo) < 75 ? 'bg-orange bg-opacity-15 rounded-3xl border-orange border-2 p-1' : ''}

@@ -12,6 +12,7 @@ function TopBar() {
   const [productos, setProductos] = useState<Product[]>([]);
   const [filteredProductos, setFilteredProductos] = useState<Product[]>([]);
   const [existingIds, setExistingIds] = useState<string[]>([]);
+  const [specialIds, setSpecialIds] = useState<string[]>([]);
   const [activeFilter, setActiveFilter] = useState({ type: '', value: '' });
   const [activeFilterTwo, setActiveFilterTwo] = useState({ type: '', value: '' });
   const [loading, setLoading] = useState(true);
@@ -25,6 +26,8 @@ function TopBar() {
     try {
       const response = await axios.get('/api/sheetData');
       const existingIdsResponse = await axios.get('/api/getExistingIds');
+      const specialIdsResponse = await axios.get('/api/getEspecialExistingIds');
+      setSpecialIds(specialIdsResponse.data);
       setExistingIds(existingIdsResponse.data);
       setProductos(response.data);
       setFilteredProductos(response.data);
@@ -117,7 +120,7 @@ function TopBar() {
           </button>
         </nav>
         <div>
-          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} 
+          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} especialIds={specialIds}
           title={
             [activeFilter.value && `En estado: ${activeFilter.value}`,
               activeFilterTwo.value && `y ${activeFilterTwo.value}`

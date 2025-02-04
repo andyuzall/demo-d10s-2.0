@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { fetchEspecialExistingIds } from '../../lib/bigQuery';
+import {  } from '../../lib/bigQuery';
+import { getGoogleSheetEspecialIds } from '@/lib/googleSheets';
 
 export default async function handler(
 req: NextApiRequest,
@@ -7,8 +8,10 @@ res: NextApiResponse
 ) {
     if(req.method === 'GET') {
         try {
-            const existingIds = await fetchEspecialExistingIds();
-            res.status(200).json(existingIds);
+            const especialIds = await getGoogleSheetEspecialIds();
+
+            const idsencontred = especialIds.map(item => item.id)
+            res.status(200).json(idsencontred);
         } catch (error) {
             res.status(500).json({ error: 'Error al obtener los ids existentes' });
         }
