@@ -2,8 +2,6 @@ import "./globals.css";
 import { Providers } from './Providers';
 import type { Metadata } from 'next';
 import Navbarr from "@/components/Navbar/Navbarr";
-import { setFlagsFromString } from 'v8';
-setFlagsFromString('--no-deprecation');
 
 export const metadata: Metadata = {
   title: "D10S 2.0",
