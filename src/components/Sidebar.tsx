@@ -25,6 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
    const [isEstadosOpen, setIsEstadosOpen] = useState(false);
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
+
    //   const fetchDestacadas = async () => {
    //     try {
    //       const response = await axios.get('/api/getDestacadas');
@@ -36,6 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
 
    
    const handleCampañasDestacadas = () => {
+      onFilterChange("campanaEspecial", "Campaña destacada");
       setSelectedButton("especial");
    }
 

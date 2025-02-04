@@ -50,6 +50,9 @@ function TopBar() {
       filtered = filtered.filter(producto =>
         activeFilter.value === 'Todas' ? true : producto.estado === activeFilter.value
       );
+    } else if (activeFilter.type === 'campanaEspecial') {
+      filtered = filtered.filter(producto => producto.campanaEspecial === "Campaña destacada");
+      
     } else if (activeFilter.type === 'destacadas') {
       const fetchDestacadas = async () => {
         try {
@@ -122,7 +125,8 @@ function TopBar() {
         <div>
           {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} especialIds={specialIds}
           title={
-            [activeFilter.value && `En estado: ${activeFilter.value}`,
+            [
+              activeFilter.value && `En estado: ${activeFilter.value}`,
               activeFilterTwo.value && `y ${activeFilterTwo.value}`
             ]
              .filter(Boolean)

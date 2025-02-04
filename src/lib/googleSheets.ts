@@ -313,7 +313,7 @@ export async function postEspecialCampaigns(productId: string): Promise<void> {
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[6]; 
 
-    await sheet.addRow({ id: productId, especial: 'si' });
+    await sheet.addRow({ id: productId, especial: 'Campaña destacada' });
 
   } catch (error) {
     console.error('Error al actualizar Google Sheets:', error);
@@ -331,7 +331,7 @@ export async function getGoogleSheetEspecialIds(): Promise<{ id: string; especia
     const rows = await sheet.getRows();
 
     const especialIds = rows
-      .filter((row: GoogleSpreadsheetRow) => row.get('especial') === "si")
+      .filter((row: GoogleSpreadsheetRow) => row.get('especial') === "Campaña destacada")
       .map((row: GoogleSpreadsheetRow) => ({
         id: row.get('id'),
         especial: row.get('especial'),
