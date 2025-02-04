@@ -254,7 +254,6 @@ export async function getGoogleSheetHomeData(userEmail: string): Promise<HomeDat
   }
 };
 
-
 // obtenemos los datos de las alarmas de la API de Google Sheets
 export async function getAlarms(userEmail: string): Promise<Alarms[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
@@ -303,7 +302,7 @@ export async function getAlarms(userEmail: string): Promise<Alarms[]> {
     throw error;
   }
 }
-
+// Guarda la campaña especial en Google Sheets
 export async function postEspecialCampaigns(productId: string): Promise<void> {
 
   const serviceAccountAuth = await initializeServiceAccountAuth();
@@ -320,7 +319,7 @@ export async function postEspecialCampaigns(productId: string): Promise<void> {
     throw error;
   }
 }
-
+// Obtiene los IDs de las campañas especiales de Google Sheets
 export async function getGoogleSheetEspecialIds(): Promise<{ id: string; especial: string }[]> {
   const serviceAccountAuth = await initializeServiceAccountAuth();
   const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
@@ -340,6 +339,47 @@ export async function getGoogleSheetEspecialIds(): Promise<{ id: string; especia
     return especialIds;
   } catch (error) {
     console.error('Error al obtener las campañas especiales:', error);
+    throw error;
+  }
+}
+
+// Guarda la campaña finalizada exitosamente en Google Sheets
+export async function postFinalizadasExitosas(
+  productId: string,
+  cliente: string,
+  anunciante: string,
+  formato: string,
+  trader: string,
+  inversion: string,
+  consumo: string,
+  objetivoTangible: string,
+  objetivoCuantificable: string,
+  compraTotal: string
+): Promise<void> {
+
+  const serviceAccountAuth = await initializeServiceAccountAuth();
+  const doc = new GoogleSpreadsheet('11aNHxEm8y2CSMFrnVE_fN6pi_3crJOK5XYJ82G-whm8', serviceAccountAuth);
+  const currentDate = new Date().toISOString().split('T')[0];
+  try {
+    await doc.loadInfo();
+    const sheet = doc.sheetsByIndex[7]; 
+
+    await sheet.addRow({ 
+      id: productId,
+      cliente: cliente,
+      anunciante: anunciante,
+      formato: formato,
+      trader: trader,
+      inversion: inversion,
+      consumo: consumo,
+      objetivoTangible: objetivoTangible,
+      objetivoCuantificable: objetivoCuantificable,
+      compraTotal: compraTotal,
+      date: currentDate,
+     });
+
+  } catch (error) {
+    console.error('Error al insertar campaña finalizada exitosamente en Google Sheets:', error);
     throw error;
   }
 }

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
-import { 
-   IconActivas, 
-   IconActivasExito, 
-   IconActivasOptimo, 
-   IconActivasDelicada, 
-   IconActivasCritica, 
-   IconDestacadas, 
-   IconSinActividad, 
-   IconPausadas, 
-   IconFueraDV, 
-   IconFinalizadas, 
-   IconFinalizadasExito } from './Tooltip/icons';
+import {
+   IconActivas,
+   IconActivasExito,
+   IconActivasOptimo,
+   IconActivasDelicada,
+   IconActivasCritica,
+   IconDestacadas,
+   IconSinActividad,
+   IconPausadas,
+   IconFueraDV,
+   IconFinalizadas,
+   IconFinalizadasExito
+} from './Tooltip/icons';
 import CampaignTooltip from './Tooltip/CampaignTooltip';
 
 
@@ -26,16 +26,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
 
-   //   const fetchDestacadas = async () => {
-   //     try {
-   //       const response = await axios.get('/api/getDestacadas');
-   //       onFilterChange("destacadas", response.data);
-   //     } catch (error) {
-   //       console.error('Error al obtener datos de destacadas:', error);
-   //     }
-   //   };
-
-   
    const handleCampañasDestacadas = () => {
       onFilterChange("campanaEspecial", "Campaña destacada");
       setSelectedButton("especial");
@@ -112,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   onClick={() => {
                      handleCampañasActivasOptimas();
                      setSelectedButton("Activa optimo");
-                  }}               />
+                  }} />
 
                <CampaignTooltip
                   icon={<IconActivasDelicada className={`w-5 h-5 ${selectedButton === 'Activa delicado' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
@@ -178,21 +168,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                   tooltipText="Campañas finalizadas exitosamente"
                   isSelected={selectedButton === 'Finalizada exitosa'}
                   onClick={() => {
-                     onFilterChange("estado", "Finalizada");
                      setSelectedButton("Finalizada exitosa");
                   }}
                />
             </div>
          )}
-         {/* Sección de Campañas Destacadas */}
-         {/* <div className="">
-        <button 
-        onClick={fetchEspecialCampaigns}
-        className="flex justify-between items-center text-left py-2 px-1 rounded-md hover:bg-gray-700">
-           <span className="text-xs">Destacadas</span>
-        </button>
-     </div> */}
       </div>
+
    );
 };
 

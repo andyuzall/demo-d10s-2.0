@@ -60,7 +60,6 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
     try {
       await axios.post('/api/saveEspecialToSheet', { id: producto.id });
       setEspecialCampaigns([...especialCampaigns, producto.id]);
-      console.log('Datos guardados en Google Sheet');
     } catch (error) {
       console.error('Error al guardar en GoogleSheet:', error);
     }
@@ -69,8 +68,18 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
   const handleSaveDestacadaToBigQuery = async (producto: Product) => {
     try {
       await axios.post('/api/saveToBigQuery', producto);
-      console.log('Datos guardados en BigQuery');
       setLikedIds([...likedIds, producto.id]);
+      await axios.post('/api/saveExitosaToSheet', { 
+        id: producto.id, 
+        cliente: producto.cliente, 
+        anunciante: producto.anunciante, 
+        formato: producto.formato, 
+        trader: producto.trader, 
+        inversion: producto.inversionCampana, 
+        consumo: producto.consumoCampana, 
+        objetivoTangible: producto.objetivoTangible, 
+        objetivoCuantificable: producto.objetivoCuantificable, 
+        compraTotal: producto.compraTotal });
     } catch (error) {
       console.error('Error al guardar en BigQuery:', error);
     }
