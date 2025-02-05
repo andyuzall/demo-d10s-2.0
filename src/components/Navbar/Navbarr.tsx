@@ -42,6 +42,14 @@ function Navbarr() {
     }
   };
 
+  const signInAccount = async () => {
+    try {
+      await signIn('', { callbackUrl: '/home' });
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+    }
+  }
+
   useEffect(() => {
     fetchNotifications();
   }, []);
@@ -168,7 +176,7 @@ function Navbarr() {
                 <h1 className='font-bold text-2xl text-blanco'>
                   Bienvenido a D1OS 2.0
                 </h1>
-                <button onClick={() => signIn()}
+                <button onClick={() => signInAccount()}
                   className='bg-blanco px-4 py-3 font-bold rounded-2xl text-negro flex items-center justify-between w-full max-w-xs'
                 >
                   <div className="w-6" /> {/* Espaciador invisible para equilibrar el diseño */}
