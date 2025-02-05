@@ -71,7 +71,7 @@ const DashboardHome: React.FC = () => {
   }
 
   if (!datosCampanas.length) {
-    return <div>Error al cargar los datos.</div>;
+    return <Loading />;
   }
 
   return (

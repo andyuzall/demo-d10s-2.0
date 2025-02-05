@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 function Navbarr() {
 
   const { data: session } = useSession();
-  const [selectedButton, setSelectedButton] = useState('');
+  const [selectedButton, setSelectedButton] = useState('home');
   const [notifications, setNotifications] = useState([
     { text: "" },
     { text: "" },

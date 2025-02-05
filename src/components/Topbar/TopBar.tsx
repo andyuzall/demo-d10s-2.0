@@ -85,11 +85,11 @@ function TopBar() {
   };
 
   if (loading) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (!productos.length) {
-    return <div>Error al cargar los datos.</div>
+    return  <Loading />;
   }
 
   return (

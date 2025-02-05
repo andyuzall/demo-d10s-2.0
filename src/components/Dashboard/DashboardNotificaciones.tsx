@@ -65,7 +65,7 @@ const DashboardNotificaciones: React.FC = () => {
     }
 
     if (!datosAlarmas.length) {
-        return <div>Error al cargar los datos.</div>;
+        return  <Loading />;
     }
 
     return (
