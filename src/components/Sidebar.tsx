@@ -11,9 +11,11 @@ import {
    IconPausadas,
    IconFueraDV,
    IconFinalizadas,
-   IconFinalizadasExito
+   IconFinalizadasExito,
+   IconFiltros
 } from './Tooltip/icons';
 import CampaignTooltip from './Tooltip/CampaignTooltip';
+import FilterTooltip from './Tooltip/FiltersToolTip';
 
 
 type SidebarProps = {
@@ -25,6 +27,12 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
    const [isEstadosOpen, setIsEstadosOpen] = useState(false);
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
+   const [selectedCompra, setSelectedCompra] = useState<string>('');
+
+   const handleTipoCompraChange = (filterType: string, filterValue: string) => {
+      setSelectedCompra(filterValue);
+      onFilterChange(filterType, filterValue);
+   };
 
    const handleCampañasDestacadas = () => {
       onFilterChange("campanaEspecial", "Campaña destacada");
@@ -173,6 +181,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
                />
             </div>
          )}
+         {/* Sección de filtros */}
+         <FilterTooltip
+         icon={<IconFiltros className={`w-5 h-5 ${selectedButton === 'Filtros' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+         tooltipText='Filtros'
+         isSelected={selectedButton === 'Filtros'}
+         onClick={() => {}}
+         onFilterChange={handleTipoCompraChange} 
+         />
       </div>
 
    );

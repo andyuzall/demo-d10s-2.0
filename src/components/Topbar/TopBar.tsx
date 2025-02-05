@@ -53,6 +53,20 @@ function TopBar() {
     } else if (activeFilter.type === 'campanaEspecial') {
       filtered = filtered.filter(producto => producto.campanaEspecial === "Campaña destacada");
       
+    } else if (activeFilter.type === 'tipoCompra') {
+      filtered = filtered.filter(producto => producto.sdc === activeFilter.value);
+    
+    } else if (activeFilter.type === 'formato') {
+      filtered = filtered.filter(producto => producto.formato === activeFilter.value);
+    
+    } else if(activeFilter.type === 'categoria') {
+
+      filtered = filtered.filter(productos => productos.categoria === activeFilter.value);
+    
+    } else if(activeFilter.type === 'objetivo') {
+
+      filtered = filtered.filter(productos => productos.queBuscamos === activeFilter.value);
+     
     } else if (activeFilter.type === 'destacadas') {
       const fetchDestacadas = async () => {
         try {
