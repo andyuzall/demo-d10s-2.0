@@ -70,7 +70,7 @@ function Navbarr() {
                 alt='Imagen de Usuario'
                 className='w-10 h-10 rounded-full cursor-pointer'
               />
-              <p className='text-blanco'>{session.user.name}</p>
+              <p className='text-blanco text-sm'>{session.user.name}</p>
               <button
                 onClick={async () => {
                   await signOut({
