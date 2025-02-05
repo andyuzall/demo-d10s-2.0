@@ -151,7 +151,7 @@ function Navbarr() {
         </>
       ) : (
         <>
-          <div className="fixed inset-0 flex flex-col gap-28 justify-start pt-10 items-center bg-[url('../assets/img-login.jpg')] bg-cover bg-no-repeat">
+          <div className="fixed inset-0 flex flex-col gap-48 justify-start pt-10 items-center bg-[url('../assets/img-login.jpg')] bg-cover bg-no-repeat">
             <div className='flex flex-col gap-8'>
             <Image
               src={logoTipo}
@@ -160,12 +160,6 @@ function Navbarr() {
               alt='Logotipo de Atomik'
               />
             <div className='flex flex-col items-center text-center'>
-              <h1 className='text-4xl text-blanco font-light uppercase tracking-widest'>
-                D10S
-              </h1>
-              <h2 className='text-2xl text-blanco'>
-                2.0
-              </h2>
             </div>
             </div>
             <div className="">
@@ -181,9 +175,6 @@ function Navbarr() {
                   <p className="text-center flex-grow">Logueate ahora</p>
                   <FcGoogle className="text-xl" />
                 </button>
-                <h2 className='text-sm text-blanco'>
-                  Registra, monitorea y acciona sobre tus campañas.
-                </h2>
               </div>
             </div>
           </div>
