@@ -12,7 +12,8 @@ import {
    IconFueraDV,
    IconFinalizadas,
    IconFinalizadasExito,
-   IconFiltros
+   IconFiltros,
+   IconBuscador
 } from './Tooltip/icons';
 import CampaignTooltip from './Tooltip/CampaignTooltip';
 import FilterTooltip from './Tooltip/FiltersToolTip';
@@ -183,14 +184,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
          )}
          {/* Sección de filtros */}
          <FilterTooltip
-         icon={<IconFiltros className={`w-5 h-5 ${selectedButton === 'Filtros' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
-         tooltipText='Filtros'
-         isSelected={selectedButton === 'Filtros'}
-         onClick={() => {}}
-         onFilterChange={handleTipoCompraChange} 
+            icon={<IconFiltros className={`w-5 h-5 ${selectedButton === 'Filtros' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+            tooltipText='Filtros'
+            isSelected={selectedButton === 'Filtros'}
+            onClick={() => { }}
+            onFilterChange={handleTipoCompraChange}
          />
       </div>
-
    );
 };
 

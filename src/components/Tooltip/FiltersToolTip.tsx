@@ -71,7 +71,6 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                         <option className="font-bold" value="3">3</option>
                         <option className="font-bold" value="4">4</option>
                     </select>
-                    
                     {/* TIPO DE COMPRA FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
@@ -97,7 +96,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
                         onChange={(e) => onFilterChange("formato", e.target.value)}
-                       >
+                    >
                         <option value="">Formato</option>
                         <option className="font-bold" value="YouTube">
                             YouTube
@@ -145,6 +144,45 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                             Video Plus
                         </option>
                     </select>
+                    {/* ESCENARIO FILTER */}
+                    <select
+                        className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                        onChange={(e) => onFilterChange("escenarioCampana", e.target.value)}
+                    >
+                        <option value="">Escenario</option>
+                        <option className="font-bold" value="Escenario 1">Escenario 1</option>
+                        <option className="font-bold" value="Escenario 2">Escenario 2</option>
+                        <option className="font-bold" value="Escenario 3">Escenario 3</option>
+                        <option className="font-bold" value="Escenario 4">Escenario 4</option>
+                    </select>
+                    {/* MERCADO FILTER */}
+                    <select
+                        className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                        onChange={(e) => onFilterChange("mercado", e.target.value)}
+                    >
+                        <option value="">Mercado</option>
+                        <option className="font-bold" value="Argentina">Argentina</option>
+                        <option className="font-bold" value="Bolivia">Bolivia</option>
+                        <option className="font-bold" value="Chile">Chile</option>
+                        <option className="font-bold" value="Colombia">Colombia</option>
+                        <option className="font-bold" value="Costa Rica">Costa Rica</option>
+                        <option className="font-bold" value="Ecuador">Ecuador</option>
+                        <option className="font-bold" value="Guatemala">Guatemala</option>
+                        <option className="font-bold" value="Honduras">Honduras</option>
+                        <option className="font-bold" value="México">México</option>
+                        <option className="font-bold" value="Paraguay Grupo">Paraguay Grupo</option>
+                        <option className="font-bold" value="Paraguay Fuera de Grupo">Paraguay Fuera de Grupo</option>
+                        <option className="font-bold" value="Perú">Perú</option>
+                        <option className="font-bold" value="Salvador">Salvador</option>
+                        <option className="font-bold" value="Uruguay">Uruguay</option>
+                    </select>
+                    {/* BUSCADOR DE ATK */}
+                    <input
+                        type="text"
+                        placeholder="Buscar por ID"
+                        className="w-full text-left text-violetaSecundario px-2 py-1 rounded font-semibold cursor-pointer"
+                        onChange={(e) => onFilterChange("id", e.target.value)}
+                        />
                 </div>
             )}
         </TooltipProvider>

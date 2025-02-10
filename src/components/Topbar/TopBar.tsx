@@ -67,6 +67,10 @@ function TopBar() {
 
       filtered = filtered.filter(productos => productos.queBuscamos === activeFilter.value);
      
+    } else if(activeFilter.type === 'id') {
+
+      filtered = filtered.filter(productos => productos.id === activeFilter.value);
+
     } else if (activeFilter.type === 'destacadas') {
       const fetchDestacadas = async () => {
         try {
