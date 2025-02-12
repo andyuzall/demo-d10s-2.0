@@ -42,6 +42,7 @@ interface Product {
   queBuscamos: string;
   queCantidad: string;
   campanaEspecial: string;
+  escenarioCampana: string;
 }
 
 interface DashboardDetallesProps {

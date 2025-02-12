@@ -52,22 +52,26 @@ function TopBar() {
       );
     } else if (activeFilter.type === 'campanaEspecial') {
       filtered = filtered.filter(producto => producto.campanaEspecial === "Campaña destacada");
-      
+
     } else if (activeFilter.type === 'tipoCompra') {
       filtered = filtered.filter(producto => producto.sdc === activeFilter.value);
-    
+
     } else if (activeFilter.type === 'formato') {
       filtered = filtered.filter(producto => producto.formato === activeFilter.value);
-    
-    } else if(activeFilter.type === 'categoria') {
+
+    } else if (activeFilter.type === 'categoria') {
 
       filtered = filtered.filter(productos => productos.categoria === activeFilter.value);
-    
-    } else if(activeFilter.type === 'objetivo') {
+
+    } else if (activeFilter.type === 'objetivo') {
 
       filtered = filtered.filter(productos => productos.queBuscamos === activeFilter.value);
-     
-    } else if(activeFilter.type === 'id') {
+
+    } else if (activeFilter.type === 'escenarioCampana') {
+
+      filtered = filtered.filter(productos => productos.escenarioCampana === activeFilter.value);
+
+    } else if (activeFilter.type === 'id') {
 
       filtered = filtered.filter(productos => productos.id === activeFilter.value);
 
@@ -107,7 +111,7 @@ function TopBar() {
   }
 
   if (!productos.length) {
-    return  <Loading />;
+    return <Loading />;
   }
 
   return (
@@ -142,14 +146,14 @@ function TopBar() {
         </nav>
         <div>
           {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} especialIds={specialIds}
-          title={
-            [
-              activeFilter.value && `En estado: ${activeFilter.value}`,
-              activeFilterTwo.value && `y ${activeFilterTwo.value}`
-            ]
-             .filter(Boolean)
-             .join(' ') || 'Todas las campañas'
-          }
+            title={
+              [
+                activeFilter.value && `En estado: ${activeFilter.value}`,
+                activeFilterTwo.value && `y ${activeFilterTwo.value}`
+              ]
+                .filter(Boolean)
+                .join(' ') || 'Todas las campañas'
+            }
           />}
           {selectedButton === 'objetivoEntregable' && <DashboardEntregable productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
           {selectedButton === 'objetivoConsumo' && <DashboardConsumo productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}

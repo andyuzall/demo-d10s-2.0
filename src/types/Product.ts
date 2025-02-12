@@ -31,6 +31,7 @@ export interface Product {
     accessDV: string;
     estadoCampana: string;
     campanaEspecial: string;
+    escenarioCampana: string;
   };
 
 export interface HomeData {

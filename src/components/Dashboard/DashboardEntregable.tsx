@@ -28,6 +28,7 @@ interface Product {
   porcentaje: string;
   queBuscamos: string;
   queCantidad: string;
+  escenarioCampana: string;
 }
 
 interface DashboardEntregableProps {

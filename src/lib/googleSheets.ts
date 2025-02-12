@@ -37,6 +37,7 @@ interface Producto {
   accessDV: string;
   estadoCampana: string;
   campanaEspecial: string;
+  escenarioCampana: string;
 }
 
 interface HomeData {
@@ -176,7 +177,8 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
       idDV: row.get('idDV'),
       accessDV: row.get('accessDV'),
       estadoCampana: row.get('estadoCampana'),
-      campanaEspecial: row.get('campanaEspecial')
+      campanaEspecial: row.get('campanaEspecial'),
+      escenarioCampana: row.get('escenarioCampana')
     }));
   }
   return rows
@@ -215,7 +217,8 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
     idDV: row.get('idDV'),
     accessDV: row.get('accessDV'),
     estadoCampana: row.get('estadoCampana'),
-    campanaEspecial: row.get('campanaEspecial')
+    campanaEspecial: row.get('campanaEspecial'),
+    escenarioCampana: row.get('escenarioCampana')
   }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);
