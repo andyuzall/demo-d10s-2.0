@@ -7,6 +7,10 @@ import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Loading from '../Loader/Loading';
 
+type FilterValues = {
+  [key: string]: string;
+};
+
 function TopBar() {
   const [selectedButton, setSelectedButton] = useState('detalles');
   const [productos, setProductos] = useState<Product[]>([]);
@@ -14,8 +18,8 @@ function TopBar() {
   const [existingIds, setExistingIds] = useState<string[]>([]);
   const [specialIds, setSpecialIds] = useState<string[]>([]);
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
-  const [activeFilter, setActiveFilter] = useState({ type: '', value: '' });
-  const [activeFilterTwo, setActiveFilterTwo] = useState({ type: '', value: '' });
+  const [activeFilter, setActiveFilter] = useState<Record<string, string>>({});
+  const [activeFilterTwo, setActiveFilterTwo] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
   const handleButtonClick = (buttonName: React.SetStateAction<string>) => {
@@ -47,30 +51,6 @@ function TopBar() {
   useEffect(() => {
     let filtered = productos;
 
-    if (activeFilter.type === 'estado') {
-      filtered = filtered.filter(producto =>
-        activeFilter.value === 'Todas' ? true : producto.estado === activeFilter.value
-      );
-    } else if (activeFilter.type === 'campanaEspecial') {
-      filtered = filtered.filter(producto => producto.campanaEspecial === "Campaña destacada");
-
-    } else if (activeFilter.type === 'id') {
-
-      filtered = filtered.filter(productos => productos.id === activeFilter.value);
-
-    } else if (activeFilter.type === 'destacadas') {
-      const fetchDestacadas = async () => {
-        try {
-          const response = await axios.get('/api/getDestacadas');
-          setFilteredProductos(response.data);
-        } catch (error) {
-          console.error('Error al obtener campañas destacadas:', error);
-        }
-      };
-      fetchDestacadas();
-      return;
-    }
-
     // Aplica todos los filtros activos
     Object.entries(activeFilters).forEach(([filterType, filterValue]) => {
       if (filterValue) {
@@ -80,42 +60,50 @@ function TopBar() {
       }
     });
 
-    if (activeFilterTwo.type && activeFilterTwo.value) {
-      filtered = filtered.filter(producto =>
-        producto[activeFilterTwo.type as keyof Product] === activeFilterTwo.value
-      );
-    }
-
     setFilteredProductos(filtered);
-  }, [activeFilter, activeFilters, activeFilterTwo, productos]);
+  }, [activeFilters, productos]);
 
-  const handleFilterChange = (filterType: string, filterValue: string) => {
-    setActiveFilter({ type: filterType, value: filterValue });
+  const handleFilterChange = (filters: FilterValues) => {
+    setActiveFilters(prevFilters => {
+      const newFilters = { ...prevFilters };
+      console.log(newFilters);
+      Object.entries(filters).forEach(([filterType, filterValue]) => {
+        if (filterValue === "") {
+          delete newFilters[filterType];
+        } else {
+          newFilters[filterType] = filterValue;
+        }
+      });
+
+      return newFilters;
+    });
   };
 
   const handleMultipleFilterChange = (filterType: string, filterValue: string) => {
-    setActiveFilters(prevFilters => {
-      if (filterValue === "") {
-          // Si el filtro se borra (selecciona vacío), eliminarlo del objeto
-          const newFilters = { ...prevFilters };
-          delete newFilters[filterType];
-          return newFilters;
+    handleFilterChange({ [filterType]: filterValue });
+  };
+
+  // Función auxiliar para generar el título basado en los filtros activos
+const generateTitle = (activeFilters: FilterValues): string => {
+  const filterDescriptions = Object.entries(activeFilters)
+    .map(([key, value]) => {
+      switch (key) {
+        case 'estado':
+          return `Estado: ${value}`;
+        case 'estadoCampana':
+          return `Estado de campaña: ${value}`;
+        case 'campanaEspecial':
+          return `Campaña especial: ${value}`;
+        default:
+          return `${key}: ${value}`;
       }
-      return { ...prevFilters, [filterType]: filterValue };
-  });
+    });
+
+  return filterDescriptions.length > 0
+    ? filterDescriptions.join(', ')
+    : 'Todas las campañas';
 };
 
-  const handleFilterTwoChange = (filterType: string, filterValue: string, filterTypeTwo: string, filterValueTwo: string) => {
-    setActiveFilters(prevFilters => {
-      if (filterValue === "") {
-          // Si el filtro se borra (selecciona vacío), eliminarlo del objeto
-          const newFilters = { ...prevFilters };
-          delete newFilters[filterType];
-          return newFilters;
-      }
-      return { ...prevFilters, [filterType]: filterValue };
-  });    setActiveFilterTwo({ type: filterTypeTwo, value: filterValueTwo });
-  };
 
   if (loading) {
     return <Loading />;
@@ -127,7 +115,7 @@ function TopBar() {
 
   return (
     <div className="flex px-4 m-2 container mx-auto max-w-full">
-      <Sidebar onFilterChange={handleFilterChange} onFilterTwoChange={handleFilterTwoChange} onMultipleFilterChange={handleMultipleFilterChange} />
+      <Sidebar onFilterChange={handleFilterChange} onMultipleFilterChange={handleMultipleFilterChange} />
       <div className='flex-row justify-center items-center m-2 w-11/12'>
         <nav className='border rounded-xl flex justify-between items-center text-center w-full shadow-custom gap-4 pt-1 pb-1 pr-4 pl-4 mb-4'>
           <button
@@ -156,18 +144,9 @@ function TopBar() {
           </button>
         </nav>
         <div>
-          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} especialIds={specialIds}
-            title={
-              [
-                activeFilter.value && `En estado: ${activeFilter.value}`,
-                activeFilterTwo.value && `y ${activeFilterTwo.value}`
-              ]
-                .filter(Boolean)
-                .join(' ') || 'Todas las campañas'
-            }
-          />}
-          {selectedButton === 'objetivoEntregable' && <DashboardEntregable productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
-          {selectedButton === 'objetivoConsumo' && <DashboardConsumo productos={filteredProductos} existingIds={existingIds} title={activeFilter.value! === '' ? 'Todas las campañas' : `En estado: ${activeFilter.value}`} />}
+          {selectedButton === 'detalles' && <DashboardDetalles productos={filteredProductos} existingIds={existingIds} especialIds={specialIds} title={generateTitle(activeFilters)} />}
+          {selectedButton === 'objetivoEntregable' && <DashboardEntregable productos={filteredProductos} existingIds={existingIds} title={generateTitle(activeFilters)}  />}
+          {selectedButton === 'objetivoConsumo' && <DashboardConsumo productos={filteredProductos} existingIds={existingIds} title={generateTitle(activeFilters)}  />}
         </div>
       </div>
     </div>
