@@ -43,6 +43,7 @@ interface Product {
   queCantidad: string;
   campanaEspecial: string;
   escenarioCampana: string;
+  mercado: string;
 }
 
 interface DashboardDetallesProps {

@@ -71,6 +71,10 @@ function TopBar() {
 
       filtered = filtered.filter(productos => productos.escenarioCampana === activeFilter.value);
 
+    } else if (activeFilter.type === 'mercado') {
+
+      filtered = filtered.filter(productos => productos.mercado === activeFilter.value);
+
     } else if (activeFilter.type === 'id') {
 
       filtered = filtered.filter(productos => productos.id === activeFilter.value);

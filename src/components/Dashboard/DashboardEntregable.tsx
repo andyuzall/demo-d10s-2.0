@@ -29,6 +29,7 @@ interface Product {
   queBuscamos: string;
   queCantidad: string;
   escenarioCampana: string;
+  mercado: string;
 }
 
 interface DashboardEntregableProps {

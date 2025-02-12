@@ -32,6 +32,7 @@ export interface Product {
     estadoCampana: string;
     campanaEspecial: string;
     escenarioCampana: string;
+    mercado: string;
   };
 
 export interface HomeData {
