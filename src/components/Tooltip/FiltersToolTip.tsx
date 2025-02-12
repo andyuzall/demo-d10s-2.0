@@ -7,11 +7,11 @@ interface CampaignTooltipProps {
     icon: React.ReactNode
     tooltipText: string
     onClick: () => void
-    onFilterChange: (filterType: string, filterValue: string) => void
+    onMultipleFilterChange: (filterType: string, filterValue: string) => void
     isSelected: boolean
 }
 
-export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, onFilterChange }: CampaignTooltipProps) {
+export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, onMultipleFilterChange }: CampaignTooltipProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -63,7 +63,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     {/* CATEGORIA FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("categoria", e.target.value)}
+                        onChange={(e) => onMultipleFilterChange("categoria", e.target.value)}
                     >
                         <option value="">Categoría</option>
                         <option className="font-bold" value="1">1</option>
@@ -74,7 +74,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     {/* TIPO DE COMPRA FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("tipoCompra", e.target.value)}
+                        onChange={(e) => onMultipleFilterChange("sdc", e.target.value)}
                     >
                         <option value="">Tipo de compra</option>
                         <option className="font-bold" value="SDC A">SDC A</option>
@@ -84,7 +84,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     {/* OBJETIVO FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("objetivo", e.target.value)}
+                        onChange={(e) => onMultipleFilterChange("queBuscamos", e.target.value)}
                     >
                         <option value="">Objetivo</option>
                         <option className="font-bold" value="Impresiones">Impresiones</option>
@@ -95,7 +95,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     {/* FORMATO FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("formato", e.target.value)}
+                        onChange={(e) => onMultipleFilterChange("formato", e.target.value)}
                     >
                         <option value="">Formato</option>
                         <option className="font-bold" value="YouTube">
@@ -147,7 +147,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     {/* ESCENARIO FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("escenarioCampana", e.target.value)}
+                        onChange={(e) => onMultipleFilterChange("escenarioCampana", e.target.value)}
                     >
                         <option value="">Escenario</option>
                         <option className="font-bold" value="Escenario 1">Escenario 1</option>
@@ -158,7 +158,7 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                     {/* MERCADO FILTER */}
                     <select
                         className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("mercado", e.target.value)}
+                        onChange={(e) => onMultipleFilterChange("mercado", e.target.value)}
                     >
                         <option value="">Mercado</option>
                         <option className="font-bold" value="Argentina">Argentina</option>
@@ -176,13 +176,6 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                         <option className="font-bold" value="Salvador">Salvador</option>
                         <option className="font-bold" value="Uruguay">Uruguay</option>
                     </select>
-                    {/* BUSCADOR DE ATK */}
-                    <input
-                        type="text"
-                        placeholder="Buscar por ID"
-                        className="w-full text-left text-violetaSecundario px-2 py-1 rounded font-semibold cursor-pointer"
-                        onChange={(e) => onFilterChange("id", e.target.value)}
-                        />
                 </div>
             )}
         </TooltipProvider>

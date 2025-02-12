@@ -13,6 +13,7 @@ function TopBar() {
   const [filteredProductos, setFilteredProductos] = useState<Product[]>([]);
   const [existingIds, setExistingIds] = useState<string[]>([]);
   const [specialIds, setSpecialIds] = useState<string[]>([]);
+  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
   const [activeFilter, setActiveFilter] = useState({ type: '', value: '' });
   const [activeFilterTwo, setActiveFilterTwo] = useState({ type: '', value: '' });
   const [loading, setLoading] = useState(true);
@@ -53,28 +54,6 @@ function TopBar() {
     } else if (activeFilter.type === 'campanaEspecial') {
       filtered = filtered.filter(producto => producto.campanaEspecial === "Campaña destacada");
 
-    } else if (activeFilter.type === 'tipoCompra') {
-      filtered = filtered.filter(producto => producto.sdc === activeFilter.value);
-
-    } else if (activeFilter.type === 'formato') {
-      filtered = filtered.filter(producto => producto.formato === activeFilter.value);
-
-    } else if (activeFilter.type === 'categoria') {
-
-      filtered = filtered.filter(productos => productos.categoria === activeFilter.value);
-
-    } else if (activeFilter.type === 'objetivo') {
-
-      filtered = filtered.filter(productos => productos.queBuscamos === activeFilter.value);
-
-    } else if (activeFilter.type === 'escenarioCampana') {
-
-      filtered = filtered.filter(productos => productos.escenarioCampana === activeFilter.value);
-
-    } else if (activeFilter.type === 'mercado') {
-
-      filtered = filtered.filter(productos => productos.mercado === activeFilter.value);
-
     } else if (activeFilter.type === 'id') {
 
       filtered = filtered.filter(productos => productos.id === activeFilter.value);
@@ -92,6 +71,15 @@ function TopBar() {
       return;
     }
 
+    // Aplica todos los filtros activos
+    Object.entries(activeFilters).forEach(([filterType, filterValue]) => {
+      if (filterValue) {
+        filtered = filtered.filter(producto => {
+          return producto[filterType as keyof Product] === filterValue;
+        });
+      }
+    });
+
     if (activeFilterTwo.type && activeFilterTwo.value) {
       filtered = filtered.filter(producto =>
         producto[activeFilterTwo.type as keyof Product] === activeFilterTwo.value
@@ -99,15 +87,34 @@ function TopBar() {
     }
 
     setFilteredProductos(filtered);
-  }, [activeFilter, activeFilterTwo, productos]);
+  }, [activeFilter, activeFilters, activeFilterTwo, productos]);
 
   const handleFilterChange = (filterType: string, filterValue: string) => {
     setActiveFilter({ type: filterType, value: filterValue });
   };
 
+  const handleMultipleFilterChange = (filterType: string, filterValue: string) => {
+    setActiveFilters(prevFilters => {
+      if (filterValue === "") {
+          // Si el filtro se borra (selecciona vacío), eliminarlo del objeto
+          const newFilters = { ...prevFilters };
+          delete newFilters[filterType];
+          return newFilters;
+      }
+      return { ...prevFilters, [filterType]: filterValue };
+  });
+};
+
   const handleFilterTwoChange = (filterType: string, filterValue: string, filterTypeTwo: string, filterValueTwo: string) => {
-    setActiveFilter({ type: filterType, value: filterValue });
-    setActiveFilterTwo({ type: filterTypeTwo, value: filterValueTwo });
+    setActiveFilters(prevFilters => {
+      if (filterValue === "") {
+          // Si el filtro se borra (selecciona vacío), eliminarlo del objeto
+          const newFilters = { ...prevFilters };
+          delete newFilters[filterType];
+          return newFilters;
+      }
+      return { ...prevFilters, [filterType]: filterValue };
+  });    setActiveFilterTwo({ type: filterTypeTwo, value: filterValueTwo });
   };
 
   if (loading) {
@@ -120,7 +127,7 @@ function TopBar() {
 
   return (
     <div className="flex px-4 m-2 container mx-auto max-w-full">
-      <Sidebar onFilterChange={handleFilterChange} onFilterTwoChange={handleFilterTwoChange} />
+      <Sidebar onFilterChange={handleFilterChange} onFilterTwoChange={handleFilterTwoChange} onMultipleFilterChange={handleMultipleFilterChange} />
       <div className='flex-row justify-center items-center m-2 w-11/12'>
         <nav className='border rounded-xl flex justify-between items-center text-center w-full shadow-custom gap-4 pt-1 pb-1 pr-4 pl-4 mb-4'>
           <button

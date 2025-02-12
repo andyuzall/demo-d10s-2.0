@@ -17,22 +17,29 @@ import {
 } from './Tooltip/icons';
 import CampaignTooltip from './Tooltip/CampaignTooltip';
 import FilterTooltip from './Tooltip/FiltersToolTip';
+import FaqTooltip from './Tooltip/FaqToolTip';
 
 
 type SidebarProps = {
    onFilterChange: (filterType: string, filterValue: string) => void;
    onFilterTwoChange: (filterType: string, filterValue: string, filterTypeTwo: string, filterValueTwo: string) => void;
+   onMultipleFilterChange: (filterType: string, filterValue: string) => void;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange, onMultipleFilterChange }) => {
    const [isEstadosOpen, setIsEstadosOpen] = useState(false);
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
    const [selectedCompra, setSelectedCompra] = useState<string>('');
 
-   const handleTipoCompraChange = (filterType: string, filterValue: string) => {
+   const handleFilterChange = (filterType: string, filterValue: string) => {
       setSelectedCompra(filterValue);
       onFilterChange(filterType, filterValue);
+   };
+
+   const handleMultipleFilter = (filterType: string, filterValue: string) => {
+      setSelectedCompra(filterValue);
+      onMultipleFilterChange(filterType, filterValue);
    };
 
    const handleCampañasDestacadas = () => {
@@ -188,7 +195,15 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onFilterTwoChange }) 
             tooltipText='Filtros'
             isSelected={selectedButton === 'Filtros'}
             onClick={() => { }}
-            onFilterChange={handleTipoCompraChange}
+            onMultipleFilterChange={handleMultipleFilter}
+         />
+         {/* Busqueda por identificador */}
+         <FaqTooltip
+            icon={<IconBuscador className={`w-5 h-5 ${selectedButton === 'Filtros' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+            tooltipText='Busqueda por identificador'
+            isSelected={selectedButton === 'Identificador'}
+            onClick={() => { }}
+            onFilterChange={handleFilterChange}
          />
       </div>
    );
