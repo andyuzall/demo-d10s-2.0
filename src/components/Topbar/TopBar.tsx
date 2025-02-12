@@ -18,8 +18,6 @@ function TopBar() {
   const [existingIds, setExistingIds] = useState<string[]>([]);
   const [specialIds, setSpecialIds] = useState<string[]>([]);
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
-  const [activeFilter, setActiveFilter] = useState<Record<string, string>>({});
-  const [activeFilterTwo, setActiveFilterTwo] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
 
   const handleButtonClick = (buttonName: React.SetStateAction<string>) => {
