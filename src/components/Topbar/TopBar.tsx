@@ -64,7 +64,6 @@ function TopBar() {
   const handleFilterChange = (filters: FilterValues) => {
     setActiveFilters(prevFilters => {
       const newFilters = { ...prevFilters };
-      console.log(newFilters);
       Object.entries(filters).forEach(([filterType, filterValue]) => {
         if (filterValue === "") {
           delete newFilters[filterType];

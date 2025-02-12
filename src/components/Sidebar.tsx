@@ -24,11 +24,11 @@ const FILTER_TYPES = {
    ESTADO: 'estado',
    ESTADO_CAMPANA: 'estadoCampana',
    CAMPANA_ESPECIAL: 'campanaEspecial'
- };
- 
- type FilterValues = {
+};
+
+type FilterValues = {
    [key: string]: string;
- };
+};
 
 type SidebarProps = {
    onFilterChange: (filters: FilterValues) => void;
@@ -39,23 +39,33 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
    const [isEstadosOpen, setIsEstadosOpen] = useState(false);
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
-   const [selectedCompra, setSelectedCompra] = useState<string>('');
+   const [activeFilters, setActiveFilters] = useState<{[key: string]: string}>({});
 
    const handleMultipleFilter = (filterType: string, filterValue: string) => {
-      setSelectedCompra(filterValue);
+      setActiveFilters(prev => ({
+          ...prev,
+          [filterType]: filterValue
+      }));
       onMultipleFilterChange(filterType, filterValue);
-   };
+  };
+
+  const handleIdentifierClick = () => {
+      setSelectedButton(prev => prev === 'Identificador' ? '' : 'Identificador');
+      if (selectedButton === 'Identificador') {
+          handleMultipleFilter('id', '');
+      }
+  };
 
    const handleFilterChange = (filters: FilterValues) => {
       onFilterChange(filters);
-    };
+   };
 
    const handleCampañasDestacadas = () => {
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: '',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: 'Campaña destacada'
-       });
+      });
       setSelectedButton("especial");
    }
 
@@ -65,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
       setSelectedButton("Activa");
    }
 
@@ -74,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'aceptable',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
    }
 
    const handleCampañasActivasOptimas = () => {
@@ -82,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'optimo',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
    }
 
    const handleCampañasActivasDelicadas = () => {
@@ -90,7 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'delicado',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
    }
 
    const handleCampañasActivasCritico = () => {
@@ -98,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'critico',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
    }
 
    const handleCampañasSinActividad = () => {
@@ -106,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Sin actividad',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
       setSelectedButton("Sin actividad");
    }
 
@@ -115,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Campaña Pausada',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
       setSelectedButton("Pausada");
    }
 
@@ -125,7 +135,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Finalizada',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
       setSelectedButton("Finalizada");
    }
 
@@ -134,7 +144,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO]: 'Por fuera de DV360',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
-       });
+      });
       setSelectedButton("Por fuera de DV360");
    }
 
@@ -249,13 +259,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
             />
          </div>
          {/* Busqueda por identificador */}
-         {/* <FaqTooltip
-            icon={<IconBuscador className={`w-5 h-5 ${selectedButton === 'Filtros' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+         <FaqTooltip
+            icon={<IconBuscador className={`w-5 h-5 ${selectedButton === 'Identificador' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
             tooltipText='Busqueda por identificador'
             isSelected={selectedButton === 'Identificador'}
-            onClick={() => { }}
-            onFilterChange={handleFilterChange}
-         /> */}
+            onClick={handleIdentifierClick}
+            onMultipleFilterChange={handleMultipleFilter}
+            activeFilter={activeFilters['id'] || ''}
+         />
       </div>
    );
 };
