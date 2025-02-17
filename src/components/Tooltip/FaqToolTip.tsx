@@ -87,7 +87,7 @@ export default function FaqTooltip({
             {isOpen && (
                 <div
                     ref={dropdownRef}
-                    className="absolut top-0 ml-56 w-40 bg-blanco shadow-custom rounded-md border border-gray-200 p-2"
+                    className="absolute left-full bottom-0 ml-2 w-40 bg-blanco shadow-custom rounded-md border border-gray-200 p-2"
                 >
                     <div className="relative">
                         {/* BUSCADOR DE ATK */}
