@@ -5,6 +5,7 @@ import CardSinCalc from '../Cards/CardSinCalc';
 import CardGrafic from '../Cards/CardGrafic';
 import CardDestacadas from '../Cards/CardDestacadas';
 import Loading from '../Loader/Loading';
+import { IconIndicador } from '../Tooltip/icons';
 
 interface HomeData {
   mesActual: number;
@@ -91,6 +92,7 @@ const DashboardHome: React.FC = () => {
                   campana.mesAnterior
                 )}
                 subtitulo='% al mes anterior.'
+                icon={<IconIndicador className='w-5 h-5' />}
               />
               <CardStatus
                 titulo="Campañas activas"
@@ -100,11 +102,13 @@ const DashboardHome: React.FC = () => {
                   campana.mesAnterior
                 )}
                 subtitulo='% de las del mes.'
+                icon={<IconIndicador className='w-5 h-5' />}
               />
               <CardSinCalc
                 titulo="Próx. a finalizar"
                 indicador={campana.campanasProxFinalizar}
                 subtitulo="Entre hoy y el sábado"
+                icon={<IconIndicador className='w-5 h-5' />}
               />
             </div>
 
@@ -161,12 +165,14 @@ const DashboardHome: React.FC = () => {
                   titulo="Nuevas alarmas"
                   indicador={alarmCount ?? 0}
                   subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
+                  icon={<IconIndicador className='w-5 h-5' />}
                 />
 
                 <CardSinCalc
                   titulo="Iniciadas recientemente"
                   indicador={campana.campanasRecientes}
                   subtitulo={`Entre el ${dateLimitRecente.toLocaleDateString()} hasta hoy`}
+                  icon={<IconIndicador className='w-5 h-5' />}
                 />
               </div>
             </div>
