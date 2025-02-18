@@ -121,7 +121,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                   <th className="px-2 py-2">Duración</th>
                   <th className="px-2 py-2">Restante</th>
                   <th
-                    className={`${showExtraTables ? "px-2 py-2" : "px-2 py-2 rounded-tr-3xl rounded-br-3xl"}`}>
+                    className={`${showExtraTables ? "px-2 py-2 border-r-2" : "px-2 py-2 rounded-tr-3xl rounded-br-3xl"}`}>
                     Inversión
                   </th>
                   {showExtraTables && (
@@ -134,7 +134,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                       <th className="px-2 py-2">Costo</th>
                       <th className="px-2 py-2">Faltan</th>
                       <th className="px-2 py-2">Ideal hoy</th>
-                      <th className="px-2 py-2">Proye%</th>
+                      <th className="px-2 py-2 border-r-2">Proye%</th>
                       <th className="px-2 py-2">Re%ult</th>
                       <th className="px-2 py-2">Acordado</th>
                       <th className="px-2 py-2">Actual</th>
@@ -218,7 +218,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.duracionCampana}</td>
                     <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
                     <td
-                      className={`${showExtraTables ? "px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal" : "px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal"}`}>
+                      className={`${showExtraTables ? "px-2 py-2 border-t-2 border-b-2 border-r-2 border-violetaPrincipal" : "px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2 border-t-2 border-b-2 border-violetaPrincipal"}`}>
                       ${producto.inversionCampana}
                     </td>
                     {showExtraTables && (
@@ -241,9 +241,9 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoCuantificable}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cuantoDeberiamosIr}</td>
-                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
+                        <td className="px-2 py-2 border-t-2 border-b-2 border-r-2 border-violetaPrincipal">{producto.porcentajeObjetivo}%</td>
                         <td className={`
-                          border-t-2 border-b-2 border-violetaPrincipal`}>
+                          border-t-2 border-b-2 pl-2 border-violetaPrincipal`}>
                           <p
                             className={`
                               ${parseFloat(producto.porcentaje) >= 120 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
