@@ -5,16 +5,19 @@ type CardSinValues = {
     indicador: number;
     subtitulo: string;
     icon: React.ReactNode;
+    onOpenModal: ()  => void;
 };
 
-const CardSinCalc: React.FC<CardSinValues> = ({ titulo, indicador, subtitulo, icon }) => {
+const CardSinCalc: React.FC<CardSinValues> = ({ titulo, indicador, subtitulo, icon, onOpenModal }) => {
 
     return (
         <>
             <div className="flex flex-col gap-5 p-4 bg-blanco h-[152px] rounded-lg shadow-custom">
                 <div className='flex justify-between items-center'>
                     <h2 className='text-s font-semibold'>{titulo}</h2>
-                    <button>
+                    <button
+                    onClick={onOpenModal}
+                    >
                         {icon}
                     </button>
                 </div>

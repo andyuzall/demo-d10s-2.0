@@ -8,9 +8,10 @@ type CardValues = {
     resultado: number;
     subtitulo: string;
     icon: React.ReactNode;
+    onOpenModal: ()  => void;
 };
 
-const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtitulo, icon }) => {
+const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtitulo, icon, onOpenModal }) => {
     const isPositive = resultado > 0;
 
     return (
@@ -19,6 +20,7 @@ const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtit
                 <div className='flex justify-between items-center'>
                     <h2 className='text-s font-semibold'>{titulo}</h2>
                     <button
+                    onClick={onOpenModal}
                     >
                         {icon}
                     </button>

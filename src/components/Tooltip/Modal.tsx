@@ -29,7 +29,7 @@ const ModalDashboard: React.FC<ModalDashboardProps> = ({
             Cerrar
           </button>
           <Link
-            href="/aplication/subscription-plans"
+            href="/dashboard"
             className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded-md">
             Ver campañas
           </Link>

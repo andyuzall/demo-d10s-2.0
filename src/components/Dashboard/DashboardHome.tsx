@@ -6,6 +6,7 @@ import CardGrafic from '../Cards/CardGrafic';
 import CardDestacadas from '../Cards/CardDestacadas';
 import Loading from '../Loader/Loading';
 import { IconIndicador } from '../Tooltip/icons';
+import ModalDashboard from '../Tooltip/Modal';
 
 interface HomeData {
   mesActual: number;
@@ -24,9 +25,15 @@ const DashboardHome: React.FC = () => {
   const [alarmCount, setAlarmCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', message: '' });
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (title: string, message: string) => {
+    setModalContent({ title, message });
     setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   // dia para las alarmas
@@ -98,6 +105,7 @@ const DashboardHome: React.FC = () => {
                 )}
                 subtitulo='% al mes anterior.'
                 icon={<IconIndicador className='w-5 h-5' />}
+                onOpenModal={() => handleOpenModal("Cantidad de campañas", "Total de campañas ordenadas")}
               />
               <CardStatus
                 titulo="Campañas activas"
@@ -108,12 +116,14 @@ const DashboardHome: React.FC = () => {
                 )}
                 subtitulo='% de las del mes.'
                 icon={<IconIndicador className='w-5 h-5' />}
+                onOpenModal={() => handleOpenModal("Campañas Activas", "Total de campañas con actividad")}
               />
               <CardSinCalc
                 titulo="Próx. a finalizar"
                 indicador={campana.campanasProxFinalizar}
                 subtitulo="Entre hoy y el sábado"
                 icon={<IconIndicador className='w-5 h-5' />}
+                onOpenModal={() => handleOpenModal("Por finalizar", "Campañas que finalizan en los próximos 6 días")}
               />
             </div>
 
@@ -171,19 +181,28 @@ const DashboardHome: React.FC = () => {
                   indicador={alarmCount ?? 0}
                   subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
                   icon={<IconIndicador className='w-5 h-5' />}
+                  onOpenModal={() => handleOpenModal("Nuevas alarmas", "Alarmas detectadas en los últimos 20 días")}
                 />
 
                 <CardSinCalc
-                  titulo="Iniciadas recientemente"
+                  titulo="Recientes"
                   indicador={campana.campanasRecientes}
                   subtitulo={`Entre el ${dateLimitRecente.toLocaleDateString()} hasta hoy`}
                   icon={<IconIndicador className='w-5 h-5' />}
+                  onOpenModal={() => handleOpenModal("Iniciadas recientemente", "Campañas ingresadas en los últimos 4 días")}
                 />
               </div>
             </div>
           </div>
         ))}
       </div>
+      {showModal && (
+        <ModalDashboard
+          title={modalContent.title}
+          message={modalContent.message}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };
