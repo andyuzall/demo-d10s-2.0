@@ -23,6 +23,11 @@ const DashboardHome: React.FC = () => {
   const [datosCampanas, setDatosCampanas] = useState<HomeData[]>([]);
   const [alarmCount, setAlarmCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
 
   // dia para las alarmas
   const dateLimit = new Date();

@@ -13,13 +13,13 @@ type CardValues = {
 const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtitulo, icon }) => {
     const isPositive = resultado > 0;
 
-
     return (
         <>
             <div className="flex flex-col gap-5 p-4 bg-blanco w-64 h-[152px] rounded-lg shadow-custom">
                 <div className='flex justify-between items-center'>
                     <h2 className='text-s font-semibold'>{titulo}</h2>
-                    <button>
+                    <button
+                    >
                         {icon}
                     </button>
                 </div>
