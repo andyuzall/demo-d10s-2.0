@@ -104,8 +104,7 @@ const DashboardHome: React.FC = () => {
                   campana.mesAnterior
                 )}
                 subtitulo='% al mes anterior.'
-                icon={<IconIndicador className='w-5 h-5' />}
-                onOpenModal={() => handleOpenModal("Cantidad de campañas", "Total de campañas ordenadas")}
+                toolTipText='Total de campañas ordenadas'
               />
               <CardStatus
                 titulo="Campañas activas"
@@ -115,15 +114,13 @@ const DashboardHome: React.FC = () => {
                   campana.mesAnterior
                 )}
                 subtitulo='% de las del mes.'
-                icon={<IconIndicador className='w-5 h-5' />}
-                onOpenModal={() => handleOpenModal("Campañas Activas", "Total de campañas con actividad")}
+                toolTipText='Total de campañas con actividad'
               />
               <CardSinCalc
                 titulo="Próx. a finalizar"
                 indicador={campana.campanasProxFinalizar}
                 subtitulo="Entre hoy y el sábado"
-                icon={<IconIndicador className='w-5 h-5' />}
-                onOpenModal={() => handleOpenModal("Por finalizar", "Campañas que finalizan en los próximos 6 días")}
+                toolTipText='Campañas que finalizan en los próximos 6 días'
               />
             </div>
 
@@ -139,6 +136,7 @@ const DashboardHome: React.FC = () => {
                 subtitulo={`% sobre ${campana.mesActual} actuales`}
                 value={campana.campanasCritico}
                 comparador={campana.mesActual}
+                toolTipText=''
               />
               <CardGrafic
                 titulo="Campañas en Estado Delicado"
@@ -150,6 +148,7 @@ const DashboardHome: React.FC = () => {
                 subtitulo={`% sobre ${campana.mesActual} actuales`}
                 value={campana.campanasDelicado}
                 comparador={campana.mesActual}
+                toolTipText=''
               />
               <CardGrafic
                 titulo="Campañas en Estado Óptimo"
@@ -161,6 +160,7 @@ const DashboardHome: React.FC = () => {
                 subtitulo={`% sobre ${campana.mesActual} actuales`}
                 value={campana.campanasOptimo}
                 comparador={campana.mesActual}
+                toolTipText=''
               />
             </div>
 
@@ -180,16 +180,14 @@ const DashboardHome: React.FC = () => {
                   titulo="Nuevas alarmas"
                   indicador={alarmCount ?? 0}
                   subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
-                  icon={<IconIndicador className='w-5 h-5' />}
-                  onOpenModal={() => handleOpenModal("Nuevas alarmas", "Alarmas detectadas en los últimos 20 días")}
+                  toolTipText='Alarmas detectadas en los últimos 20 días'
                 />
 
                 <CardSinCalc
                   titulo="Recientes"
                   indicador={campana.campanasRecientes}
                   subtitulo={`Entre el ${dateLimitRecente.toLocaleDateString()} hasta hoy`}
-                  icon={<IconIndicador className='w-5 h-5' />}
-                  onOpenModal={() => handleOpenModal("Iniciadas recientemente", "Campañas ingresadas en los últimos 4 días")}
+                  toolTipText='Campañas ingresadas en los últimos 4 días'
                 />
               </div>
             </div>
