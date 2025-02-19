@@ -5,8 +5,6 @@ import CardSinCalc from '../Cards/CardSinCalc';
 import CardGrafic from '../Cards/CardGrafic';
 import CardDestacadas from '../Cards/CardDestacadas';
 import Loading from '../Loader/Loading';
-import { IconIndicador } from '../Tooltip/icons';
-import ModalDashboard from '../Tooltip/Modal';
 
 interface HomeData {
   mesActual: number;
@@ -24,17 +22,6 @@ const DashboardHome: React.FC = () => {
   const [datosCampanas, setDatosCampanas] = useState<HomeData[]>([]);
   const [alarmCount, setAlarmCount] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState({ title: '', message: '' });
-
-  const handleOpenModal = (title: string, message: string) => {
-    setModalContent({ title, message });
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
 
   // dia para las alarmas
   const dateLimit = new Date();
@@ -194,13 +181,6 @@ const DashboardHome: React.FC = () => {
           </div>
         ))}
       </div>
-      {showModal && (
-        <ModalDashboard
-          title={modalContent.title}
-          message={modalContent.message}
-          onClose={handleCloseModal}
-        />
-      )}
     </div>
   );
 };
