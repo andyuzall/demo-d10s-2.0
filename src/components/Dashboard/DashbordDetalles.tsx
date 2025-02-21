@@ -137,13 +137,11 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                       <th className="px-2 py-2">%Entr</th>
                       <th className="px-2 py-2">Uni.</th>
                       <th className="px-2 py-2">Costo</th>
-                      <th className="px-2 py-2">Faltan</th>
                       <th className="px-2 py-2">Ideal hoy</th>
                       <th className="px-2 py-2 border-r-2">Proye%</th>
                       <th className="px-2 py-2">Re%ult</th>
                       <th className="px-2 py-2">Acordado</th>
                       <th className="px-2 py-2">Actual</th>
-                      <th className="px-2 py-2">Falta</th>
                       <th className="px-2 py-2">Ideal</th>
                       <th className="px-2 py-2 rounded-tr-3xl rounded-br-3xl">Proye%</th>
                     </>
@@ -243,7 +241,6 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         </td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.compraTotal}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.objetivoCuantificable}</td>
-                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cuantoDeberiamosIr}</td>
 
                         <td className="px-2 py-2 border-t-2 border-b-2 border-r-2 border-violetaPrincipal">
@@ -270,7 +267,6 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
                         </td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.inversionCampana}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.consumoCampana}</td>
-                        <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.diasRestantes}</td>
                         <td className="px-2 py-2 border-t-2 border-b-2 border-violetaPrincipal">{producto.cuantoConsumoDeberiamosIr}</td>
                         <td className={`
                           px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2  border-t-2 border-b-2 pl-2 border-violetaPrincipal`}>
