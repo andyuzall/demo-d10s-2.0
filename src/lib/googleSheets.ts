@@ -39,6 +39,7 @@ interface Producto {
   campanaEspecial: string;
   escenarioCampana: string;
   mercado: string;
+  rangoInversion: string;
 }
 
 interface HomeData {
@@ -180,7 +181,8 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
       estadoCampana: row.get('estadoCampana'),
       campanaEspecial: row.get('campanaEspecial'),
       escenarioCampana: row.get('escenarioCampana'),
-      mercado: row.get('mercado')
+      mercado: row.get('mercado'),
+      rangoInversion: row.get('rangoInversion')
     }));
   }
   return rows
@@ -221,7 +223,8 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
     estadoCampana: row.get('estadoCampana'),
     campanaEspecial: row.get('campanaEspecial'),
     escenarioCampana: row.get('escenarioCampana'),
-    mercado: row.get('mercado')
+    mercado: row.get('mercado'),
+    rangoInversion: row.get('rangoInversion')
   }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);

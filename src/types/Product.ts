@@ -33,6 +33,7 @@ export interface Product {
     campanaEspecial: string;
     escenarioCampana: string;
     mercado: string;
+    rangoInversion: string;
   };
 
 export interface HomeData {

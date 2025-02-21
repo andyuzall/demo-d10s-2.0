@@ -181,6 +181,17 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                             <option className="font-bold" value="Salvador">Salvador</option>
                             <option className="font-bold" value="Uruguay">Uruguay</option>
                         </select>
+                        {/* INVERSIÓN FILTER */}
+                        <select
+                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                            onChange={(e) => onMultipleFilterChange("rangoInversion", e.target.value)}
+                        >
+                            <option value="">Inversión</option>
+                            <option className="font-bold" value="1 a 1000">1 a 1000</option>
+                            <option className="font-bold" value="1001 a 5000">1001 a 5000</option>
+                            <option className="font-bold" value="5001 a 9999">5001 a 9999</option>
+                            <option className="font-bold" value="1000 o +">10000 o +</option>
+                        </select>
                     </div>
                 </div>
             )}
