@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-
+import React, { useState } from 'react'
 import {
    IconActivas,
    IconActivasExito,
@@ -16,8 +15,8 @@ import {
    IconBuscador
 } from './Tooltip/icons';
 import CampaignTooltip from './Tooltip/CampaignTooltip';
-import FilterTooltip from './Tooltip/FiltersToolTip';
 import FaqTooltip from './Tooltip/FaqToolTip';
+import FilterTooltip from './Tooltip/FiltersToolTip';
 
 // Constantes para los nombres de los filtros
 const FILTER_TYPES = {

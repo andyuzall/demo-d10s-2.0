@@ -11,11 +11,32 @@ interface CampaignTooltipProps {
     isSelected: boolean
 }
 
-export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, onMultipleFilterChange }: CampaignTooltipProps) {
+export default function FilterTooltip({ 
+    icon, 
+    tooltipText, 
+    onClick, 
+    isSelected, 
+    onMultipleFilterChange, 
+ }: CampaignTooltipProps) {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [isEmailAdmin, setIsEmailAdmin] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+        const checkAdminStatus = async () => {
+            try {
+                const response = await fetch('/api/get-admin');
+                const data = await response.json();
+                setIsEmailAdmin(data.isEmailAdmin);
+            } catch (error) {
+                console.error('Error checking admin status:', error);
+                setIsEmailAdmin(false);
+            }
+        };
+
+        checkAdminStatus();
+    }, []);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -192,6 +213,21 @@ export default function FilterTooltip({ icon, tooltipText, onClick, isSelected, 
                             <option className="font-bold" value="5001 a 9999">5001 a 9999</option>
                             <option className="font-bold" value="1000 o +">10000 o +</option>
                         </select>
+                        {/* TRADER FILTER */}
+                        {isEmailAdmin && (
+                        <select
+                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                            onChange={(e) => onMultipleFilterChange("trader", e.target.value)}
+                        >
+                            <option value="">Trader</option>
+                            <option className="font-bold" value="Juan">Juan</option>
+                            <option className="font-bold" value="Cynthia">Cynthia</option>
+                            <option className="font-bold" value="Emmanuel">Emmanuel</option>
+                            <option className="font-bold" value="Monica">Monica</option>
+                            <option className="font-bold" value="Juan Sebastian">Juan Sebastian</option>
+                            <option className="font-bold" value="Dalma">Dalma</option>
+                        </select>
+                        )}
                     </div>
                 </div>
             )}
