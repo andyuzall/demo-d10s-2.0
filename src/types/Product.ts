@@ -34,6 +34,8 @@ export interface Product {
     escenarioCampana: string;
     mercado: string;
     rangoInversion: string;
+    entr: string;
+    result: string;
   };
 
 export interface HomeData {

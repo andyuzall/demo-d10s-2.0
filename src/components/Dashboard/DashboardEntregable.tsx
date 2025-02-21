@@ -97,9 +97,9 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, ti
                     <td className="border-t-2 border-b-2 border-violetaPrincipal">
                       <p
                         className={`${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 111 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
-                        ${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 100 && parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) <= 110 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
-                        ${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 91 && parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) <= 99 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
-                        ${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 0 && parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) <= 90 ? 'bg-red bg-opacity-15 rounded-3xl border-red border-2 p-1' : ''}`}
+                        ${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 100 && parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) <= 110.99 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
+                        ${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 91 && parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) <= 99.99 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
+                        ${parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) >= 0 && parseFloat(calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))) <= 90.99 ? 'bg-red bg-opacity-15 rounded-3xl border-red border-2 p-1' : ''}`}
                       >
                         {calcularPorcentaje(parseFloat(producto.compraTotal), parseFloat(producto.queCantidad))}
                       </p>
@@ -111,9 +111,9 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, ti
                     <td className="px-2 py-2 rounded-tr-3xl rounded-br-3xl border-r-2  border-t-2 border-b-2 pl-2 border-violetaPrincipal">
                       <p
                         className={`${parseFloat(producto.porcentajeObjetivo) >= 111 ? 'bg-purple bg-opacity-15 rounded-3xl border-purple border-2 p-1' : ''}
-                          ${parseFloat(producto.porcentajeObjetivo) >= 100 && parseFloat(producto.porcentajeObjetivo) <= 110 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
-                          ${parseFloat(producto.porcentajeObjetivo) >= 91 && parseFloat(producto.porcentajeObjetivo) <= 99 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
-                          ${parseFloat(producto.porcentajeObjetivo) >= 0 && parseFloat(producto.porcentajeObjetivo) <= 90 ? ' bg-red bg-opacity-15 rounded-3xl border-red border-2 p-1' : ''}`}
+                          ${parseFloat(producto.porcentajeObjetivo) >= 100 && parseFloat(producto.porcentajeObjetivo) <= 110.99 ? 'bg-green bg-opacity-15 rounded-3xl border-green border-2 p-1' : ''}
+                          ${parseFloat(producto.porcentajeObjetivo) >= 91 && parseFloat(producto.porcentajeObjetivo) <= 99.99 ? 'bg-yellow bg-opacity-15 rounded-3xl border-yellow border-2 p-1' : ''}
+                          ${parseFloat(producto.porcentajeObjetivo) >= 0 && parseFloat(producto.porcentajeObjetivo) <= 90.99 ? ' bg-red bg-opacity-15 rounded-3xl border-red border-2 p-1' : ''}`}
                       >
                         {producto.porcentajeObjetivo}%
                       </p>
