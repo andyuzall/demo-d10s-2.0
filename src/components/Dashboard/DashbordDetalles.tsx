@@ -8,6 +8,7 @@ import destacadoActivoclicked from '../../assets/icons/menu-campañas/destacados
 import axios from 'axios';
 import Image from 'next/image';
 import SwitchButton from '../Switch/SwitchButton';
+import { calcularPorcentaje } from '@/helpers/calc';
 
 interface Product {
   estado: string;
@@ -86,11 +87,6 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
     } catch (error) {
       console.error('Error al guardar en BigQuery:', error);
     }
-  };
-
-  const calcularPorcentaje = (compraTotal: number, queCantidad: number): string => {
-    const porcentaje = (compraTotal / queCantidad) * 100;
-    return `${porcentaje.toFixed(2)}%`;
   };
 
 
