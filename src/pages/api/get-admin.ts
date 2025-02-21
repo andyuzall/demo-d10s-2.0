@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/auth";
-import { NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const filterExceptions = [
