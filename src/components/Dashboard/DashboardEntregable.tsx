@@ -57,7 +57,7 @@ const DashboardEntregable: React.FC<DashboardEntregableProps> = ({ productos, ti
         </div>
 
         {/* Contenedor con la tabla */}
-        <div className="overflow-x-auto h-[650px]">
+        <div className="overflow-x-auto h-[650px] 2xl:h-[900px]">
           <div className="overflow-y-auto">
             <table className="min-w-full text-xs border-separate border-spacing-y-2 text-center">
               <thead className="bg-violetaSecundario text-blanco sticky top-0 z-10">

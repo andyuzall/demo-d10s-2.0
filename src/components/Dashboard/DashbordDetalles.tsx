@@ -108,7 +108,7 @@ const DashboardDetalles: React.FC<DashboardDetallesProps> = ({ productos, existi
           </div>
         </div>
         {/* Contenedor con la tabla sin menos info */}
-        <div className="overflow-x-auto h-[650px] 2xl:h-[900px] ">
+        <div className="overflow-x-auto h-[650px] 2xl:h-[900px]">
           <div className="overflow-y-auto max-h-full">
             <table className="min-w-full whitespace-nowrap text-xs border-separate border-spacing-y-2 text-center">
               <thead className="bg-violetaSecundario text-blanco sticky top-0 z-10">
