@@ -208,6 +208,7 @@ const DashboardHome: React.FC = () => {
                   indicador={alarmCount ?? 0}
                   subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
                   toolTipText='Alarmas detectadas en los últimos 20 días'
+                  navigable= {true}
                 />
 
                 <CardSinCalc

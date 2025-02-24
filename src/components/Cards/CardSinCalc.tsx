@@ -9,28 +9,31 @@ type CardSinValues = {
     indicador: number;
     subtitulo: string;
     toolTipText: string;
-
+    navigable?: boolean;
 };
 
-const CardSinCalc: React.FC<CardSinValues> = ({ 
-    titulo, 
-    indicador, 
-    subtitulo, 
+const CardSinCalc: React.FC<CardSinValues> = ({
+    titulo,
+    indicador,
+    subtitulo,
     toolTipText,
+    navigable = false
 }) => {
 
-        const { navigateWithFilterAlarms } = useFilterNavigationAlarms();
+    const { navigateWithFilterAlarms } = useFilterNavigationAlarms();
 
-        const handleClick = () => {
-            navigateWithFilterAlarms;
-        };
-    
+    const handleClick = () => {
+        if (navigable) {
+            navigateWithFilterAlarms();
+        }
+    };
+
 
     return (
         <>
-            <div 
-            onClick={handleClick}
-            className={`flex flex-col gap-5 p-4 bg-blanco h-[152px] rounded-lg shadow-custom  cursor-pointer card-hover`}>
+            <div
+                onClick={handleClick}
+                className={`flex flex-col gap-5 p-4 bg-blanco h-[152px] rounded-lg shadow-custom ${navigable ? 'cursor-pointer card-hover' : ''}`}>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-s font-semibold'>{titulo}</h2>
                     <IndicadorToolTip
