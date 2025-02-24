@@ -6,9 +6,10 @@ import logOut from '@/assets/icons/generales/logout.svg';
 import Image from 'next/image';
 import { FcGoogle } from "react-icons/fc";
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 function Navbarr() {
-
+  const pathname  = usePathname();
   const { data: session } = useSession();
   const [selectedButton, setSelectedButton] = useState('home');
   const [notifications, setNotifications] = useState([
@@ -19,6 +20,13 @@ function Navbarr() {
     { text: "" },
   ]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Efecto para sincronizar el selectedButton con la ruta actual
+  useEffect(() => {
+    // Remover el slash inicial para comparar
+    const currentPath = pathname?.slice(1) || 'home';
+    setSelectedButton(currentPath);
+  }, [pathname]);
 
   const fetchNotifications = async () => {
     try {
