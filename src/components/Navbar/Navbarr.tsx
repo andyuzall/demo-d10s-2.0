@@ -32,7 +32,6 @@ function Navbarr() {
     try {
       const res = await fetch('/api/sheetAlarms');
       const data = await res.json();
-      console.log("Respuesta de la API:", data);
       if (Array.isArray(data.recentAlarms)) {
         setNotifications(data.recentAlarms);
       } else {
