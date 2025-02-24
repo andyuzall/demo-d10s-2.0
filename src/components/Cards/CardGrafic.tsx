@@ -1,8 +1,10 @@
+'use client';
 import React from 'react';
 import { ArrowDownLeftIcon, ArrowUpIcon } from '@heroicons/react/16/solid';
 import GaugeChart from '../Graphic/Gauge';
 import IndicadorToolTip from '../Tooltip/IndicadorToolTip';
 import { IconIndicador } from '../Tooltip/icons';
+import { useFilterNavigation } from '@/hooks/usefilterNavigation';
 
 
 type CardGraficValues = {
@@ -13,15 +15,37 @@ type CardGraficValues = {
     value: number;
     comparador: number;
     toolTipText: string;
+    filterPath?: {
+        query: { [key: string]: string };
+    }
 };
 
-const CardGrafic: React.FC<CardGraficValues> = ({ titulo, indicador, resultado, subtitulo, value, comparador, toolTipText }) => {
+const CardGrafic: React.FC<CardGraficValues> = ({
+    titulo,
+    indicador,
+    resultado,
+    subtitulo,
+    value,
+    comparador,
+    toolTipText,
+    filterPath
+}) => {
     const isPositive = resultado > 0;
+    const { navigateWithFilter } = useFilterNavigation();
+
+    const handleClick = () => {
+        if (filterPath) {
+            navigateWithFilter(filterPath.query);
+        }
+    };
 
 
     return (
         <>
-            <div className='flex p-4 justify-between items-center bg-blanco shadow-custom rounded-lg w-[450px]'>
+            <div
+            onClick={handleClick} 
+            className={`flex p-4 justify-between items-center bg-blanco shadow-custom rounded-lg w-[450px] ${filterPath ? 'cursor-pointer card-hover' : ''
+            }`}>
                 <div className="flex flex-col gap-5">
                     <h2 className='text-s font-semibold'>{titulo}</h2>
                     <h3 className='text-negro font-semibold text-3xl'>{indicador}</h3>

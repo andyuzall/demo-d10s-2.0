@@ -1,19 +1,36 @@
+'use client';
 import React from 'react';
 import { IconIndicador } from '../Tooltip/icons';
 import IndicadorToolTip from '../Tooltip/IndicadorToolTip';
+import { useFilterNavigationAlarms } from '@/hooks/usefilterNavigation';
 
 type CardSinValues = {
     titulo: string;
     indicador: number;
     subtitulo: string;
     toolTipText: string;
+
 };
 
-const CardSinCalc: React.FC<CardSinValues> = ({ titulo, indicador, subtitulo, toolTipText }) => {
+const CardSinCalc: React.FC<CardSinValues> = ({ 
+    titulo, 
+    indicador, 
+    subtitulo, 
+    toolTipText,
+}) => {
+
+        const { navigateWithFilterAlarms } = useFilterNavigationAlarms();
+
+        const handleClick = () => {
+            navigateWithFilterAlarms;
+        };
+    
 
     return (
         <>
-            <div className="flex flex-col gap-5 p-4 bg-blanco h-[152px] rounded-lg shadow-custom">
+            <div 
+            onClick={handleClick}
+            className={`flex flex-col gap-5 p-4 bg-blanco h-[152px] rounded-lg shadow-custom  cursor-pointer card-hover`}>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-s font-semibold'>{titulo}</h2>
                     <IndicadorToolTip

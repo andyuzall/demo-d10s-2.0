@@ -17,6 +17,11 @@ interface HomeData {
   campanasOptimo: number;
 };
 
+const FILTER_TYPES = {
+  ESTADO: 'estado',
+  ESTADO_CAMPANA: 'estadoCampana',
+  CAMPANA_ESPECIAL: 'campanaEspecial'
+};
 
 const DashboardHome: React.FC = () => {
   const [datosCampanas, setDatosCampanas] = useState<HomeData[]>([]);
@@ -92,6 +97,13 @@ const DashboardHome: React.FC = () => {
                 )}
                 subtitulo='% al mes anterior.'
                 toolTipText='Total de campañas ordenadas'
+                filterPath={{
+                  query: {
+                    [FILTER_TYPES.ESTADO]: '',
+                    [FILTER_TYPES.ESTADO_CAMPANA]: '',
+                    [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+                  }
+                }}
               />
               <CardStatus
                 titulo="Campañas activas"
@@ -102,6 +114,13 @@ const DashboardHome: React.FC = () => {
                 )}
                 subtitulo='% de las del mes.'
                 toolTipText='Total de campañas con actividad'
+                filterPath={{
+                  query: {
+                    [FILTER_TYPES.ESTADO]: 'Activa',
+                    [FILTER_TYPES.ESTADO_CAMPANA]: '',
+                    [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+                  }
+                }}
               />
               <CardSinCalc
                 titulo="Próx. a finalizar"
@@ -124,6 +143,13 @@ const DashboardHome: React.FC = () => {
                 value={campana.campanasCritico}
                 comparador={campana.mesActual}
                 toolTipText=''
+                filterPath={{
+                  query: {
+                    [FILTER_TYPES.ESTADO]: 'Activa',
+                    [FILTER_TYPES.ESTADO_CAMPANA]: 'critico',
+                    [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+                  }
+                }}
               />
               <CardGrafic
                 titulo="Campañas en Estado Delicado"
@@ -136,6 +162,13 @@ const DashboardHome: React.FC = () => {
                 value={campana.campanasDelicado}
                 comparador={campana.mesActual}
                 toolTipText=''
+                filterPath={{
+                  query: {
+                    [FILTER_TYPES.ESTADO]: 'Activa',
+                    [FILTER_TYPES.ESTADO_CAMPANA]: 'delicado',
+                    [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+                  }
+                }}
               />
               <CardGrafic
                 titulo="Campañas en Estado Óptimo"
@@ -148,6 +181,13 @@ const DashboardHome: React.FC = () => {
                 value={campana.campanasOptimo}
                 comparador={campana.mesActual}
                 toolTipText=''
+                filterPath={{
+                  query: {
+                    [FILTER_TYPES.ESTADO]: 'Activa',
+                    [FILTER_TYPES.ESTADO_CAMPANA]: 'optimo',
+                    [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+                  }
+                }}
               />
             </div>
 

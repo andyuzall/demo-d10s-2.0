@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
    IconActivas,
    IconActivasExito,
@@ -17,6 +17,7 @@ import {
 import CampaignTooltip from './Tooltip/CampaignTooltip';
 import FaqTooltip from './Tooltip/FaqToolTip';
 import FilterTooltip from './Tooltip/FiltersToolTip';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // Constantes para los nombres de los filtros
 const FILTER_TYPES = {
@@ -35,17 +36,68 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChange }) => {
+   const router = useRouter();
+   const searchParams = useSearchParams();
    const [isEstadosOpen, setIsEstadosOpen] = useState(false);
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
    const [activeFilters, setActiveFilters] = useState<{ [key: string]: string }>({});
 
+   // Efecto para sincronizar el estado inicial con los query params
+   useEffect(() => {
+      const estado = searchParams?.get(FILTER_TYPES.ESTADO);
+      const estadoCampana = searchParams?.get(FILTER_TYPES.ESTADO_CAMPANA);
+      const campanaEspecial = searchParams?.get(FILTER_TYPES.CAMPANA_ESPECIAL);
+
+      // Establecer el estado inicial basado en los query params
+      if (estado || estadoCampana || campanaEspecial) {
+          const initialFilters: FilterValues = {};
+          if (estado) initialFilters[FILTER_TYPES.ESTADO] = estado;
+          if (estadoCampana) initialFilters[FILTER_TYPES.ESTADO_CAMPANA] = estadoCampana;
+          if (campanaEspecial) initialFilters[FILTER_TYPES.CAMPANA_ESPECIAL] = campanaEspecial;
+          
+          handleFilterChange(initialFilters);
+          
+          // Establecer el botón seleccionado basado en los filtros
+          if (estado === 'Activa') setSelectedButton('Activa');
+          if (campanaEspecial === 'Campaña destacada') setSelectedButton('especial');
+          // ... otros casos según necesites
+      }
+  }, [searchParams]);
+
+  // Función auxiliar para actualizar la URL
+  const updateURL = (filters: FilterValues) => {
+      const params = new URLSearchParams();
+      Object.entries(filters).forEach(([key, value]) => {
+          if (value) params.set(key, value);
+      });
+      
+      const newURL = params.toString() ? `?${params.toString()}` : '';
+      router.push(`/dashboard${newURL}`, { scroll: false });
+  };
+
+
    const handleMultipleFilter = (filterType: string, filterValue: string) => {
-      setActiveFilters(prev => ({
-         ...prev,
-         [filterType]: filterValue
-      }));
-      onMultipleFilterChange(filterType, filterValue);
+      // setActiveFilters(prev => ({
+      //    ...prev,
+      //    [filterType]: filterValue
+      // }));
+      // onMultipleFilterChange(filterType, filterValue);
+      setActiveFilters(prev => {
+         const newFilters = {
+             ...prev,
+             [filterType]: filterValue
+         };
+         
+         // Si el valor está vacío, eliminar el filtro
+         if (!filterValue) {
+             delete newFilters[filterType];
+         }
+
+         updateURL(newFilters);
+         return newFilters;
+     });
+     onMultipleFilterChange(filterType, filterValue);
    };
 
    const handleIdentifierClick = () => {
@@ -56,6 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
    };
 
    const handleFilterChange = (filters: FilterValues) => {
+      updateURL(filters);
       onFilterChange(filters);
    };
 

@@ -114,3 +114,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to right, #BB86FC, #47029b);
 }
+
+.card-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-hover:hover {
+  box-shadow: 0 0 0 1px #BB86FC;
+}

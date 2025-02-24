@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
 import { ArrowDownLeftIcon, ArrowUpIcon } from '@heroicons/react/16/solid';
 import IndicadorToolTip from '../Tooltip/IndicadorToolTip';
 import { IconIndicador } from '../Tooltip/icons';
+import { useFilterNavigation } from '@/hooks/usefilterNavigation';
 
 
 type CardValues = {
@@ -10,14 +12,35 @@ type CardValues = {
     resultado: number;
     subtitulo: string;
     toolTipText: string;
+    filterPath?: {
+        query: { [key: string]: string };
+    }
 };
 
-const CardStatus: React.FC<CardValues> = ({ titulo, indicador, resultado, subtitulo, toolTipText }) => {
+const CardStatus: React.FC<CardValues> = ({ 
+    titulo, 
+    indicador, 
+    resultado, 
+    subtitulo, 
+    toolTipText,
+    filterPath
+}) => {
     const isPositive = resultado > 0;
+    const { navigateWithFilter } = useFilterNavigation();
+
+    const handleClick = () => {
+        if (filterPath) {
+            navigateWithFilter(filterPath.query);
+        }
+    };
 
     return (
         <>
-            <div className="flex flex-col gap-5 p-4 bg-blanco w-64 h-[152px] rounded-lg shadow-custom">
+            <div
+            onClick={handleClick} 
+            className={`flex flex-col gap-5 p-4 bg-blanco w-64 h-[152px] rounded-lg shadow-custom ${
+                filterPath ? 'cursor-pointer card-hover' : ''
+            }`}>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-s font-semibold'>{titulo}</h2>
                     <IndicadorToolTip
