@@ -61,7 +61,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
           // Establecer el botón seleccionado basado en los filtros
           if (estado === 'Activa') setSelectedButton('Activa');
           if (campanaEspecial === 'Campaña destacada') setSelectedButton('especial');
-          // ... otros casos según necesites
+          if (estado === 'Activa' && estadoCampana === 'aceptable') setSelectedButton('Activa excelente');
+          if (estado === 'Activa' && estadoCampana === 'optimo') setSelectedButton('Activa optimo');
+          if (estado === 'Activa' && estadoCampana === 'delicado') setSelectedButton('Activa delicado');
+          if (estado === 'Activa' && estadoCampana === 'critico') setSelectedButton('Activa critico');
       }
   }, [searchParams]);
 
@@ -78,11 +81,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
 
 
    const handleMultipleFilter = (filterType: string, filterValue: string) => {
-      // setActiveFilters(prev => ({
-      //    ...prev,
-      //    [filterType]: filterValue
-      // }));
-      // onMultipleFilterChange(filterType, filterValue);
       setActiveFilters(prev => {
          const newFilters = {
              ...prev,
@@ -221,7 +219,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
                         isSelected={selectedButton === 'Activa excelente'}
                         onClick={() => {
                            handleCampañasActivasAceptables();
-                           setSelectedButton("Activa excelente");
                         }}
                      />
 
@@ -231,7 +228,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
                         isSelected={selectedButton === 'Activa optimo'}
                         onClick={() => {
                            handleCampañasActivasOptimas();
-                           setSelectedButton("Activa optimo");
                         }} />
 
                      <CampaignTooltip
@@ -240,7 +236,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
                         isSelected={selectedButton === 'Activa delicado'}
                         onClick={() => {
                            handleCampañasActivasDelicadas();
-                           setSelectedButton("Activa delicado");
                         }}
                      />
 
@@ -250,7 +245,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
                         isSelected={selectedButton === 'Activa critico'}
                         onClick={() => {
                            handleCampañasActivasCritico();
-                           setSelectedButton("Activa critico");
                         }}
                      />
 
