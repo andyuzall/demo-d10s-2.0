@@ -37,6 +37,7 @@ export interface Product {
     entr: string;
     result: string;
     filtroCumplimiento: string;
+    campanaPorFinalizar: string;
   };
 
 export interface HomeData {

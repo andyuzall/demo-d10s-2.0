@@ -14,8 +14,9 @@ export const useFilterNavigation = () => {
 
 export const useFilterNavigationAlarms = () => {
    const router = useRouter();
-   const navigateWithFilterAlarms = () => {
-      router.push(`/notificaciones`);
+   const navigateWithFilterAlarms = (filters: { [key: string]: string }, baseUrl: string) => {
+      const queryString = new URLSearchParams(filters).toString();
+      router.push(`/${baseUrl}?${queryString}`);
    }
    return { navigateWithFilterAlarms };
 };

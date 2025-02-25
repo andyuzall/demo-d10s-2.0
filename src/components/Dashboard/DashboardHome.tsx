@@ -20,7 +20,8 @@ interface HomeData {
 const FILTER_TYPES = {
   ESTADO: 'estado',
   ESTADO_CAMPANA: 'estadoCampana',
-  CAMPANA_ESPECIAL: 'campanaEspecial'
+  CAMPANA_ESPECIAL: 'campanaEspecial',
+  POR_FINALIZAR: 'campanaPorFinalizar'
 };
 
 const DashboardHome: React.FC = () => {
@@ -127,6 +128,16 @@ const DashboardHome: React.FC = () => {
                 indicador={campana.campanasProxFinalizar}
                 subtitulo="Entre hoy y el sábado"
                 toolTipText='Campañas que finalizan en los próximos 6 días'
+                navigable= {true}
+                baseUrl={'dashboard'}
+                filterPath={{
+                  query: {
+                    [FILTER_TYPES.ESTADO]: '',
+                    [FILTER_TYPES.ESTADO_CAMPANA]: '',
+                    [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+                    [FILTER_TYPES.POR_FINALIZAR]: 'Por finalizar'
+                  }
+                }}
               />
             </div>
 
@@ -208,7 +219,16 @@ const DashboardHome: React.FC = () => {
                   indicador={alarmCount ?? 0}
                   subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
                   toolTipText='Alarmas detectadas en los últimos 20 días'
-                  navigable= {true}
+                  navigable={true}
+                  baseUrl={'notificaciones'}
+                  filterPath={{
+                    query: {
+                      [FILTER_TYPES.ESTADO]: '',
+                      [FILTER_TYPES.ESTADO_CAMPANA]: '',
+                      [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+                      [FILTER_TYPES.POR_FINALIZAR]: ''
+                    }
+                  }}
                 />
 
                 <CardSinCalc
@@ -216,6 +236,7 @@ const DashboardHome: React.FC = () => {
                   indicador={campana.campanasRecientes}
                   subtitulo={`Entre el ${dateLimitRecente.toLocaleDateString()} hasta hoy`}
                   toolTipText='Campañas ingresadas en los últimos 4 días'
+                  baseUrl='dashboard'
                 />
               </div>
             </div>

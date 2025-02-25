@@ -23,7 +23,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 const FILTER_TYPES = {
    ESTADO: 'estado',
    ESTADO_CAMPANA: 'estadoCampana',
-   CAMPANA_ESPECIAL: 'campanaEspecial'
+   CAMPANA_ESPECIAL: 'campanaEspecial',
+   POR_FINALIZAR: 'campanaPorFinalizar'
 };
 
 type FilterValues = {
@@ -48,13 +49,15 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       const estado = searchParams?.get(FILTER_TYPES.ESTADO);
       const estadoCampana = searchParams?.get(FILTER_TYPES.ESTADO_CAMPANA);
       const campanaEspecial = searchParams?.get(FILTER_TYPES.CAMPANA_ESPECIAL);
+      const campanaPorFinalizar = searchParams?.get(FILTER_TYPES.POR_FINALIZAR);
 
       // Establecer el estado inicial basado en los query params
-      if (estado || estadoCampana || campanaEspecial) {
+      if (estado || estadoCampana || campanaEspecial || campanaPorFinalizar) {
           const initialFilters: FilterValues = {};
           if (estado) initialFilters[FILTER_TYPES.ESTADO] = estado;
           if (estadoCampana) initialFilters[FILTER_TYPES.ESTADO_CAMPANA] = estadoCampana;
           if (campanaEspecial) initialFilters[FILTER_TYPES.CAMPANA_ESPECIAL] = campanaEspecial;
+          if (campanaPorFinalizar) initialFilters[FILTER_TYPES.POR_FINALIZAR] = campanaPorFinalizar;
           
           handleFilterChange(initialFilters);
           
@@ -65,6 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
           if (estado === 'Activa' && estadoCampana === 'optimo') setSelectedButton('Activa optimo');
           if (estado === 'Activa' && estadoCampana === 'delicado') setSelectedButton('Activa delicado');
           if (estado === 'Activa' && estadoCampana === 'critico') setSelectedButton('Activa critico');
+          if (campanaPorFinalizar === 'Por finalizar') setSelectedButton('por finalizar');
       }
   }, [searchParams]);
 
@@ -159,6 +163,16 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
          [FILTER_TYPES.ESTADO_CAMPANA]: 'critico',
          [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
       });
+   }
+
+   const handleCampañasPorFinalizar = () => {
+      handleFilterChange({
+         [FILTER_TYPES.ESTADO]: '',
+         [FILTER_TYPES.ESTADO_CAMPANA]: '',
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: 'Por finalizar'
+      });
+      setSelectedButton("por finalizar");
    }
 
    const handleCampañasSinActividad = () => {
@@ -256,6 +270,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
                   tooltipText="Campañas destacadas"
                   isSelected={selectedButton === 'especial'}
                   onClick={() => handleCampañasDestacadas()}
+               />
+               {/* Sección de campañas por finalizar */}
+               <CampaignTooltip
+                  icon={<IconDestacadas className={`w-5 h-5 items-center ${selectedButton === 'por finalizar' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
+                  tooltipText="Campañas por finalizar"
+                  isSelected={selectedButton === 'por finalizar'}
+                  onClick={() => handleCampañasPorFinalizar()}
                />
                {/* Sección de campañas sin actividad */}
                <CampaignTooltip

@@ -10,6 +10,10 @@ type CardSinValues = {
     subtitulo: string;
     toolTipText: string;
     navigable?: boolean;
+    filterPath?: {
+        query: { [key: string]: string };
+    }
+    baseUrl: string;
 };
 
 const CardSinCalc: React.FC<CardSinValues> = ({
@@ -17,16 +21,20 @@ const CardSinCalc: React.FC<CardSinValues> = ({
     indicador,
     subtitulo,
     toolTipText,
-    navigable = false
+    navigable = false,
+    filterPath,
+    baseUrl
 }) => {
 
     const { navigateWithFilterAlarms } = useFilterNavigationAlarms();
 
     const handleClick = () => {
         if (navigable) {
-            navigateWithFilterAlarms();
+            if (filterPath) {
+                navigateWithFilterAlarms(filterPath.query, baseUrl);
+            }
         }
-    };
+    }
 
 
     return (

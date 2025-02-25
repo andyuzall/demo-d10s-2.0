@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Loading from '../Loader/Loading';
-import { FaRegArrowAltCircleUp } from "react-icons/fa";
-import { FaRegArrowAltCircleDown } from "react-icons/fa";
-
 
 type Alarms = {
     date: string;

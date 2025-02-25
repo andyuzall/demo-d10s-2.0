@@ -43,6 +43,7 @@ interface Producto {
   entr: string;
   result: string;
   filtroCumplimiento: string;
+  campanaPorFinalizar: string;
 }
 
 interface HomeData {
@@ -189,6 +190,7 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
       entr: row.get('entr'),
       result: row.get('result'),
       filtroCumplimiento: row.get('filtroCumplimiento'),
+      campanaPorFinalizar: row.get('campanaPorFinalizar'),
     }));
   }
   return rows
@@ -234,6 +236,7 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
     entr: row.get('entr'),
     result: row.get('result'),
     filtroCumplimiento: row.get('filtroCumplimiento'),
+    campanaPorFinalizar: row.get('campanaPorFinalizar'),
   }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);
