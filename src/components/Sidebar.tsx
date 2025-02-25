@@ -118,7 +118,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: '',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: 'Campaña destacada'
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: 'Campaña destacada',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
       setSelectedButton("especial");
    }
@@ -128,7 +129,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
       setSelectedButton("Activa");
    }
@@ -137,7 +139,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'aceptable',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
    }
 
@@ -145,7 +148,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'optimo',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
    }
 
@@ -153,7 +157,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'delicado',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
    }
 
@@ -161,7 +166,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Activa',
          [FILTER_TYPES.ESTADO_CAMPANA]: 'critico',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
    }
 
@@ -179,7 +185,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Sin actividad',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
       setSelectedButton("Sin actividad");
    }
@@ -188,7 +195,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Campaña Pausada',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
       setSelectedButton("Pausada");
    }
@@ -198,7 +206,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Finalizada',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
       setSelectedButton("Finalizada");
    }
@@ -207,7 +216,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
       handleFilterChange({
          [FILTER_TYPES.ESTADO]: 'Por fuera de DV360',
          [FILTER_TYPES.ESTADO_CAMPANA]: '',
-         [FILTER_TYPES.CAMPANA_ESPECIAL]: ''
+         [FILTER_TYPES.CAMPANA_ESPECIAL]: '',
+         [FILTER_TYPES.POR_FINALIZAR]: ''
       });
       setSelectedButton("Por fuera de DV360");
    }
