@@ -42,6 +42,7 @@ interface Producto {
   rangoInversion: string;
   entr: string;
   result: string;
+  filtroCumplimiento: string;
 }
 
 interface HomeData {
@@ -187,6 +188,7 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
       rangoInversion: row.get('rangoInversion'),
       entr: row.get('entr'),
       result: row.get('result'),
+      filtroCumplimiento: row.get('filtroCumplimiento'),
     }));
   }
   return rows
@@ -231,6 +233,7 @@ export async function getGoogleSheetData(userEmail: string): Promise<Producto[]>
     rangoInversion: row.get('rangoInversion'),
     entr: row.get('entr'),
     result: row.get('result'),
+    filtroCumplimiento: row.get('filtroCumplimiento'),
   }));
   } catch (error) {
     console.error('Error al obtener los datos de Google Sheets:', error);

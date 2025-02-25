@@ -36,6 +36,7 @@ export interface Product {
     rangoInversion: string;
     entr: string;
     result: string;
+    filtroCumplimiento: string;
   };
 
 export interface HomeData {

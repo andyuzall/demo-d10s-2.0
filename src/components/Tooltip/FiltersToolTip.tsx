@@ -11,13 +11,13 @@ interface CampaignTooltipProps {
     isSelected: boolean
 }
 
-export default function FilterTooltip({ 
-    icon, 
-    tooltipText, 
-    onClick, 
-    isSelected, 
-    onMultipleFilterChange, 
- }: CampaignTooltipProps) {
+export default function FilterTooltip({
+    icon,
+    tooltipText,
+    onClick,
+    isSelected,
+    onMultipleFilterChange,
+}: CampaignTooltipProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     const [isEmailAdmin, setIsEmailAdmin] = useState(false);
@@ -213,20 +213,30 @@ export default function FilterTooltip({
                             <option className="font-bold" value="5001 a 9999">5001 a 9999</option>
                             <option className="font-bold" value="1000 o +">10000 o +</option>
                         </select>
-                        {/* TRADER FILTER */}
-                        {isEmailAdmin && (
+                        {/* CUMPLIMIENTO FILTER */}
                         <select
                             className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                            onChange={(e) => onMultipleFilterChange("trader", e.target.value)}
+                            onChange={(e) => onMultipleFilterChange("filtroCumplimiento", e.target.value)}
                         >
-                            <option value="">Trader</option>
-                            <option className="font-bold" value="Juan">Juan</option>
-                            <option className="font-bold" value="Cynthia">Cynthia</option>
-                            <option className="font-bold" value="Emmanuel">Emmanuel</option>
-                            <option className="font-bold" value="Monica">Monica</option>
-                            <option className="font-bold" value="Juan Sebastian">Juan Sebastian</option>
-                            <option className="font-bold" value="Dalma">Dalma</option>
+                            <option value="">Situación actual</option>
+                            <option className="font-bold" value="Objetivos cumplidos">Objetivos cumplidos</option>
+                            <option className="font-bold" value="Cumplio Objetivo">Cumplio Objetivo</option>
+                            <option className="font-bold" value="Cumplio Consumo">Cumplio Consumo</option>
                         </select>
+                        {/* TRADER FILTER */}
+                        {isEmailAdmin && (
+                            <select
+                                className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                                onChange={(e) => onMultipleFilterChange("trader", e.target.value)}
+                            >
+                                <option value="">Trader</option>
+                                <option className="font-bold" value="Juan">Juan</option>
+                                <option className="font-bold" value="Cynthia">Cynthia</option>
+                                <option className="font-bold" value="Emmanuel">Emmanuel</option>
+                                <option className="font-bold" value="Monica">Monica</option>
+                                <option className="font-bold" value="Juan Sebastian">Juan Sebastian</option>
+                                <option className="font-bold" value="Dalma">Dalma</option>
+                            </select>
                         )}
                     </div>
                 </div>
