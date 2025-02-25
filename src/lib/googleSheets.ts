@@ -56,6 +56,7 @@ interface HomeData {
   campanasCritico: number;
   campanasDelicado: number;
   campanasOptimo: number;
+  campanasAceptable: number;
 }
 
 interface Alarms {
@@ -267,6 +268,7 @@ export async function getGoogleSheetHomeData(userEmail: string): Promise<HomeDat
       campanasCritico: Number(row.get('campanasCritico')) || 0,
       campanasDelicado: Number(row.get('campanasDelicado')) || 0,
       campanasOptimo: Number(row.get('campanasOptimo')) || 0,
+      campanasAceptable: Number(row.get('campanasAceptable')) || 0,
     }));
 
   } catch (error) {

@@ -18,6 +18,14 @@ import CampaignTooltip from './Tooltip/CampaignTooltip';
 import FaqTooltip from './Tooltip/FaqToolTip';
 import FilterTooltip from './Tooltip/FiltersToolTip';
 import { useRouter, useSearchParams } from 'next/navigation';
+import axios from 'axios';
+
+interface HomeData {
+   campanasCritico: number;
+   campanasDelicado: number;
+   campanasOptimo: number;
+   campanasAceptable: number;
+};
 
 // Constantes para los nombres de los filtros
 const FILTER_TYPES = {
@@ -43,6 +51,20 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
    const [isFinalizadasOpen, setIsFinalizadasOpen] = useState(false);
    const [selectedButton, setSelectedButton] = useState('');
    const [activeFilters, setActiveFilters] = useState<{ [key: string]: string }>({});
+   const [datosCampanas, setDatosCampanas] = useState<HomeData[]>([]);
+
+
+   const fetchDatosCampanas = async () => {
+      try {
+         const response = await axios.get('/api/sheetDataHome');
+         setDatosCampanas(response.data);
+      } catch (error) {
+         console.error('Error al obtener datos:', error);
+      }
+   };
+   useEffect(() => {
+      fetchDatosCampanas();
+   }, []);
 
    // Efecto para sincronizar el estado inicial con los query params
    useEffect(() => {
@@ -53,53 +75,53 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
 
       // Establecer el estado inicial basado en los query params
       if (estado || estadoCampana || campanaEspecial || campanaPorFinalizar) {
-          const initialFilters: FilterValues = {};
-          if (estado) initialFilters[FILTER_TYPES.ESTADO] = estado;
-          if (estadoCampana) initialFilters[FILTER_TYPES.ESTADO_CAMPANA] = estadoCampana;
-          if (campanaEspecial) initialFilters[FILTER_TYPES.CAMPANA_ESPECIAL] = campanaEspecial;
-          if (campanaPorFinalizar) initialFilters[FILTER_TYPES.POR_FINALIZAR] = campanaPorFinalizar;
-          
-          handleFilterChange(initialFilters);
-          
-          // Establecer el botón seleccionado basado en los filtros
-          if (estado === 'Activa') setSelectedButton('Activa');
-          if (campanaEspecial === 'Campaña destacada') setSelectedButton('especial');
-          if (estado === 'Activa' && estadoCampana === 'aceptable') setSelectedButton('Activa excelente');
-          if (estado === 'Activa' && estadoCampana === 'optimo') setSelectedButton('Activa optimo');
-          if (estado === 'Activa' && estadoCampana === 'delicado') setSelectedButton('Activa delicado');
-          if (estado === 'Activa' && estadoCampana === 'critico') setSelectedButton('Activa critico');
-          if (campanaPorFinalizar === 'Por finalizar') setSelectedButton('por finalizar');
-      }
-  }, [searchParams]);
+         const initialFilters: FilterValues = {};
+         if (estado) initialFilters[FILTER_TYPES.ESTADO] = estado;
+         if (estadoCampana) initialFilters[FILTER_TYPES.ESTADO_CAMPANA] = estadoCampana;
+         if (campanaEspecial) initialFilters[FILTER_TYPES.CAMPANA_ESPECIAL] = campanaEspecial;
+         if (campanaPorFinalizar) initialFilters[FILTER_TYPES.POR_FINALIZAR] = campanaPorFinalizar;
 
-  // Función auxiliar para actualizar la URL
-  const updateURL = (filters: FilterValues) => {
+         handleFilterChange(initialFilters);
+
+         // Establecer el botón seleccionado basado en los filtros
+         if (estado === 'Activa') setSelectedButton('Activa');
+         if (campanaEspecial === 'Campaña destacada') setSelectedButton('especial');
+         if (estado === 'Activa' && estadoCampana === 'aceptable') setSelectedButton('Activa excelente');
+         if (estado === 'Activa' && estadoCampana === 'optimo') setSelectedButton('Activa optimo');
+         if (estado === 'Activa' && estadoCampana === 'delicado') setSelectedButton('Activa delicado');
+         if (estado === 'Activa' && estadoCampana === 'critico') setSelectedButton('Activa critico');
+         if (campanaPorFinalizar === 'Por finalizar') setSelectedButton('por finalizar');
+      }
+   }, [searchParams]);
+
+   // Función auxiliar para actualizar la URL
+   const updateURL = (filters: FilterValues) => {
       const params = new URLSearchParams();
       Object.entries(filters).forEach(([key, value]) => {
-          if (value) params.set(key, value);
+         if (value) params.set(key, value);
       });
-      
+
       const newURL = params.toString() ? `?${params.toString()}` : '';
       router.push(`/dashboard${newURL}`, { scroll: false });
-  };
+   };
 
 
    const handleMultipleFilter = (filterType: string, filterValue: string) => {
       setActiveFilters(prev => {
          const newFilters = {
-             ...prev,
-             [filterType]: filterValue
+            ...prev,
+            [filterType]: filterValue
          };
-         
+
          // Si el valor está vacío, eliminar el filtro
          if (!filterValue) {
-             delete newFilters[filterType];
+            delete newFilters[filterType];
          }
 
          updateURL(newFilters);
          return newFilters;
-     });
-     onMultipleFilterChange(filterType, filterValue);
+      });
+      onMultipleFilterChange(filterType, filterValue);
    };
 
    const handleIdentifierClick = () => {
@@ -239,7 +261,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
                   <div className="mt-2 flex flex-col gap-1 items-center">
                      <CampaignTooltip
                         icon={<IconActivasExito className={`w-5 h-5 ${selectedButton === 'Activa excelente' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
-                        tooltipText="Campañas activas en estado excelente"
+                        tooltipText={`Campañas activas en estado excelente: ${datosCampanas.map (dato => dato.campanasAceptable).reduce((acum, val) => acum + val, 0)}`}
                         isSelected={selectedButton === 'Activa excelente'}
                         onClick={() => {
                            handleCampañasActivasAceptables();
@@ -248,7 +270,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
 
                      <CampaignTooltip
                         icon={<IconActivasOptimo className={`w-5 h-5 ${selectedButton === 'Activa optimo' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
-                        tooltipText="Campañas activas en estado optimo"
+                        tooltipText={`Campañas activas en estado óptimo: ${datosCampanas.map (dato => dato.campanasOptimo).reduce((acum, val) => acum + val, 0)}`}
                         isSelected={selectedButton === 'Activa optimo'}
                         onClick={() => {
                            handleCampañasActivasOptimas();
@@ -256,7 +278,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
 
                      <CampaignTooltip
                         icon={<IconActivasDelicada className={`w-5 h-5 ${selectedButton === 'Activa delicado' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
-                        tooltipText="Campañas activas en estado delicado"
+                        tooltipText={`Campañas activas en estado delicado: ${datosCampanas.map (dato => dato.campanasDelicado).reduce((acum, val) => acum + val, 0)}`}
                         isSelected={selectedButton === 'Activa delicado'}
                         onClick={() => {
                            handleCampañasActivasDelicadas();
@@ -265,7 +287,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onFilterChange, onMultipleFilterChang
 
                      <CampaignTooltip
                         icon={<IconActivasCritica className={`w-5 h-5 ${selectedButton === 'Activa critico' ? 'stroke-blanco' : 'text-violetaPrincipal'}`} />}
-                        tooltipText="Campañas activas en estado critico"
+                        tooltipText={`Campañas activas en estado critico: ${datosCampanas.map (dato => dato.campanasCritico).reduce((acum, val) => acum + val, 0)}`}
                         isSelected={selectedButton === 'Activa critico'}
                         onClick={() => {
                            handleCampañasActivasCritico();

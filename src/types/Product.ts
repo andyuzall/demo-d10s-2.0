@@ -49,6 +49,7 @@ export interface HomeData {
     campanasCritico: number;
     campanasDelicado: number;
     campanasOptimo: number;
+    campanasAceptable: number;
   }
 
 export interface Alarms {
