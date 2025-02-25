@@ -1,5 +1,4 @@
 'use client'
-
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useEffect, useRef, useState } from "react"
 
@@ -11,6 +10,13 @@ interface CampaignTooltipProps {
     isSelected: boolean
 }
 
+interface Producto {
+    cliente: string;
+    anunciante: string;
+    mercado: string;
+    formato: string;
+}
+
 export default function FilterTooltip({
     icon,
     tooltipText,
@@ -20,8 +26,51 @@ export default function FilterTooltip({
 }: CampaignTooltipProps) {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [clientes, setClientes] = useState<string[]>([]);
+    const [anunciantes, setAnunciantes] = useState<string[]>([]);
+    const [mercados, setMercados] = useState<string[]>([]);
+    const [formatos, setFormatos] = useState<string[]>([]);
+
+    const [isLoading, setIsLoading] = useState(false);
     const [isEmailAdmin, setIsEmailAdmin] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const getUniqueValues = (array: Producto[], key: keyof Producto) => {
+        return Array.from(new Set(array.map(item => item[key])))
+            .filter(Boolean)
+            .sort((a, b) => a.localeCompare(b));
+    }
+    // Función para cargar los datos
+    const fetchData = async () => {
+        try {
+            setIsLoading(true);
+            const response = await fetch('/api/sheetData');
+            const data = await response.json();
+
+            // Obtener valores únicos
+            const uniqueClientes = getUniqueValues(data, 'cliente');
+            const uniqueAnunciantes = getUniqueValues(data, 'anunciante');
+            const uniqueMercados = getUniqueValues(data, 'mercado');
+            const uniqueFormatos = getUniqueValues(data, 'formato');
+
+            setClientes(uniqueClientes);
+            setAnunciantes(uniqueAnunciantes);
+            setMercados(uniqueMercados);
+            setFormatos(uniqueFormatos);
+        } catch (error) {
+            console.error('Error al cargar los datos:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Cargar datos cuando se abre el dropdown
+    useEffect(() => {
+        if (isOpen && clientes.length === 0 && anunciantes.length === 0 && mercados.length === 0 && formatos.length === 0) {
+            fetchData();
+        }
+    }, [isOpen]);
+
 
     useEffect(() => {
         const checkAdminStatus = async () => {
@@ -34,7 +83,6 @@ export default function FilterTooltip({
                 setIsEmailAdmin(false);
             }
         };
-
         checkAdminStatus();
     }, []);
 
@@ -118,58 +166,6 @@ export default function FilterTooltip({
                             <option className="font-bold" value="Vistas completas">Vistas completas</option>
                             <option className="font-bold" value="Escuchas completas">Escuchas completas</option>
                         </select>
-                        {/* FORMATO FILTER */}
-                        <select
-                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                            onChange={(e) => onMultipleFilterChange("formato", e.target.value)}
-                        >
-                            <option value="">Formato</option>
-                            <option className="font-bold" value="YouTube">
-                                YouTube
-                            </option>
-                            <option className="font-bold" value="Push Notification">
-                                Push Notification
-                            </option>
-                            <option className="font-bold" value="Connected TV">
-                                Connected TV
-                            </option>
-                            <option className="font-bold" value="Banners Display">
-                                Banners Display
-                            </option>
-                            <option className="font-bold" value="Video Programático">
-                                Video Programático
-                            </option>
-                            <option className="font-bold" value="Video Rewarded">
-                                Video Rewarded
-                            </option>
-                            <option className="font-bold" value="Rich Media Standard">
-                                Rich Media Standard
-                            </option>
-                            <option className="font-bold" value=" Rich Media Plus">
-                                Rich Media Plus
-                            </option>
-                            <option className="font-bold" value="Tik Tok Business">
-                                Tik Tok Business
-                            </option>
-                            <option className="font-bold" value="Native Standard">
-                                Native Standard
-                            </option>
-                            <option className="font-bold" value="DOOH">
-                                DOOH
-                            </option>
-                            <option className="font-bold" value="Social Plus Display">
-                                Social Plus Display
-                            </option>
-                            <option className="font-bold" value="Display DCO">
-                                Display DCO
-                            </option>
-                            <option className="font-bold" value="Audio Ads">
-                                Audio Ads
-                            </option>
-                            <option className="font-bold" value="Video Plus">
-                                Video Plus
-                            </option>
-                        </select>
                         {/* ESCENARIO FILTER */}
                         <select
                             className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
@@ -180,27 +176,6 @@ export default function FilterTooltip({
                             <option className="font-bold" value="Escenario 2">Escenario 2</option>
                             <option className="font-bold" value="Escenario 3">Escenario 3</option>
                             <option className="font-bold" value="Escenario 4">Escenario 4</option>
-                        </select>
-                        {/* MERCADO FILTER */}
-                        <select
-                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
-                            onChange={(e) => onMultipleFilterChange("mercado", e.target.value)}
-                        >
-                            <option value="">Mercado</option>
-                            <option className="font-bold" value="Argentina">Argentina</option>
-                            <option className="font-bold" value="Bolivia">Bolivia</option>
-                            <option className="font-bold" value="Chile">Chile</option>
-                            <option className="font-bold" value="Colombia">Colombia</option>
-                            <option className="font-bold" value="Costa Rica">Costa Rica</option>
-                            <option className="font-bold" value="Ecuador">Ecuador</option>
-                            <option className="font-bold" value="Guatemala">Guatemala</option>
-                            <option className="font-bold" value="Honduras">Honduras</option>
-                            <option className="font-bold" value="México">México</option>
-                            <option className="font-bold" value="Paraguay Grupo">Paraguay Grupo</option>
-                            <option className="font-bold" value="Paraguay Fuera de Grupo">Paraguay Fuera de Grupo</option>
-                            <option className="font-bold" value="Perú">Perú</option>
-                            <option className="font-bold" value="Salvador">Salvador</option>
-                            <option className="font-bold" value="Uruguay">Uruguay</option>
                         </select>
                         {/* INVERSIÓN FILTER */}
                         <select
@@ -222,6 +197,82 @@ export default function FilterTooltip({
                             <option className="font-bold" value="Objetivos cumplidos">Objetivos cumplidos</option>
                             <option className="font-bold" value="Cumplio Objetivo">Cumplio Objetivo</option>
                             <option className="font-bold" value="Cumplio Consumo">Cumplio Consumo</option>
+                        </select>
+                        {/* FORMATO FILTER */}
+                        <select
+                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                            onChange={(e) => onMultipleFilterChange("formato", e.target.value)}
+                            disabled={isLoading}
+                        >
+                            <option value="">
+                                {isLoading ? 'Cargando...' : 'Formato'}
+                            </option>
+                            {formatos.map((formato) => (
+                                <option
+                                    key={formato}
+                                    value={formato}
+                                    className="font-bold"
+                                >
+                                    {formato}
+                                </option>
+                            ))}
+                        </select>
+                        {/* MERCADO FILTER */}
+                        <select
+                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                            onChange={(e) => onMultipleFilterChange("mercado", e.target.value)}
+                            disabled={isLoading}
+                        >
+                            <option value="">
+                                {isLoading ? 'Cargando...' : 'Mercado'}
+                            </option>
+                            {mercados.map((mercado) => (
+                                <option
+                                    key={mercado}
+                                    value={mercado}
+                                    className="font-bold"
+                                >
+                                    {mercado}
+                                </option>
+                            ))}
+                        </select>
+                        {/* CLIENTE FILTER */}
+                        <select
+                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                            onChange={(e) => onMultipleFilterChange("cliente", e.target.value)}
+                            disabled={isLoading}
+                        >
+                            <option value="">
+                                {isLoading ? 'Cargando...' : 'Cliente'}
+                            </option>
+                            {clientes.map((cliente) => (
+                                <option
+                                    key={cliente}
+                                    value={cliente}
+                                    className="font-bold"
+                                >
+                                    {cliente}
+                                </option>
+                            ))}
+                        </select>
+                        {/* ANUNCIANTE FILTER */}
+                        <select
+                            className="w-full text-left px-2 py-1 rounded text-violetaPrincipal font-semibold cursor-pointer"
+                            onChange={(e) => onMultipleFilterChange("anunciante", e.target.value)}
+                            disabled={isLoading}
+                        >
+                            <option value="">
+                                {isLoading ? 'Cargando...' : 'Anunciante'}
+                            </option>
+                            {anunciantes.map((anunciante) => (
+                                <option
+                                    key={anunciante}
+                                    value={anunciante}
+                                    className="font-bold"
+                                >
+                                    {anunciante}
+                                </option>
+                            ))}
                         </select>
                         {/* TRADER FILTER */}
                         {isEmailAdmin && (
