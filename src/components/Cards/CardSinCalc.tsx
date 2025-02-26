@@ -43,7 +43,7 @@ const CardSinCalc: React.FC<CardSinValues> = ({
                 onClick={handleClick}
                 className={`flex flex-col gap-5 p-4 bg-blanco h-[152px] rounded-lg shadow-custom ${navigable ? 'cursor-pointer card-hover' : ''}`}>
                 <div className='flex justify-between items-center'>
-                    <h2 className='text-s font-semibold'>{titulo}</h2>
+                    <h2 className='text-sm font-semibold'>{titulo}</h2>
                     <IndicadorToolTip
                         icon={<IconIndicador className='w-5 h-5' />}
                         tooltipText={toolTipText}

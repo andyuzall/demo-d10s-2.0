@@ -47,13 +47,13 @@ const CardGrafic: React.FC<CardGraficValues> = ({
             className={`flex p-4 justify-between items-center bg-blanco shadow-custom rounded-lg w-[450px] ${filterPath ? 'cursor-pointer card-hover' : ''
             }`}>
                 <div className="flex flex-col gap-5">
-                    <h2 className='text-s font-semibold'>{titulo}</h2>
+                    <h2 className='text-sm font-semibold'>{titulo}</h2>
                     <h3 className='text-negro font-semibold text-3xl'>{indicador}</h3>
                     <div className="flex items-center">
                         {isPositive ? (
-                            <ArrowUpIcon className="w-4 h-4 text-green-500" />
+                            <ArrowUpIcon className="w-4 h-4 text-green" />
                         ) : resultado < 0 ? (
-                            <ArrowDownLeftIcon className="w-4 h-4 text-red-500" />
+                            <ArrowDownLeftIcon className="w-4 h-4 text-red" />
                         ) : (
                             <span className="text-gray-400">Sin cambios</span>
                         )}

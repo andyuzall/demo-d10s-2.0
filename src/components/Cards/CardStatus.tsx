@@ -42,7 +42,7 @@ const CardStatus: React.FC<CardValues> = ({
                 filterPath ? 'cursor-pointer card-hover' : ''
             }`}>
                 <div className='flex justify-between items-center'>
-                    <h2 className='text-s font-semibold'>{titulo}</h2>
+                    <h2 className='text-sm font-semibold'>{titulo}</h2>
                     <IndicadorToolTip
                         icon={<IconIndicador className='w-5 h-5' />}
                         tooltipText={toolTipText}
@@ -51,9 +51,9 @@ const CardStatus: React.FC<CardValues> = ({
                 <h3 className='text-negro font-semibold text-3xl'>{indicador}</h3>
                 <div className="flex items-center">
                     {isPositive ? (
-                        <ArrowUpIcon className="w-4 h-4 text-green-500" />
+                        <ArrowUpIcon className="w-4 h-4 text-green" />
                     ) : resultado < 0 ? (
-                        <ArrowDownLeftIcon className="w-4 h-4 text-red-500" />
+                        <ArrowDownLeftIcon className="w-4 h-4 text-red" />
                     ) : (
                         <span className="text-gray-400">Sin cambios</span>
                     )}

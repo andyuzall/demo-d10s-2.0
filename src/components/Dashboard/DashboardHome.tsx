@@ -90,14 +90,14 @@ const DashboardHome: React.FC = () => {
             {/* Primer bloque de datos */}
             <div className='flex flex-col gap-6'>
               <CardStatus
-                titulo="Cant. de campañas"
+                titulo="Campañas Activas"
                 indicador={campana.mesActual}
                 resultado={calcularCambio(
                   campana.mesActual,
                   campana.mesAnterior
                 )}
                 subtitulo='% al mes anterior.'
-                toolTipText='Total de campañas ordenadas'
+                toolTipText='Representa las campañas ordenadas que deberían estar ejecutándose.'
                 filterPath={{
                   query: {
                     [FILTER_TYPES.ESTADO]: '',
@@ -107,14 +107,14 @@ const DashboardHome: React.FC = () => {
                 }}
               />
               <CardStatus
-                titulo="Campañas activas"
+                titulo="Campañas en actividad"
                 indicador={campana.campanasActivas}
                 resultado={calcularCambio(
                   campana.mesActual,
                   campana.mesAnterior
                 )}
                 subtitulo='% de las del mes.'
-                toolTipText='Total de campañas con actividad'
+                toolTipText='Representa las campañas ordenadas que tienen actividad al día de hoy.'
                 filterPath={{
                   query: {
                     [FILTER_TYPES.ESTADO]: 'Activa',
@@ -128,7 +128,7 @@ const DashboardHome: React.FC = () => {
                 indicador={campana.campanasProxFinalizar}
                 subtitulo="Entre hoy y el sábado"
                 toolTipText='Campañas que finalizan en los próximos 6 días'
-                navigable= {true}
+                navigable={true}
                 baseUrl={'dashboard'}
                 filterPath={{
                   query: {
