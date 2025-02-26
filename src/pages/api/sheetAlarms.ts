@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const sheetAlarms = await getAlarms(userEmail);
 
     const dateLimit = new Date();
-    dateLimit.setDate(dateLimit.getDate() - 20);
+    dateLimit.setDate(dateLimit.getDate() - 6);
 
     const filteredAlarms = sheetAlarms.filter((alarm) => {
       const alarmDate = new Date(alarm.dateFormmated);

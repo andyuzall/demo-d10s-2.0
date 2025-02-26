@@ -31,12 +31,14 @@ const DashboardHome: React.FC = () => {
 
   // dia para las alarmas
   const dateLimit = new Date();
-  dateLimit.setDate(dateLimit.getDate() - 20);
-
+  dateLimit.setDate(dateLimit.getDate() - 6);
+  const diasSemanaLimit = dateLimit.toLocaleDateString('es-ES', { weekday: 'long' });
+  
   // dias para campañas recientes
   const dateLimitRecente = new Date();
   dateLimitRecente.setDate(dateLimitRecente.getDate() - 4);
-
+  const diaSemanaRecente = dateLimitRecente.toLocaleDateString('es-ES', { weekday: 'long' });
+  
   const dateProxFinalizar = new Date();
   dateProxFinalizar.setDate(dateProxFinalizar.getDate() + 6);
   
@@ -222,8 +224,8 @@ const DashboardHome: React.FC = () => {
                 <CardSinCalc
                   titulo="Nuevas alarmas"
                   indicador={alarmCount ?? 0}
-                  subtitulo={`Desde el ${dateLimit.toLocaleDateString()} hasta hoy`}
-                  toolTipText='Alarmas detectadas en los últimos 20 días'
+                  subtitulo={`Desde el ${diasSemanaLimit} hasta hoy`}
+                  toolTipText='Alarmas detectadas en los últimos 6 días'
                   navigable={true}
                   baseUrl={'notificaciones'}
                   filterPath={{
@@ -239,7 +241,7 @@ const DashboardHome: React.FC = () => {
                 <CardSinCalc
                   titulo="Recientes"
                   indicador={campana.campanasRecientes}
-                  subtitulo={`Entre el ${dateLimitRecente.toLocaleDateString()} hasta hoy`}
+                  subtitulo={`Entre el ${diaSemanaRecente} hasta hoy`}
                   toolTipText='Campañas ingresadas en los últimos 4 días'
                   baseUrl='dashboard'
                 />
