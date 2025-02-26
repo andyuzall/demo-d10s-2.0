@@ -37,6 +37,11 @@ const DashboardHome: React.FC = () => {
   const dateLimitRecente = new Date();
   dateLimitRecente.setDate(dateLimitRecente.getDate() - 4);
 
+  const dateProxFinalizar = new Date();
+  dateProxFinalizar.setDate(dateProxFinalizar.getDate() + 6);
+  
+  const diaSemana = dateProxFinalizar.toLocaleDateString('es-ES', { weekday: 'long' });
+
   const fetchAlarms = async () => {
     try {
       const res = await fetch('/api/sheetAlarms');
@@ -126,7 +131,7 @@ const DashboardHome: React.FC = () => {
               <CardSinCalc
                 titulo="Próx. a finalizar"
                 indicador={campana.campanasProxFinalizar}
-                subtitulo="Entre hoy y el sábado"
+                subtitulo={`Entre hoy y el ${diaSemana}`}
                 toolTipText='Campañas que finalizan en los próximos 6 días'
                 navigable={true}
                 baseUrl={'dashboard'}
